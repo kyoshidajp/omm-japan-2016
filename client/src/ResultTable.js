@@ -53,8 +53,8 @@ export default class ResultTable extends Component {
           </thead>
           <tbody>
             {this.props.markers.map(marker => (
-              <tr key={marker.code}>
-                <td>{marker.label}</td>
+              <tr key={marker.key}>
+                <td>{marker.key}</td>
                 <td>{this.is_checked_control1(marker.label) ? 'x' : ''}</td>
                 <td>{this.is_checked_control2(marker.label) ? 'x' : ''}</td>
               </tr>
