@@ -1,0 +1,13 @@
+.DS_Store
+**.swp
+.env
+/.idea
+/.bundle
+/vendor/bundle/
+/client/node_modules
+/app/assets/javascripts/webpack
+/log/*
+/tmp/*
+!/log/.keep
+!/tmp/.keep
+.byebug_history

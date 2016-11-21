@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>OmmResult</title>
+    <%= stylesheet_link_tag 'application', media: 'all' %>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap-theme.min.css">
+  </head>
+
+  <body>
+    <!--
+    <header class="navbar navbar-default" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <%= link_to 'root', root_path, class: 'navbar-brand' %>
+        </div>
+      </div>
+    </header>
+    <div class="container">
+    </div>
+    -->
+      <%= yield %>
+  </body>
+  <%= javascript_include_tag 'application' %>
+</html>
