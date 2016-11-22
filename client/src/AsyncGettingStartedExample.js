@@ -1,9 +1,9 @@
-import { 
+import {
   default as React,
   PropTypes,
   Component
 } from 'react';
-import { 
+import {
   GoogleMap,
   withGoogleMap,
   Marker,
@@ -125,17 +125,8 @@ export default class AsyncGettingStartedExample extends Component {
             };
           });
 
-          let linesymbol = {
-            path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
-          };
           let routepath = {
             path: path,
-            icons: [
-            {
-              icon: linesymbol,
-              offset: '100%'
-            },
-            ],
             geodesic: true,
             strokecolor: '#ff0000',
             strokeopacity: 1.0,
@@ -188,7 +179,7 @@ export default class AsyncGettingStartedExample extends Component {
 
   render() {
     return (
-      <Grid style={{ width: `100%`, height: `100%` }}>
+      <Grid>
         <Row className="show-grid">
           <Col xs={3} md={3}>
             <ResultTable
@@ -196,11 +187,11 @@ export default class AsyncGettingStartedExample extends Component {
               results={this.state.results} />
           </Col>
           <Col xs={9} md={9}>
-            <div style={{ height: `80%` }}>
-            <AsyncGoogleMap
+            <div>
+            <AsyncGoogleMap 
               googleMapURL={GOOGLE_MAP_API_URL}
               loadingElement={
-                <div style={{ height: `100%` }}>
+                <div style={{ height: `100%`, width: `100%` }}>
                   <FaSpinner
                     style={{
                       display: `block`,
@@ -213,18 +204,12 @@ export default class AsyncGettingStartedExample extends Component {
                 </div>
               }
               containerElement={
-                <div style={{ 
-                  height: `100%`,
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
+                <div style={{
+                  height: `500px`,
                   alighnItems: 'center', }} />
               }
               mapElement={
-                <div style={{ height: `100%`,
-                  position: 'absolute' }} />
+                <div style={{ height: `500px` }} />
               }
               onMapLoad={this.handleMapLoad}
               onMapClick={this.handleMapClick}
