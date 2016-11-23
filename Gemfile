@@ -9,12 +9,12 @@ gem 'foreman'
 gem 'dotenv-rails'
 gem 'therubyracer'
 gem 'jquery-rails'
+gem 'bootstrap-sass'
+gem 'sass-rails'
 
 group :assets do
-  gem 'sass-rails'
   gem 'uglifier', '>= 1.3.0'
   gem 'coffee-rails', '~> 4.2'
-  gem 'bootstrap-sass'
 end
 
 group :production do
