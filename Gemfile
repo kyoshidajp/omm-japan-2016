@@ -16,6 +16,10 @@ group :assets do
   gem 'bootstrap-sass'
 end
 
+group :production do
+  gem 'rails_12factor'
+end 
+
 group :development, :test do
   gem 'byebug', platform: :mri
 end
