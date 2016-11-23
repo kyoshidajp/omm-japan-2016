@@ -8,6 +8,7 @@ gem 'seed-fu'
 gem 'foreman'
 gem 'dotenv-rails'
 gem 'therubyracer'
+gem 'jquery-rails'
 
 group :assets do
   gem 'sass-rails'
