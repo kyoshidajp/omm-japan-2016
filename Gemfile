@@ -12,6 +12,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'seed-fu'
 gem 'foreman'
 gem 'dotenv-rails'
+gem 'therubyracer'
 
 group :development, :test do
   gem 'byebug', platform: :mri
