@@ -166,7 +166,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bootstrap-sass (~> 3.3.6)
+  bootstrap-sass
   byebug
   coffee-rails (~> 4.2)
   dotenv-rails
@@ -176,7 +176,7 @@ DEPENDENCIES
   pg (~> 0.18)
   puma (~> 3.0)
   rails (~> 5.0.0, >= 5.0.0.1)
-  sass-rails (~> 5.0)
+  sass-rails
   seed-fu
   spring
   spring-watcher-listen (~> 2.0.0)

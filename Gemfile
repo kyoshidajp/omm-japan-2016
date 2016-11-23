@@ -3,16 +3,18 @@ source 'https://rubygems.org'
 gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
 gem 'pg', '~> 0.18'
 gem 'puma', '~> 3.0'
-gem 'sass-rails', '~> 5.0'
-gem 'uglifier', '>= 1.3.0'
-gem 'coffee-rails', '~> 4.2'
-gem 'bootstrap-sass', '~> 3.3.6'
-#gem 'react-rails'
 gem 'jbuilder', '~> 2.5'
 gem 'seed-fu'
 gem 'foreman'
 gem 'dotenv-rails'
 gem 'therubyracer'
+
+group :assets do
+  gem 'sass-rails'
+  gem 'uglifier', '>= 1.3.0'
+  gem 'coffee-rails', '~> 4.2'
+  gem 'bootstrap-sass'
+end
 
 group :development, :test do
   gem 'byebug', platform: :mri
