@@ -1,2 +1,2 @@
 web: bundle exec rails server -p $PORT
-webpack: npm run webpack-watch
+webpack: npm run webpack-build
