@@ -19,6 +19,7 @@ class Suggest extends Component {
 
     const propTypes = {
       results: PropTypes.array,
+      allResults: PropTypes.array,
       displayResults: PropTypes.array,
       addResult: React.PropTypes.func,
     };
@@ -31,13 +32,14 @@ class Suggest extends Component {
     this.onSuggestionsFetchRequested = this.onSuggestionsFetchRequested.bind(this);
     this.onSuggestionsClearRequested = this.onSuggestionsClearRequested.bind(this);
     this.onSuggestionSelected = this.onSuggestionSelected.bind(this);
+    this.addResult = this.props.addResult.bind(this);
   }
 
   getSuggestions(value) {
     let inputValue = value.toString();
     let inputLength = inputValue.length;
 
-    let result_bibs = this.props.results.map(result =>
+    let result_bibs = this.props.allResults.map(result =>
       result.bib.toString()
     );
     return inputLength === 0 ? [] : result_bibs.filter(bib =>
@@ -94,58 +96,33 @@ export default class ResultTable extends Component {
     super(props);
 
     const propTypes = {
+      controls1: PropTypes.array,
+      controls2: PropTypes.array,
       results: PropTypes.array,
       markers: PropTypes.array,
+      addResult: React.PropTypes.func,
+      deleteResult: React.PropTypes.func,
     };
 
     this.state = {
       results: []
     }
 
-    this.controls1 = new Set();
-    this.controls2 = new Set();
     this.is_checked_control1 = this.is_checked_control1.bind(this);
     this.is_checked_control2 = this.is_checked_control2.bind(this);
-    this.addResult = this.addResult.bind(this);
-    this.deleteResult = this.deleteResult.bind(this);
-  };
-
-  controls() {
-    if (this.state.results.length === 0) return;
-    let [first, second] = this.state.results;
-    this.controls1 = (typeof first === "undefined") ?
-      new Set() : new Set(first.route.split('-').map(r => Number(r)));
-    this.controls2 = (typeof second === "undefined") ?
-      new Set() : new Set(second.route.split('-').map(r => Number(r)));
+    this.addResult = this.props.addResult.bind(this);
+    this.deleteResult = this.props.deleteResult.bind(this);
   };
 
   is_checked_control1(mark_id) {
-    return this.controls1.has(mark_id);
+    return (typeof this.props.controls1 === "undefined") ?
+      false : this.props.controls1.has(Number(mark_id));
   };
 
   is_checked_control2(mark_id) {
-    return this.controls2.has(mark_id);
+    return (typeof this.props.controls2 === "undefined") ?
+      false : this.props.controls2.has(Number(mark_id));
   };
-
-  addResult(bib) {
-    let newResult = this.props.results.filter(result =>
-      result.bib.toString() === bib
-    );
-    this.setState({
-      results: this.state.results.concat(newResult),
-    });
-    this.controls();
-  }
-
-  deleteResult(bib) {
-    let results = this.state.results.filter(result =>
-      result.bib !== bib
-    );
-    this.setState({
-      results: results,
-    });
-    this.controls();
-  }
 
   render() {
     return (
@@ -153,6 +130,7 @@ export default class ResultTable extends Component {
         <h2>Compare</h2>
         <Suggest
           results={this.props.results}
+          allResults={this.props.allResults}
           displayResults={this.state.results}
           addResult={this.addResult}
         />
@@ -160,7 +138,7 @@ export default class ResultTable extends Component {
           <thead>
             <tr>
               <td />
-              {this.state.results.map(result => (
+              {this.props.results.map(result => (
                 <td key={result.id} onClick={() => this.deleteResult(result.bib)}>delete</td>
               ))}
             </tr>
@@ -168,19 +146,19 @@ export default class ResultTable extends Component {
           <tbody>
             <tr>
               <td>bib:</td>
-              {this.state.results.map(result => (
+              {this.props.results.map(result => (
                 <td key={result.id}>{result.bib}</td>
               ))}
             </tr>
             <tr>
               <td>score:</td>
-              {this.state.results.map(result => (
+              {this.props.results.map(result => (
                 <td key={result.id}>{result.score}</td>
               ))}
             </tr>
             <tr>
               <td>players:</td>
-              {this.state.results.map(result => (
+              {this.props.results.map(result => (
                 <td key={result.id}>
                   <ul>
                   {result.players.map(player => (

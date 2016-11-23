@@ -71,6 +71,7 @@ export default class AsyncGettingStartedExample extends Component {
     this.state = {
       markers: [],
       results: [],
+      allResults: [],
       routes: new Map(),
     }
 
@@ -79,6 +80,51 @@ export default class AsyncGettingStartedExample extends Component {
     this.handleMapLoad = this.handleMapLoad.bind(this);
     this.handleMapClick = this.handleMapClick.bind(this);
     this.handleMarkerRightClick = this.handleMarkerRightClick.bind(this);
+    this.addResult = this.addResult.bind(this);
+    this.setControls = this.setControls.bind(this);
+  }
+
+  addResult(bib) {
+    let newResult = this.state.allResults.filter(result =>
+      result.bib == bib
+    );
+    let results = this.state.results.concat(newResult);
+    this.setState({ results: results });
+    this.setControls(results);
+  }
+
+  setControls(results) {
+    let [first, second] = results;
+    this.controls1 = (typeof first === "undefined") ?
+      new Set() : new Set(first.route.split('-').map(r => Number(r)));
+    this.controls2 = (typeof second === "undefined") ?
+      new Set() : new Set(second.route.split('-').map(r => Number(r)));
+  };
+
+  deleteResult(bib) {
+    let results = this.state.results.filter(result =>
+      result.bib !== bib
+    );
+    this.setState({
+      results: results,
+    });
+    this.setControls();
+  }
+
+  addMarker(data) {
+    for (let control of data) {
+      this.controls.set(control.code, control);
+    }
+    this.setState({markers: data.map(control => {
+      return {
+        position: {
+          lat: control.lat,
+          lng: control.lng,
+        },
+        label: control.code.toString(),
+        key: control.id
+      }
+    })});
   }
 
   loadControlsFromServer() {
@@ -86,23 +132,40 @@ export default class AsyncGettingStartedExample extends Component {
       url: this.props.url,
       dataType: 'json',
       cache: false,
-      success: data => {
-        for (let control of data) {
-          this.controls.set(control.code, control);
-        }
-        this.setState({markers: data.map((control) => {
-          return {
-            position: {
-              lat: control.lat,
-              lng: control.lng,
-            },
-            label: control.code.toString(),
-            key: control.id
-          }
-        })});
+      success: data => { 
+        this.addMarker(data);
         this.loadResultFromServer();
       },
       error: (xhr, status, err) => console.error(this.props.url, status, err.toStrig())
+    });
+  }
+
+  cacheRoute(data) {
+    let results = data.map(result => {
+      let control_ids = result.route.split('-');
+      let path = control_ids.map(control_id => {
+        if (control_id === 'F') {
+          return FINISH_POINT;
+        }
+        let control = this.controls.get(Number(control_id));
+        return {
+          lat: control.lat,
+          lng: control.lng,
+        };
+      });
+
+      let routepath = {
+        path: path,
+        geodesic: true,
+        strokecolor: '#ff0000',
+        strokeopacity: 1.0,
+        strokeweight: 2
+      }
+      this.routes.set(result.id, routepath);
+    });
+    this.setState({
+      allResults: data,
+      routes: this.routes,
     });
   }
 
@@ -112,29 +175,7 @@ export default class AsyncGettingStartedExample extends Component {
       datatype: 'json',
       cache: false,
       success: data => {
-        let results = data.map((result) => {
-          let control_ids = result.route.split('-');
-          let path = control_ids.map((control_id) => {
-            if (control_id === 'F') {
-              return FINISH_POINT;
-            }
-            let control = this.controls.get(Number(control_id));
-            return {
-              lat: control.lat,
-              lng: control.lng,
-            };
-          });
-
-          let routepath = {
-            path: path,
-            geodesic: true,
-            strokecolor: '#ff0000',
-            strokeopacity: 1.0,
-            strokeweight: 2
-          }
-          this.routes.set(result.id, routepath);
-        });
-        this.setState({results: data, routes: this.routes});
+        this.cacheRoute(data);
       },
       error: (xhr, status, err) => console.error(this.props.resultsUrl, status, err.tostrig())
     });
@@ -183,7 +224,12 @@ export default class AsyncGettingStartedExample extends Component {
         <Row className="show-grid">
           <Col xs={3} md={3}>
             <ResultTable
+              controls1={this.controls1}
+              controls2={this.controls2}
+              addResult={this.addResult}
+              deleteResult={this.deleteResult}
               markers={this.state.markers}
+              allResults={this.state.allResults}
               results={this.state.results} />
           </Col>
           <Col xs={9} md={9}>
