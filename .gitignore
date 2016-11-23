@@ -4,7 +4,7 @@
 /.idea
 /.bundle
 /vendor/bundle/
-/client/node_modules
+/node_modules
 /app/assets/javascripts/webpack
 /log/*
 /tmp/*
