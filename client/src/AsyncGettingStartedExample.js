@@ -220,7 +220,7 @@ export default class AsyncGettingStartedExample extends Component {
 
   render() {
     return (
-      <Grid>
+      <Grid fluid={true}>
         <Row className="show-grid">
           <Col xs={3} md={3}>
             <ResultTable

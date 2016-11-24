@@ -134,7 +134,7 @@ export default class ResultTable extends Component {
           displayResults={this.state.results}
           addResult={this.addResult}
         />
-        <Table responsive>
+        <Table striped condensed hover responsive>
           <thead>
             <tr>
               <td />
