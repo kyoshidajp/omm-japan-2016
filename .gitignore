@@ -1,6 +1,7 @@
 .DS_Store
 **.swp
 .env
+.foreman
 /.idea
 /.bundle
 /vendor/bundle/
