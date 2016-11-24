@@ -83,7 +83,6 @@ export default class AsyncGettingStartedExample extends Component {
     this.handleMarkerRightClick = this.handleMarkerRightClick.bind(this);
     this.addResult = this.addResult.bind(this);
     this.deleteResult = this.deleteResult.bind(this);
-    this.setControls = this.setControls.bind(this);
   }
 
   addResult(bib) {
@@ -97,7 +96,9 @@ export default class AsyncGettingStartedExample extends Component {
 
   setControls(results) {
     for (let result of results) {
-      this.controls.set(result.bib, result.route.split('-').map(r => Number(r)));
+      this.controls.set(result.bib, result.controls.map(control => {
+        return control.code;
+      }));
     }
   };
 
@@ -142,12 +143,8 @@ export default class AsyncGettingStartedExample extends Component {
 
   cacheRoute(data) {
     let results = data.map(result => {
-      let control_ids = result.route.split('-');
-      let path = control_ids.map(control_id => {
-        if (control_id === 'F') {
-          return FINISH_POINT;
-        }
-        let control = this.controls.get(Number(control_id));
+      let controls = result.controls;
+      let path = controls.map(control => {
         return {
           lat: control.lat,
           lng: control.lng,
