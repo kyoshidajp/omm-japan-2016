@@ -81,6 +81,7 @@ export default class AsyncGettingStartedExample extends Component {
     this.handleMapClick = this.handleMapClick.bind(this);
     this.handleMarkerRightClick = this.handleMarkerRightClick.bind(this);
     this.addResult = this.addResult.bind(this);
+    this.deleteResult = this.deleteResult.bind(this);
     this.setControls = this.setControls.bind(this);
   }
 
@@ -94,11 +95,9 @@ export default class AsyncGettingStartedExample extends Component {
   }
 
   setControls(results) {
-    let [first, second] = results;
-    this.controls1 = (typeof first === "undefined") ?
-      new Set() : new Set(first.route.split('-').map(r => Number(r)));
-    this.controls2 = (typeof second === "undefined") ?
-      new Set() : new Set(second.route.split('-').map(r => Number(r)));
+    for (let result of results) {
+      this.controls.set(result.bib, result.route.split('-').map(r => Number(r)));
+    }
   };
 
   deleteResult(bib) {
@@ -108,7 +107,7 @@ export default class AsyncGettingStartedExample extends Component {
     this.setState({
       results: results,
     });
-    this.setControls();
+    this.setControls(results);
   }
 
   addMarker(data) {
@@ -224,8 +223,7 @@ export default class AsyncGettingStartedExample extends Component {
         <Row className="show-grid">
           <Col xs={3} md={3}>
             <ResultTable
-              controls1={this.controls1}
-              controls2={this.controls2}
+              controls={this.controls}
               addResult={this.addResult}
               deleteResult={this.deleteResult}
               markers={this.state.markers}

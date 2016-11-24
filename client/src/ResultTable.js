@@ -96,8 +96,7 @@ export default class ResultTable extends Component {
     super(props);
 
     const propTypes = {
-      controls1: PropTypes.array,
-      controls2: PropTypes.array,
+      controls: PropTypes.array,
       results: PropTypes.array,
       markers: PropTypes.array,
       addResult: React.PropTypes.func,
@@ -108,20 +107,14 @@ export default class ResultTable extends Component {
       results: []
     }
 
-    this.is_checked_control1 = this.is_checked_control1.bind(this);
-    this.is_checked_control2 = this.is_checked_control2.bind(this);
+    this.isCheckedControl = this.isCheckedControl.bind(this);
     this.addResult = this.props.addResult.bind(this);
     this.deleteResult = this.props.deleteResult.bind(this);
   };
 
-  is_checked_control1(mark_id) {
-    return (typeof this.props.controls1 === "undefined") ?
-      false : this.props.controls1.has(Number(mark_id));
-  };
-
-  is_checked_control2(mark_id) {
-    return (typeof this.props.controls2 === "undefined") ?
-      false : this.props.controls2.has(Number(mark_id));
+  isCheckedControl(bib, mark_id) {
+    if (!this.props.controls.has(bib)) return false;
+    return this.props.controls.get(bib).indexOf(Number(mark_id)) > -1;
   };
 
   render() {
@@ -171,8 +164,9 @@ export default class ResultTable extends Component {
             {this.props.markers.map(marker => (
               <tr key={marker.key}>
                 <td>{marker.key}</td>
-                <td>{this.is_checked_control1(marker.label) ? 'x' : ''}</td>
-                <td>{this.is_checked_control2(marker.label) ? 'x' : ''}</td>
+                {this.props.results.map(result => (
+                  <td key={result.id}>{this.isCheckedControl(result.bib, marker.label) ? 'x' : ''}</td>
+                ))}
               </tr>
             ))}
           </tbody>
