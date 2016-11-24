@@ -120,7 +120,6 @@ export default class ResultTable extends Component {
   render() {
     return (
       <div>
-        <h2>Compare</h2>
         <Suggest
           results={this.props.results}
           allResults={this.props.allResults}
