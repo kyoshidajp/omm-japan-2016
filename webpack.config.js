@@ -2,7 +2,7 @@ var webpack = require('webpack');
 
 module.exports = {
   entry: {
-    app: './client/src/index.js',
+    app: './client/src/app.js',
   },
 
   output: {
