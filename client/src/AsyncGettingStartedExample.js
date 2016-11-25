@@ -79,8 +79,6 @@ export default class AsyncGettingStartedExample extends Component {
     this.controls = new Map();
     this.routes = new Map();
     this.handleMapLoad = this.handleMapLoad.bind(this);
-    this.handleMapClick = this.handleMapClick.bind(this);
-    this.handleMarkerRightClick = this.handleMarkerRightClick.bind(this);
     this.addResult = this.addResult.bind(this);
     this.deleteResult = this.deleteResult.bind(this);
   }
@@ -186,35 +184,6 @@ export default class AsyncGettingStartedExample extends Component {
     this._mapComponent = map;
   }
 
-  handleMapClick(event) {
-    const nextMarkers = [
-      ...this.state.markers,
-      {
-        position: event.latLng,
-        defaultAnimation: 2,
-        key: 'nextMarkers' + Date.now(),
-      },
-    ];
-
-    this.setState({
-      markers: nextMarkers,
-    });
-
-    if (nextMarkers.length === 3) {
-      this.props.toast(
-        `Right click on the marker to remove it`,
-        `Also check the code!`
-      );
-    }
-  }
-
-  handleMarkerRightClick(targetMarker) {
-    const nextMarkers = this.state.markers.filter(marker => marker !== targetMarker);
-    this.setState({
-      markers: nextMarkers,
-    });
-  }
-
   render() {
     return (
       <div>
@@ -256,11 +225,9 @@ export default class AsyncGettingStartedExample extends Component {
                   <div style={{ height: `500px` }} />
                 }
                 onMapLoad={this.handleMapLoad}
-                onMapClick={this.handleMapClick}
                 markers={this.state.markers}
                 results={this.state.results}
                 routes={this.state.routes}
-                onMarkerRightClick={this.handleMarkerRightClick}
               />
               </div>
             </Col>
