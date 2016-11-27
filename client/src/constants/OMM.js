@@ -6,6 +6,11 @@ export const CENTER_POINT = {
   lng: 137.861446
 };
 
+export const START_POINT = {
+  lat: 36.560606,
+  lng: 137.872176
+};
+
 export const FINISH_POINT = {
   lat: 36.598034,
   lng: 137.824866

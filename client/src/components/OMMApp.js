@@ -35,15 +35,21 @@ const AsyncGoogleMap = _.flowRight(
     defaultCenter={OMM.CENTER_POINT}
     onClick={props.onMapClick}
   >
+    <Marker
+      position={OMM.START_POINT}
+      label="start" />
+    <Marker
+      position={OMM.FINISH_POINT}
+      label="finish" />
     {props.markers.map(marker => (
       <Marker
         {...marker}
         onRightClick={() => props.onMarkerRightClick(marker)}
       />
     ))}
-    {props.results.map(result => (
+    {props.compareResults.map(result => (
       <Polyline key={result.id}
-        {...props.routes.get(result.id)}
+        {...props.bibControlsMap.get(result.bib)}
       />
     ))}
   </GoogleMap>
@@ -61,10 +67,7 @@ class OMMApp extends Component {
     };
 
     this.state = {
-      markers: [],
       results: [],
-      allResults: [],
-      routes: new Map(),
     }
   }
 
@@ -124,8 +127,8 @@ class OMMApp extends Component {
                   <div style={{ height: `500px` }} />
                 }
                 markers={this.props.omm.markers}
-                results={this.state.results}
-                routes={this.state.routes}
+                compareResults={this.props.omm.compareResults}
+                bibControlsMap={this.props.omm.bibControlsMap}
               />
             </Col>
           </Row>

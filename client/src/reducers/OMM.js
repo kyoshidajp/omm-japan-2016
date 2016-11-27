@@ -29,6 +29,31 @@ function getBibCodesMap(results) {
   return bibCodesMap;
 };
 
+function getBibControlsMap(results) {
+  let bibControlsMap = new Map();
+  for (let result of results) {
+    let controls = result.controls;
+    let path = controls.map(control => {
+      return {
+        lat: control.lat,
+        lng: control.lng,
+      }
+    });
+    path.push(OMM.START_POINT);
+    path.unshift(OMM.FINISH_POINT);
+
+    let routepath = {
+      path,
+      geodesic: true,
+      strokecolor: '#ff0000',
+      strokeopacity: 1.0,
+      strokeweight: 2
+    }
+    bibControlsMap.set(result.bib, routepath);
+  }
+  return bibControlsMap;
+}
+
 function getControlsAndMarkers(data) {
   let controls = new Map();
   let markers = [];
@@ -84,6 +109,9 @@ const initialState = {
 
   /* Map: result.bib => [control.code, ...] */
   bibCodesMap: new Map(),
+
+  /* Map: result.bib => [control, ...] */
+  bibControlsMap: new Map(),
 
   /* Map: control.code => control  */
   controls: new Map(),
@@ -150,6 +178,7 @@ export default function omm(state = initialState, action) {
         loaded: true,
         allResults: action.result,
         bibCodesMap: getBibCodesMap(action.result),
+        bibControlsMap: getBibControlsMap(action.result),
       });
     case OMM.DELETE_RESULT:
       let compareResults = deleteResult(action.bib, state.compareResults);
