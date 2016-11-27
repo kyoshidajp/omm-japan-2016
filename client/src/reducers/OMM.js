@@ -7,6 +7,19 @@ function getResult(bib, results) {
 	return result;
 }
 
+function getGridWidthObject(results) {
+  let length = results.length;
+  if (length === 0) return [ 2, 10 ];
+  if (1 <= length || legnth <= 4) return [ 3, 9 ];
+  if (5 <= length || legnth <= 7) return [ 5, 7 ];
+  return [ 7, 5 ];
+}
+
+function getGridWidth(results) {
+  let [ controlsTable, map ] = getGridWidthObject(results);
+  return { controlsTable, map };
+}
+
 function getSuggestions(value, results) {
   let inputValue = value.toString();
   let inputLength = inputValue.length;
@@ -115,6 +128,14 @@ const initialState = {
 
   /* Map: control.code => control  */
   controls: new Map(),
+
+  /* Object: { controlsTable: number,
+   *           map: number }
+   */
+  gridWidth: {
+    controlsTable: 2,
+    map: 10
+  }
 };
 
 export default function omm(state = initialState, action) {
@@ -139,6 +160,7 @@ export default function omm(state = initialState, action) {
       return Object.assign({}, state, {
         value: '',
         compareResults: state.compareResults.concat(result),
+        gridWidth: getGridWidth(result),
       });
 
     case OMM.LOAD_RESULTS:
@@ -183,7 +205,8 @@ export default function omm(state = initialState, action) {
     case OMM.DELETE_RESULT:
       let compareResults = deleteResult(action.bib, state.compareResults);
       return Object.assign({}, state, {
-        compareResults 
+        compareResults,
+        gridWidth: getGridWidth(compareResults),
       });
     default:
       return state;

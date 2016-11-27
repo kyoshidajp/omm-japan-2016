@@ -106,7 +106,8 @@ class OMMApp extends Component {
             </Row>
             : '' }
           <Row className="show-grid omm-column">
-            <Col xs={3} md={3}>
+            <Col xs={this.props.omm.gridWidth.controlsTable}
+                 md={this.props.omm.gridWidth.controlsTable}>
               <OMMControlsTable
                 omm={this.props.omm}
                 ommActions={this.props.ommActions}
@@ -115,7 +116,8 @@ class OMMApp extends Component {
                 deleteResult={this.deleteResult}
                 results={this.state.results} />
             </Col>
-            <Col xs={9} md={9}>
+            <Col xs={this.props.omm.gridWidth.map}
+                 md={this.props.omm.gridWidth.map}>
               <AsyncGoogleMap 
                 googleMapURL={OMM.GOOGLE_MAP_API_URL}
                 loadingElement={
