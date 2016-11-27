@@ -24,7 +24,6 @@ import * as OMMActions from '../actions/OMM';
 import ResultTable from './ResultTable';
 import Suggest from './Suggest';
 import OMMNavbar from './OMMNavbar';
-import AsyncGettingStartedExample from './AsyncGettingStartedExample';
 
 const AsyncGoogleMap = _.flowRight(
   withScriptjs,
