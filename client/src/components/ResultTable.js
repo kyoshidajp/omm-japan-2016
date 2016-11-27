@@ -56,6 +56,14 @@ export default class ResultTable extends Component {
             ))}
           </tr>
           <tr>
+            <td><div className="text-right">rank:</div></td>
+            {this.props.omm.compareResults.map(result => (
+              <td key={result.id}>
+                <div className="text-center">{result.rank}</div>
+              </td>
+            ))}
+          </tr>
+          <tr>
             <td><div className="text-right">score:</div></td>
             {this.props.omm.compareResults.map(result => (
               <td key={result.id}>

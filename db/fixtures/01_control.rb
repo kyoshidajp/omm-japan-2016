@@ -2,7 +2,7 @@ require 'csv'
 
 class ControlsImporter
   def import
-    CSV.foreach('db/fixtures/controls.csv') do |row|
+    CSV.foreach('db/fixtures/controls_day2.csv') do |row|
       Control.seed(:code) do |s|
         s.code = row[0]
         s.points = row[1]

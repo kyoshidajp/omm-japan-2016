@@ -23,7 +23,10 @@ class ResultClass
   end
 
   def rank
-    @rank ||= @line.match(/^(\d+) /)[1]
+    return @rank unless @rank.nil?
+
+    rank_match = @line.match(/^(\d+) /)
+    @rank = rank_match ? rank_match[1] : nil
   end
 
   def bib
@@ -48,11 +51,13 @@ class ResultClass
 
   def score
     return @score unless @score.nil?
-    @score = 0
-    @route.each do |point|
-      @score += point.to_i if (point != 'F' && !point.nil?)
+
+    if @line.match(/ DISQ /)
+      @score = 0
+      return @score
     end
-    @score
+
+    @score ||= @line.match(/(\d+)点/)[1]
   end
 end
 
@@ -65,6 +70,7 @@ class ResultsImporter
         Result.seed do |r|
           r.bib = result.bib
           r.score = result.score
+          r.rank = result.rank
         end
 
         result.players.each do |player|
