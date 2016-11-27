@@ -21,7 +21,8 @@ import _ from 'lodash';
 
 import * as OMM from '../constants/OMM';
 import * as OMMActions from '../actions/OMM';
-import ResultTable from './ResultTable';
+import OMMControlsTable from './OMMControlsTable';
+import OMMResultsTable from './OMMResultsTable';
 import Suggest from './Suggest';
 import OMMNavbar from './OMMNavbar';
 
@@ -90,11 +91,23 @@ class OMMApp extends Component {
                 ommActions={this.props.ommActions}
               />
             </Col>
-            <Col xs={9} md={9} />
           </Row>
+          {this.props.omm.compareResults.length > 0 ?
+            <Row className="show-grid omm-column result-table">
+              <Col xs={12} md={12}>
+                <OMMResultsTable
+                  omm={this.props.omm}
+                  ommActions={this.props.ommActions}
+                  controls={this.controls}
+                  addResult={this.addResult}
+                  deleteResult={this.deleteResult}
+                  results={this.state.results} />
+              </Col>
+            </Row>
+            : '' }
           <Row className="show-grid omm-column">
             <Col xs={3} md={3}>
-              <ResultTable
+              <OMMControlsTable
                 omm={this.props.omm}
                 ommActions={this.props.ommActions}
                 controls={this.controls}

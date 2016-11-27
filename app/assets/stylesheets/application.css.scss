@@ -68,6 +68,7 @@ body {
   margin-left: 0;
   margin-bottom: 0;
   padding-left: 0;
+  min-width: 6em;
 }
 
 .omm-column {
@@ -78,6 +79,11 @@ body {
 .omm-column .col-md-3,
 .omm-column .col-md-9 {
   padding: 5px;
+}
+
+.result-table {
+  padding: 0;
+  margin-top: 10px;
 }
 
 .logo.navbar-brand {
