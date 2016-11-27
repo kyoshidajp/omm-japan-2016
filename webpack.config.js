@@ -21,15 +21,6 @@ module.exports = {
       },
     ],
     plugins: [
-      new webpack.DefinePlugin({
-        "process.env": {
-          "GOOGLE_MAPS_API_KEY": JSON.stringify('aaa')
-        }
-      }),
-      new webpack.ProvidePlugin({
-        _: "underscore",
-        jQuery: "jquery"
-      })
     ]
   }
 };
