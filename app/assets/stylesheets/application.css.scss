@@ -62,3 +62,30 @@ body {
 .react-autosuggest__suggestion--focused {
   background-color: #ddd;
 }
+
+.players-list {
+  list-style-type: none;
+  margin-left: 0;
+  margin-bottom: 0;
+  padding-left: 0;
+}
+
+.omm-column {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.omm-column .col-md-3,
+.omm-column .col-md-9 {
+  padding: 5px;
+}
+
+.logo.navbar-brand {
+  color: #e78b14;
+  font-family: impact;
+  font-size: 1.7em;
+}
+
+.navbar-inverse .navbar-nav {
+  color: white;
+}

@@ -79,7 +79,7 @@ class OMMApp extends Component {
       <div>
         <OMMNavbar style={{ height: `100%`, width: `100%` }}/>
         <Grid fluid={true}>
-          <Row className="show-grid">
+          <Row className="show-grid omm-column">
             <Col xs={3} md={3}>
               <Suggest
                 allResults={this.props.omm.allResults}
@@ -90,7 +90,7 @@ class OMMApp extends Component {
             </Col>
             <Col xs={9} md={9} />
           </Row>
-          <Row className="show-grid">
+          <Row className="show-grid omm-column">
             <Col xs={3} md={3}>
               <ResultTable
                 omm={this.props.omm}

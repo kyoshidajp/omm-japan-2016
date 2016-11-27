@@ -6,6 +6,8 @@ import {
 import {
   Table
 } from 'react-bootstrap';
+import FaTrash from 'react-icons/lib/fa/trash';
+import FaCheck from 'react-icons/lib/fa/check';
 
 export default class ResultTable extends Component {
   constructor(props) {
@@ -36,40 +38,53 @@ export default class ResultTable extends Component {
           <tr>
             <td />
             {this.props.omm.compareResults.map(result => (
-              <td key={result.id} onClick={() => this.deleteResult(result.bib)}>delete</td>
+              <td key={result.id} >
+                <div className="text-center">
+                  <a href="#" onClick={() => this.deleteResult(result.bib)}><FaTrash /></a>
+                </div>
+              </td>
             ))}
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>bib:</td>
-            {this.props.omm.compareResults.map(result => (
-              <td key={result.id}>{result.bib}</td>
-            ))}
-          </tr>
-          <tr>
-            <td>score:</td>
-            {this.props.omm.compareResults.map(result => (
-              <td key={result.id}>{result.score}</td>
-            ))}
-          </tr>
-          <tr>
-            <td>players:</td>
+            <td><div className="text-right">bib:</div></td>
             {this.props.omm.compareResults.map(result => (
               <td key={result.id}>
-                <ul>
-                {result.players.map(player => (
-                  <li key={player.id}>{player.last_name} {player.first_name}</li>
-                ))}
-                </ul>
+                <div className="text-center">{result.bib}</div>
+              </td>
+            ))}
+          </tr>
+          <tr>
+            <td><div className="text-right">score:</div></td>
+            {this.props.omm.compareResults.map(result => (
+              <td key={result.id}>
+                <div className="text-center">{result.score}</div>
+              </td>
+            ))}
+          </tr>
+          <tr>
+            <td><div className="text-right">players:</div></td>
+            {this.props.omm.compareResults.map(result => (
+              <td key={result.id}>
+                <div className="text-center">
+                  <ul className="players-list">
+                  {result.players.map(player => (
+                    <li key={player.id}>{player.last_name} {player.first_name}</li>
+                  ))}
+                  </ul>
+                </div>
               </td>
             ))}
           </tr>
           {this.props.omm.markers.map(marker => (
             <tr key={marker.key}>
-              <td>{marker.label}</td>
+              <td><div className="text-right">{marker.label}</div></td>
               {this.props.omm.compareResults.map(result => (
-                <td key={result.id}>{this.isCheckedControl(result.bib, marker.label) ? 'x' : ''}</td>
+                <td key={result.id}>
+                  <div className="text-center">
+                  {this.isCheckedControl(result.bib, marker.label) ? <FaCheck /> : ''}</div>
+                </td>
               ))}
             </tr>
           ))}
