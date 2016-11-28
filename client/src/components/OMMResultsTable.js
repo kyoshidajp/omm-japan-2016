@@ -67,6 +67,7 @@ export default class OMMResultsTable extends Component {
                   {result.controls.map(control =>
                      control.code.toString()
                    ).join('-')}
+                  {result.score > 0 ? '-F' : ''}
                 </div>
               </td>
             </tr>
