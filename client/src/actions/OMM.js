@@ -5,6 +5,8 @@ export const DELETE_COMPARE_RESULT = 'DELETE_COMPARE_RESULT';
 export const LOAD_RESULTS = 'LOAD_RESULTS';
 export const LOAD_CONTROLS_REQUEST = 'LOAD_CONTROLS_REQUEST';
 export const LOAD_CONTROLS_RESULT = 'LOAD_CONTROLS_RESULT';
+export const LOAD_BIBS_REQUEST = 'LOAD_BIBS_REQUEST';
+export const LOAD_BIBS_RESULT = 'LOAD_BIBS_RESULT';
 export const LOAD_RESULTS_REQUEST = 'LOAD_RESULTS_REQUEST';
 export const LOAD_RESULTS_RESULT = 'LOAD_RESULTS_RESULT';
 export const SUGGEST_ON_CHANGE = 'SUGGEST_ON_CHANGE';
@@ -48,10 +50,45 @@ export function onSuggestionsClearRequested() {
 }
 
 export function onSuggestionSelected(value) {
+  return dispatch => {
+    Axios.get(`/api/v1/results/${value}.json`).then(
+      response => dispatch(loadResultResult(response.data))
+    ).catch(
+      response => console.log(response)
+    );
+  };
+}
+
+function loadResultResult(value) {
   return {
     type: SUGGEST_ON_SUGGESTION_SELECTED,
     value,
-  }
+  };
+}
+
+export function loadBibs() {
+  return dispatch => {
+    dispatch(loadBibsRequest());
+
+    Axios.get('/api/v1/bibs.json').then(
+      response => dispatch(loadBibsResult(response.data))
+    ).catch(
+      response => console.log(response)
+    );
+  };
+}
+
+function loadBibsRequest() {
+  return {
+    type: LOAD_BIBS_REQUEST,
+  };
+}
+
+function loadBibsResult(value) {
+  return {
+    type: LOAD_BIBS_RESULT,
+    value,
+  };
 }
 
 export function loadControls() {

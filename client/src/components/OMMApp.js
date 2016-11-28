@@ -70,7 +70,7 @@ class OMMApp extends Component {
 
   componentDidMount() {
     this.props.ommActions.loadControls();
-    this.props.ommActions.loadResults();
+    this.props.ommActions.loadBibs();
   }
 
   render() {

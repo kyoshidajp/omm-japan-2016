@@ -1,12 +1,14 @@
 import * as OMM from '../actions/OMM';
 import * as OMM_CONST from '../constants/OMM';
 
-function getResult(bib, results) {
-	let result = results.filter(r =>
+/*
+function getResult(result, bibs) {
+	let result = bibs.filter(r =>
 		r.bib === Number(bib)
 	);
 	return result;
 }
+*/
 
 function getGridWidthObject(results) {
   let length = results.length;
@@ -21,13 +23,11 @@ function getGridWidth(results) {
   return { controlsTable, map };
 }
 
-function getSuggestions(value, results) {
+function getSuggestions(value, bibs) {
   let inputValue = value.toString();
   let inputLength = inputValue.length;
 
-  let resultBibs = results.map(result =>
-    result.bib.toString()
-  );
+  let resultBibs = bibs.map(bib => bib.toString());
   return inputLength === 0 ? [] : resultBibs.filter(bib =>
     bib.slice(0, inputLength) === inputValue
   );
@@ -122,6 +122,9 @@ const initialState = {
   compareResults: [],
   suggestions: [],
 
+  /* Array: [bib, ...] */
+  bibs: [],
+
   /* Map: result.bib => [control.code, ...] */
   bibCodesMap: new Map(),
 
@@ -151,22 +154,40 @@ export default function omm(state = initialState, action) {
       });
     case OMM.SUGGEST_ON_SUGGESTIONS_FETCH_REQUESTED:
       return Object.assign({}, state, {
-        suggestions: getSuggestions(action.value, state.allResults),
+        suggestions: getSuggestions(action.value, state.bibs),
       });
     case OMM.SUGGEST_ON_SUGGESTIONS_CLEAR_REQUESTED:
       return Object.assign({}, state, {
         suggestions: []
       });
     case OMM.SUGGEST_ON_SUGGESTION_SELECTED:
-      let result = getResult(action.value, state.allResults);
+      let results = state.compareResults.concat(action.value);
+      let codesByBib = action.value.controls.map(control => control.code);
       return Object.assign({}, state, {
         value: '',
-        compareResults: state.compareResults.concat(result),
-        gridWidth: getGridWidth(result),
+        compareResults: results, 
+        gridWidth: getGridWidth(results),
+        bibCodesMap: state.bibCodesMap.set(action.value.bib, codesByBib),
       });
 
     case OMM.LOAD_RESULTS:
       return {};
+    case OMM.LOAD_BIBS:
+      return Object.assign({}, state, {
+        bibs: []
+      });
+    case OMM.LOAD_BIBS_REQUST:
+      return Object.assign({}, state, {
+        loading: true,
+        loaded: false,
+        bibs: [],
+      });
+    case OMM.LOAD_BIBS_RESULT:
+      return Object.assign({}, state, {
+        loading: false,
+        loaded: true,
+        bibs: action.value,
+      });
     case OMM.LOAD_CONTROLS:
       return Object.assign({}, state, {
         markers: []
