@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import omm from './reducers/OMM';
+import omm from './OMM';
 
 const rootReducer = combineReducers({
   omm,
