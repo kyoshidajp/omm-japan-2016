@@ -43,28 +43,25 @@ function getBibCodesMap(results) {
   return bibCodesMap;
 };
 
-function getBibControlsMap(results) {
-  let bibControlsMap = new Map();
-  for (let result of results) {
-    let controls = result.controls;
-    let path = controls.map(control => {
-      return {
-        lat: control.lat,
-        lng: control.lng,
-      }
-    });
-    path.push(OMM_CONST.START_POINT);
-    path.unshift(OMM_CONST.FINISH_POINT);
-
-    let routepath = {
-      path,
-      geodesic: true,
-      strokecolor: '#ff0000',
-      strokeopacity: 1.0,
-      strokeweight: 2
+function getBibControlsMap(result, bibControlsMap) {
+  let controls = result.controls;
+  let path = controls.map(control => {
+    return {
+      lat: control.lat,
+      lng: control.lng,
     }
-    bibControlsMap.set(result.bib, routepath);
+  });
+  path.push(OMM_CONST.START_POINT);
+  path.unshift(OMM_CONST.FINISH_POINT);
+
+  let routepath = {
+    path,
+    geodesic: true,
+    strokecolor: '#ff0000',
+    strokeopacity: 1.0,
+    strokeweight: 2
   }
+  bibControlsMap.set(result.bib, routepath);
   return bibControlsMap;
 }
 
@@ -168,6 +165,7 @@ export default function omm(state = initialState, action) {
         compareResults: results, 
         gridWidth: getGridWidth(results),
         bibCodesMap: state.bibCodesMap.set(action.value.bib, codesByBib),
+        bibControlsMap: getBibControlsMap(action.value, state.bibControlsMap),
       });
 
     case OMM.LOAD_RESULTS:
@@ -223,7 +221,6 @@ export default function omm(state = initialState, action) {
         loaded: true,
         allResults: action.result,
         bibCodesMap: getBibCodesMap(action.result),
-        bibControlsMap: getBibControlsMap(action.result),
       });
     case OMM.DELETE_COMPARE_RESULT:
       let compareResults = deleteComareResult(action.bib, state.compareResults);
