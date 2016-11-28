@@ -120,6 +120,7 @@ const initialState = {
 
   markers: [],
   compareResults: [],
+  suggestions: [],
 
   /* Map: result.bib => [control.code, ...] */
   bibCodesMap: new Map(),
@@ -136,7 +137,7 @@ const initialState = {
   gridWidth: {
     controlsTable: 2,
     map: 10
-  }
+  },
 };
 
 export default function omm(state = initialState, action) {
@@ -150,7 +151,7 @@ export default function omm(state = initialState, action) {
       });
     case OMM.SUGGEST_ON_SUGGESTIONS_FETCH_REQUESTED:
       return Object.assign({}, state, {
-        suggestions: getSuggestions(action.value, action.results),
+        suggestions: getSuggestions(action.value, state.allResults),
       });
     case OMM.SUGGEST_ON_SUGGESTIONS_CLEAR_REQUESTED:
       return Object.assign({}, state, {

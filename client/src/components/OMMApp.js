@@ -66,10 +66,6 @@ class OMMApp extends Component {
       omm: PropTypes.object.isRequired,
       suggest: PropTypes.object.isRequired,
     };
-
-    this.state = {
-      results: [],
-    }
   }
 
   componentDidMount() {
@@ -86,7 +82,6 @@ class OMMApp extends Component {
             <Col xs={3} md={3}>
               <Suggest
                 allResults={this.props.omm.allResults}
-                displayResults={this.state.results}
                 omm={this.props.omm}
                 ommActions={this.props.ommActions}
               />
@@ -101,7 +96,7 @@ class OMMApp extends Component {
                   controls={this.controls}
                   addResult={this.addResult}
                   deleteResult={this.deleteResult}
-                  results={this.state.results} />
+                />
               </Col>
             </Row>
             : '' }
@@ -114,7 +109,7 @@ class OMMApp extends Component {
                 controls={this.controls}
                 addResult={this.addResult}
                 deleteResult={this.deleteResult}
-                results={this.state.results} />
+              />
             </Col>
             <Col xs={this.props.omm.gridWidth.map}
                  md={this.props.omm.gridWidth.map}>

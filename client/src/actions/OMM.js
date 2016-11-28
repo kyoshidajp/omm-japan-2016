@@ -36,7 +36,7 @@ export function onChange(value) {
 export function onSuggestionsFetchRequested(value, results) {
   return {
     type: SUGGEST_ON_SUGGESTIONS_FETCH_REQUESTED,
-    value: value,
+    value: value.value,
     results: results,
   }
 }

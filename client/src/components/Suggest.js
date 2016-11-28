@@ -19,45 +19,12 @@ export default class Suggest extends Component {
       omm: PropTypes.object.isRequired,
     };
 
-    this.state = {
-      value: '',
-      suggestions: []
-    };
     this.onChange = this.onChange.bind(this);
-    this.onSuggestionsFetchRequested = this.onSuggestionsFetchRequested.bind(this);
-    this.onSuggestionsClearRequested = this.onSuggestionsClearRequested.bind(this);
     this.onSuggestionSelected = this.onSuggestionSelected.bind(this);
   }
 
-  getSuggestions(value) {
-    let inputValue = value.toString();
-    let inputLength = inputValue.length;
-
-    let result_bibs = this.props.omm.allResults.map(result =>
-      result.bib.toString()
-    );
-    return inputLength === 0 ? [] : result_bibs.filter(bib =>
-      bib.slice(0, inputLength) === inputValue
-    );
-  };
-
   onChange(event, { newValue }) {
     this.props.ommActions.onChange(newValue);
-    /*
-    this.setState({
-      value: newValue
-    });
-    */
-  };
-
-  onSuggestionsFetchRequested({ value }) {
-    this.setState({
-      suggestions: this.getSuggestions(value)
-    });
-  };
-
-  onSuggestionsClearRequested() {
-    this.props.ommActions.onSuggestionsClearRequested();
   };
 
   onSuggestionSelected(event, { suggestion, suggestionValue}) {
@@ -65,7 +32,6 @@ export default class Suggest extends Component {
   };
 
   render() {
-    const { value, suggestions } = this.state;
     const inputProps = {
       placeholder: 'Type a bib',
       value: this.props.omm.value,
@@ -73,11 +39,11 @@ export default class Suggest extends Component {
     };
     return (
       <Autosuggest
-        onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-        onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+        onSuggestionsFetchRequested={this.props.ommActions.onSuggestionsFetchRequested}
+        onSuggestionsClearRequested={this.props.ommActions.onSuggestionsClearRequested}
         onSuggestionSelected={this.onSuggestionSelected}
         getSuggestionValue={getSuggestionValue}
-        suggestions={suggestions}
+        suggestions={this.props.omm.suggestions}
         renderSuggestion={renderSuggestion}
         inputProps={inputProps}
       />
