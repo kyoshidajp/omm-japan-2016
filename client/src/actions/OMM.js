@@ -1,30 +1,41 @@
 import Axios from 'axios';
-import * as OMM from '../constants/OMM';
+
+export const ADD_COMPARE_RESULT = 'ADD_COMPARE_RESULT';
+export const DELETE_RESULT = 'DELETE_RESULT';
+export const LOAD_RESULTS = 'LOAD_RESULTS';
+export const LOAD_CONTROLS_REQUEST = 'LOAD_CONTROLS_REQUEST';
+export const LOAD_CONTROLS_RESULT = 'LOAD_CONTROLS_RESULT';
+export const LOAD_RESULTS_REQUEST = 'LOAD_RESULTS_REQUEST';
+export const LOAD_RESULTS_RESULT = 'LOAD_RESULTS_RESULT';
+export const SUGGEST_ON_CHANGE = 'SUGGEST_ON_CHANGE';
+export const SUGGEST_ON_SUGGESTIONS_FETCH_REQUESTED = 'SUGGEST_ON_SUGGESTIONS_FETCH_REQUESTED';
+export const SUGGEST_ON_SUGGESTIONS_CLEAR_REQUESTED = 'SUGGEST_ON_SUGGESTIONS_CLEAR_REQUESTED';
+export const SUGGEST_ON_SUGGESTION_SELECTED = 'SUGGEST_ON_SUGGESTION_SELECTED';
 
 export function addCompareResult(value) {
   return {
-    type: OMM.ADD_COMPARE_RESULT,
+    type: ADD_COMPARE_RESULT,
     value: value
   }
 }
 
 export function onChange(value) {
   return {
-    type: OMM.SUGGEST_ON_CHANGE,
+    type: SUGGEST_ON_CHANGE,
     value: value
   }
 }
 
 export function deleteResult(bib) {
   return {
-    type: OMM.DELETE_RESULT,
+    type: DELETE_RESULT,
     bib
   }
 }
 
 export function onSuggestionsFetchRequested(value, results) {
   return {
-    type: OMM.SUGGEST_ON_SUGGESTIONS_FETCH_REQUESTED,
+    type: SUGGEST_ON_SUGGESTIONS_FETCH_REQUESTED,
     value: value,
     results: results,
   }
@@ -32,13 +43,13 @@ export function onSuggestionsFetchRequested(value, results) {
 
 export function onSuggestionsClearRequested() {
   return {
-    type: OMM.SUGGEST_ON_SUGGESTIONS_CLEAR_REQUESTED
+    type: SUGGEST_ON_SUGGESTIONS_CLEAR_REQUESTED
   }
 }
 
 export function onSuggestionSelected(value) {
   return {
-    type: OMM.SUGGEST_ON_SUGGESTION_SELECTED,
+    type: SUGGEST_ON_SUGGESTION_SELECTED,
     value,
   }
 }
@@ -57,13 +68,13 @@ export function loadControls() {
 
 function loadControlsRequest() {
   return {
-    type: OMM.LOAD_CONTROLS_REQUEST,
+    type: LOAD_CONTROLS_REQUEST,
   };
 }
 
 function loadControlsResult(result) {
   return {
-    type: OMM.LOAD_CONTROLS_RESULT,
+    type: LOAD_CONTROLS_RESULT,
     result,
   };
 }
@@ -82,13 +93,13 @@ export function loadResults() {
 
 function loadResultsRequest() {
   return {
-    type: OMM.LOAD_RESULTS_REQUEST,
+    type: LOAD_RESULTS_REQUEST,
   };
 }
 
 function loadResultsResult(result) {
   return {
-    type: OMM.LOAD_RESULTS_RESULT,
+    type: LOAD_RESULTS_RESULT,
     result: result,
   };
 }

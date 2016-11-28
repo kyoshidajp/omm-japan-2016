@@ -1,4 +1,5 @@
-import * as OMM from '../constants/OMM';
+import * as OMM from '../actions/OMM';
+import * as OMM_CONST from '../constants/OMM';
 
 function getResult(bib, results) {
 	let result = results.filter(r =>
@@ -52,8 +53,8 @@ function getBibControlsMap(results) {
         lng: control.lng,
       }
     });
-    path.push(OMM.START_POINT);
-    path.unshift(OMM.FINISH_POINT);
+    path.push(OMM_CONST.START_POINT);
+    path.unshift(OMM_CONST.FINISH_POINT);
 
     let routepath = {
       path,
