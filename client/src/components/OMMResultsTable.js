@@ -17,13 +17,8 @@ export default class OMMResultsTable extends Component {
       ommActions: PropTypes.object.isRequired,
     };
 
-    this.deleteResult = this.deleteResult.bind(this);
     this.isCheckedControl = this.isCheckedControl.bind(this);
   };
-
-  deleteResult(bib) {
-    this.props.ommActions.deleteResult(bib);
-  }
 
   isCheckedControl(bib, mark_id) {
     if (!this.props.omm.bibCodesMap.has(bib)) return false;
@@ -47,7 +42,7 @@ export default class OMMResultsTable extends Component {
           {this.props.omm.compareResults.map(result => (
             <tr key={result.id}>
               <td key={result.id} >
-                <a href="#" onClick={() => this.deleteResult(result.bib)}><FaTrash /></a>
+                <a href="#" onClick={() => this.props.ommActions.deleteCompareResult(result.bib)}><FaTrash /></a>
               </td>
               <td>
                 <div className="text-right">{result.bib}</div>

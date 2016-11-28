@@ -108,7 +108,7 @@ function getRoutesByResult(data) {
   return routes;
 }
 
-function deleteResult(bib, results) {
+function deleteComareResult(bib, results) {
   return results.filter(result => result.bib !== bib);
 }
 
@@ -203,8 +203,8 @@ export default function omm(state = initialState, action) {
         bibCodesMap: getBibCodesMap(action.result),
         bibControlsMap: getBibControlsMap(action.result),
       });
-    case OMM.DELETE_RESULT:
-      let compareResults = deleteResult(action.bib, state.compareResults);
+    case OMM.DELETE_COMPARE_RESULT:
+      let compareResults = deleteComareResult(action.bib, state.compareResults);
       return Object.assign({}, state, {
         compareResults,
         gridWidth: getGridWidth(compareResults),

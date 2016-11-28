@@ -1,7 +1,7 @@
 import Axios from 'axios';
 
 export const ADD_COMPARE_RESULT = 'ADD_COMPARE_RESULT';
-export const DELETE_RESULT = 'DELETE_RESULT';
+export const DELETE_COMPARE_RESULT = 'DELETE_COMPARE_RESULT';
 export const LOAD_RESULTS = 'LOAD_RESULTS';
 export const LOAD_CONTROLS_REQUEST = 'LOAD_CONTROLS_REQUEST';
 export const LOAD_CONTROLS_RESULT = 'LOAD_CONTROLS_RESULT';
@@ -19,17 +19,17 @@ export function addCompareResult(value) {
   }
 }
 
+export function deleteCompareResult(bib) {
+  return {
+    type: DELETE_COMPARE_RESULT,
+    bib
+  }
+}
+
 export function onChange(value) {
   return {
     type: SUGGEST_ON_CHANGE,
     value: value
-  }
-}
-
-export function deleteResult(bib) {
-  return {
-    type: DELETE_RESULT,
-    bib
   }
 }
 
