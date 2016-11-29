@@ -51,8 +51,8 @@ function getBibControlsMap(result, bibControlsMap) {
       lng: control.lng,
     }
   });
-  path.push(OMM_CONST.START_POINT);
-  path.unshift(OMM_CONST.FINISH_POINT);
+  path.unshift(OMM_CONST.START_POINT);
+  path.push(OMM_CONST.FINISH_POINT);
 
   let routepath = {
     path,
