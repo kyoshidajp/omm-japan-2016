@@ -12,7 +12,7 @@ function getResult(result, bibs) {
 
 function getGridWidthObject(results) {
   let length = results.length;
-  if (length === 0) return [ 2, 10 ];
+  if (length === 0) return [ 0, 12 ];
   if (1 <= length || legnth <= 4) return [ 3, 9 ];
   if (5 <= length || legnth <= 7) return [ 5, 7 ];
   return [ 7, 5 ];
@@ -135,8 +135,8 @@ const initialState = {
    *           map: number }
    */
   gridWidth: {
-    controlsTable: 2,
-    map: 10
+    controlsTable: 0,
+    map: 12
   },
 };
 

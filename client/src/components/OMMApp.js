@@ -100,7 +100,8 @@ class OMMApp extends Component {
               </Col>
             </Row>
             : '' }
-          <Row className="show-grid omm-column">
+          <Row className="show-grid omm-column controls-table">
+            {this.props.omm.compareResults.length > 0 ?
             <Col xs={this.props.omm.gridWidth.controlsTable}
                  md={this.props.omm.gridWidth.controlsTable}>
               <OMMControlsTable
@@ -110,7 +111,7 @@ class OMMApp extends Component {
                 addResult={this.addResult}
                 deleteResult={this.deleteResult}
               />
-            </Col>
+            </Col> : '' }
             <Col xs={this.props.omm.gridWidth.map}
                  md={this.props.omm.gridWidth.map}>
               <AsyncGoogleMap 
