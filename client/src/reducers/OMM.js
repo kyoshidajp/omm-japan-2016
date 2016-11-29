@@ -1,15 +1,6 @@
 import * as OMM from '../actions/OMM';
 import * as OMM_CONST from '../constants/OMM';
 
-/*
-function getResult(result, bibs) {
-	let result = bibs.filter(r =>
-		r.bib === Number(bib)
-	);
-	return result;
-}
-*/
-
 function getGridWidthObject(results) {
   let length = results.length;
   if (length === 0) return [ 0, 12 ];
