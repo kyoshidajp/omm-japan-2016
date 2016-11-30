@@ -35,6 +35,7 @@ const AsyncGoogleMap = _.flowRight(
     defaultZoom={13}
     defaultCenter={OMM.CENTER_POINT}
     onClick={props.onMapClick}
+    options={{ scrollwheel: false }}
   >
     <Marker
       position={OMM.START_POINT}
