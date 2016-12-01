@@ -16,3 +16,12 @@ export const FINISH_POINT = {
   lng: 137.824866
 };
 
+export const SEARCH_TARGETS = {
+  BIB: 'BIB',
+  PLAYER: 'PLAYER',
+}
+
+export const SEARCH_PLACE_HOLDER = {
+  BIB: 'Type a bib',
+  PLAYER: 'Type a player name',
+}

@@ -14,13 +14,22 @@ function getGridWidth(results) {
   return { controlsTable, map };
 }
 
-function getSuggestions(value, bibs) {
+function getSuggestions(value, state) {
+  let provider = null;
+  switch (state.searchTarget) {
+    case OMM_CONST.SEARCH_TARGETS.BIB:
+      provider = state.bibs;
+      break;
+    case OMM_CONST.SEARCH_TARGETS.PLAYER:
+      provider = state.players;
+      break;
+  }
   let inputValue = value.toString();
   let inputLength = inputValue.length;
 
-  let resultBibs = bibs.map(bib => bib.toString());
-  return inputLength === 0 ? [] : resultBibs.filter(bib =>
-    bib.slice(0, inputLength) === inputValue
+  let candidates = provider.map(item => item.toString());
+  return inputLength === 0 ? [] : candidates.filter(item =>
+    item.slice(0, inputLength) === inputValue
   );
 };
 
@@ -101,6 +110,14 @@ function deleteComareResult(bib, results) {
 }
 
 const initialState = {
+  searchTargets: [
+    OMM_CONST.SEARCH_TARGETS.BIB,
+    OMM_CONST.SEARCH_TARGETS.PLAYER,
+  ],
+
+  searchTarget: OMM_CONST.SEARCH_TARGETS.BIB,
+  searchPlaceHolder: OMM_CONST.SEARCH_PLACE_HOLDER.BIB,
+
   value: '',
 
   /* Array: [result, ...] */
@@ -112,6 +129,12 @@ const initialState = {
 
   /* Array: [bib, ...] */
   bibs: [],
+
+  /* Array: [player.name, ...] */
+  players: [],
+
+  /* Array: [player, ...] */
+  searchPlayersResults: [],
 
   /* Map: result.bib => [control.code, ...] */
   bibCodesMap: new Map(),
@@ -131,9 +154,29 @@ const initialState = {
   },
 };
 
+function getPlaceHolder(target) {
+  switch (target) {
+    case OMM_CONST.SEARCH_TARGETS.BIB:
+      return OMM_CONST.SEARCH_PLACE_HOLDER.BIB;
+    case OMM_CONST.SEARCH_TARGETS.PLAYER:
+      return OMM_CONST.SEARCH_PLACE_HOLDER.PLAYER;
+  }
+  return OMM_CONST.SEARCH_PLACE_HOLDER.BIB;
+}
+
 export default function omm(state = initialState, action) {
 
   switch (action.type) {
+     case OMM.ON_CHANGE_SEARCH_TARGET:
+       return Object.assign({}, state, {
+         searchTarget: action.value,
+         searchPlaceHolder: getPlaceHolder(action.value),
+       });
+
+    case OMM.SUGGEST_ON_KEY_PRESS:
+      return Object.assign({}, state, {
+        searchPlayersResults: action.value,
+      });
 
     case OMM.SUGGEST_ON_CHANGE:
       return Object.assign({}, state, {
@@ -142,7 +185,7 @@ export default function omm(state = initialState, action) {
       });
     case OMM.SUGGEST_ON_SUGGESTIONS_FETCH_REQUESTED:
       return Object.assign({}, state, {
-        suggestions: getSuggestions(action.value, state.bibs),
+        suggestions: getSuggestions(action.value, state),
       });
     case OMM.SUGGEST_ON_SUGGESTIONS_CLEAR_REQUESTED:
       return Object.assign({}, state, {
@@ -153,6 +196,7 @@ export default function omm(state = initialState, action) {
       let codesByBib = action.value.controls.map(control => control.code);
       return Object.assign({}, state, {
         value: '',
+        searchPlayersResults: [],
         compareResults: results, 
         gridWidth: getGridWidth(results),
         bibCodesMap: state.bibCodesMap.set(action.value.bib, codesByBib),
@@ -161,6 +205,7 @@ export default function omm(state = initialState, action) {
 
     case OMM.LOAD_RESULTS:
       return {};
+
     case OMM.LOAD_BIBS:
       return Object.assign({}, state, {
         bibs: []
@@ -176,6 +221,10 @@ export default function omm(state = initialState, action) {
         loading: false,
         loaded: true,
         bibs: action.value,
+      });
+    case OMM.LOAD_PLAYERS_RESULT:
+      return Object.assign({}, state, {
+        players: action.value,
       });
     case OMM.LOAD_CONTROLS:
       return Object.assign({}, state, {

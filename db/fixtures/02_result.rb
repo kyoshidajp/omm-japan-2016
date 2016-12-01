@@ -75,6 +75,7 @@ class ResultsImporter
 
         result.players.each do |player|
           Player.seed do |pl|
+            pl.bib = result.bib
             pl.first_name = player.first_name
             pl.last_name = player.last_name
           end

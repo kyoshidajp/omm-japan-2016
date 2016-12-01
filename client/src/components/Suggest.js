@@ -20,22 +20,31 @@ export default class Suggest extends Component {
     };
 
     this.onChange = this.onChange.bind(this);
+    this.onKeyPress = this.onKeyPress.bind(this);
     this.onSuggestionSelected = this.onSuggestionSelected.bind(this);
   }
 
-  onChange(event, { newValue }) {
+  onChange(event, { newValue, method }) {
+    event.preventDefault();
     this.props.ommActions.onChange(newValue);
   };
 
+  onKeyPress(event) {
+    this.props.ommActions.suggestOnKeyPress(event,
+        this.props.omm.value);
+  }
+
   onSuggestionSelected(event, { suggestion, suggestionValue}) {
-    this.props.ommActions.onSuggestionSelected(suggestion);
+    this.props.ommActions.onSuggestionSelected(suggestion,
+        this.props.omm.searchTarget);
   };
 
   render() {
     const inputProps = {
-      placeholder: 'Type a bib',
+      placeholder: this.props.omm.searchPlaceHolder,
       value: this.props.omm.value,
-      onChange: this.onChange
+      onChange: this.onChange,
+      onKeyDown: this.onKeyPress,
     };
     return (
       <Autosuggest

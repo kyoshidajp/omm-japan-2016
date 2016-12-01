@@ -1,11 +1,12 @@
 class Api::V1::ResultsController < ApplicationController
-  def index
-    results = Result.all
-    render json: results, include: [:players, :controls]
-  end
 
-  def show
-    result = Result.find_by(bib: params[:id])
+  def index 
+    result = if params[:name].present?
+               name = params[:name]
+               Result.has_player_name_like(name)
+             elsif params[:bib].present?
+               Result.find_by(bib: params[:bib])
+             end
     render json: result, include: [:players, :controls]
   end
 

@@ -3,6 +3,12 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import {
   Button,
+  InputGroup,
+  FormGroup,
+  ButtonToolbar,
+  DropdownButton,
+  Dropdown,
+  MenuItem,
   Grid,
   Row,
   Col,
@@ -16,6 +22,7 @@ import {
 } from 'react-google-maps';
 import withScriptjs from 'react-google-maps/lib/async/withScriptjs';
 import FaSpinner from 'react-icons/lib/fa/spinner';
+import FaPlus from 'react-icons/lib/fa/plus';
 import $ from 'jquery';
 import _ from 'lodash';
 
@@ -80,14 +87,57 @@ class OMMApp extends Component {
         <OMMNavbar style={{ height: `100%`, width: `100%` }}/>
         <Grid fluid={true}>
           <Row className="show-grid omm-column">
-            <Col xs={3} md={3}>
-              <Suggest
-                allResults={this.props.omm.allResults}
-                omm={this.props.omm}
-                ommActions={this.props.ommActions}
-              />
+            <Col xs={4} md={4}>
+              <FormGroup>
+                <InputGroup>
+                  <DropdownButton bsStyle="primary" 
+                    componentClass={InputGroup.Button}
+                    title={this.props.omm.searchTarget}
+                    id="input-dropdown-addon">
+                    {this.props.omm.searchTargets.map(target =>
+                      <MenuItem key={target} eventKey="1"
+                        onClick={() => this.props.ommActions.onChangeSearchTarget(target)}>{target}</MenuItem>
+                    )}
+                  </DropdownButton>
+                  <Suggest
+                    allResults={this.props.omm.allResults}
+                    omm={this.props.omm}
+                    ommActions={this.props.ommActions}
+                  />
+                </InputGroup>
+              </FormGroup>
             </Col>
           </Row>
+          {this.props.omm.searchPlayersResults.length > 0 ?
+            <Row className="show-grid omm-column">
+              <Col xs={12} md={12}>
+                <Table bordered striped condensed hover responsive>
+                  <thead>
+                    <tr>
+                      <th />
+                      <th>bib</th>
+                      <th>name</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {this.props.omm.searchPlayersResults.map(player => 
+                    <tr key={player.id}>
+                      <td>
+                        <a href="#" onClick={() => this.props.ommActions.addCompareResult(player.bib)}><FaPlus /></a>
+                      </td>
+                      <td>
+                        <div className="text-left">{player.bib}</div>
+                      </td>
+                      <td>
+                        <div className="text-left">{player.last_name} {player.first_name}</div>
+                      </td>
+                    </tr>
+                  )}
+                  </tbody>
+                </Table>
+              </Col>
+            </Row>
+            : '' }
           {this.props.omm.compareResults.length > 0 ?
             <Row className="show-grid omm-column result-table">
               <Col xs={12} md={12}>
