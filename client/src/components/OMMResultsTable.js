@@ -18,6 +18,7 @@ export default class OMMResultsTable extends Component {
     };
 
     this.isCheckedControl = this.isCheckedControl.bind(this);
+    this.joinPlayers = this.joinPlayers.bind(this);
   };
 
   isCheckedControl(bib, mark_id) {
@@ -25,17 +26,23 @@ export default class OMMResultsTable extends Component {
     return this.props.omm.bibCodesMap.get(bib).indexOf(Number(mark_id)) > -1;
   };
 
+  joinPlayers(players) {
+    return players.map(player => `${player.last_name} ${player.first_name}`)
+      .join(' / ');
+  }
+
   render() {
     return (
-      <Table bordered striped condensed hover responsive>
+      <Table bordered striped condensed hover responsive
+        className="result-table">
         <thead>
           <tr>
-            <th />
-            <th>bib</th>
-            <th>rank</th>
-            <th>score</th>
-            <th>players</th>
-            <th>route</th>
+            <th className="delete" />
+            <th className="bib">bib</th>
+            <th className="rank">rank</th>
+            <th className="score">score</th>
+            <th className="players">players</th>
+            <th className="routes">route</th>
           </tr>
         </thead>
         <tbody>
@@ -55,11 +62,7 @@ export default class OMMResultsTable extends Component {
               </td>
               <td>
                 <div className="text-left">
-                  <ul className="players-list">
-                  {result.players.map(player => (
-                    <li key={player.id}>{player.last_name} {player.first_name}</li>
-                  ))}
-                  </ul>
+                  {this.joinPlayers(result.players)}
                 </div>
               </td>
               <td>

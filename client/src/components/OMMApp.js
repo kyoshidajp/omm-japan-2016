@@ -186,7 +186,7 @@ class OMMApp extends Component {
                     alighnItems: 'center', }} />
                 }
                 mapElement={
-                  <div style={{ height: `500px` }} />
+                  <div style={{ height: `600px` }} />
                 }
                 markers={this.props.omm.markers}
                 compareResults={this.props.omm.compareResults}

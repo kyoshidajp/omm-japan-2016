@@ -31,11 +31,11 @@ export default class OMMContorlsTable extends Component {
       <Table striped condensed hover responsive>
         <thead>
           <tr>
-            <td><div className="text-right">bib:</div></td>
+            <th><div className="text-right">bib</div></th>
             {this.props.omm.compareResults.map(result => (
-              <td key={result.id}>
+              <th key={result.id}>
                 <div className="text-center">{result.bib}</div>
-              </td>
+              </th>
             ))}
           </tr>
         </thead>

@@ -83,17 +83,13 @@ body {
   padding: 5px;
 }
 
-.result-table {
-  padding: 0;
-  margin-top: 5px;
-}
-
 .controls-table {
   margin-top: 7px;
 }
 
 .result-table .table {
-  margin-bottom: 5px;
+  margin-top: 5px;
+  margin-bottom: 0px;
 }
 
 .logo.navbar-brand {
@@ -102,16 +98,16 @@ body {
   font-size: 1.7em;
 }
 
+.navbar {
+  border-radius: initial;
+}
+
 .navbar-inverse .navbar-nav {
   color: white;
 }
 
-.navbar {
-  margin-bottom: 10px;
-}
-
 .controls-table .table-responsive {
-  height: 500px;
+  height: 600px;
 }
 
 .dropdown.btn-group {
@@ -126,4 +122,8 @@ body {
 #input-dropdown-addon {
   width: 7em;
   text-align: right;
+}
+
+.form-group {
+  margin-bottom: 5px;
 }
