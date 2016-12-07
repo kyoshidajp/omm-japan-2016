@@ -3,6 +3,4 @@ class Api::V1::PlayersController < ApplicationController
     players = Player.name_like(params[:name])
     render json: players
   end
-
 end
-

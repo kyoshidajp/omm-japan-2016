@@ -1,0 +1,18 @@
+Rails:
+  Enabled: true
+ClassAndModuleChildren:
+  Enabled: false
+LineLength:
+  Max: 100
+
+AllCops:
+  Exclude:
+    - 'db/**/*'
+    - 'bin/**/*'
+    - 'vendor/**/*'
+    - 'node_modules/**/*'
+    - 'config/**/*'
+    - 'client/**/*'
+
+Style/Documentation:
+  Enabled: false

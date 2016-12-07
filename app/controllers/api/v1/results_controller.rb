@@ -1,6 +1,5 @@
 class Api::V1::ResultsController < ApplicationController
-
-  def index 
+  def index
     result = if params[:name].present?
                name = params[:name]
                Result.has_player_name_like(name)

@@ -4,4 +4,3 @@ class Api::V1::ControlsController < ApplicationController
     render json: controls
   end
 end
-
