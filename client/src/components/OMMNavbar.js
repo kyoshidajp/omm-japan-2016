@@ -1,12 +1,12 @@
 import {
   default as React,
-  Component
+  Component,
 } from 'react';
 import {
   Navbar,
   Nav,
   NavItem,
-  MenuItem
+  MenuItem,
 } from 'react-bootstrap';
 
 export default class OMMNavbar extends Component {

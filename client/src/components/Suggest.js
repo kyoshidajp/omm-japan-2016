@@ -1,7 +1,7 @@
 import {
   default as React,
   PropTypes,
-  Component
+  Component,
 } from 'react';
 import Autosuggest from 'react-autosuggest';
 
@@ -27,17 +27,17 @@ export default class Suggest extends Component {
   onChange(event, { newValue, method }) {
     event.preventDefault();
     this.props.ommActions.onChange(newValue);
-  };
+  }
 
   onKeyPress(event) {
     this.props.ommActions.suggestOnKeyPress(event,
         this.props.omm.value);
   }
 
-  onSuggestionSelected(event, { suggestion, suggestionValue}) {
+  onSuggestionSelected(event, { suggestion, suggestionValue }) {
     this.props.ommActions.onSuggestionSelected(suggestion,
         this.props.omm.searchTarget);
-  };
+  }
 
   render() {
     const inputProps = {

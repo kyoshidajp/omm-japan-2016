@@ -1,0 +1,17 @@
+{
+  "parser": "babel-eslint",
+  "plugins": ["react"],
+  "extends": "airbnb-base",
+  "env": {
+    "es6": true
+  },
+  "rules": {
+    "arrow-body-style": "off",
+    "comma-dangle": ["off"],
+    "no-console": "off",
+    "no-unused-vars": 0,
+    "import/no-named-default": "off",
+    "max-len": "off",
+    "class-methods-use-this": "off"
+  }
+}

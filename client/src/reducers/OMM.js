@@ -2,15 +2,15 @@ import * as OMM from '../actions/OMM';
 import * as OMM_CONST from '../constants/OMM';
 
 function getGridWidthObject(results) {
-  let length = results.length;
-  if (length === 0) return [ 0, 12 ];
-  if (1 <= length || legnth <= 4) return [ 3, 9 ];
-  if (5 <= length || legnth <= 7) return [ 5, 7 ];
-  return [ 7, 5 ];
+  const length = results.length;
+  if (length === 0) return [0, 12];
+  if (length >= 1 || length <= 4) return [3, 9];
+  if (length >= 5 || length <= 7) return [5, 7];
+  return [7, 5];
 }
 
 function getGridWidth(results) {
-  let [ controlsTable, map ] = getGridWidthObject(results);
+  const [controlsTable, map] = getGridWidthObject(results);
   return { controlsTable, map };
 }
 
@@ -23,52 +23,55 @@ function getSuggestions(value, state) {
     case OMM_CONST.SEARCH_TARGETS.PLAYER:
       provider = state.players;
       break;
+    default:
+      provider = state.bibs;
+      break;
   }
-  let inputValue = value.toString();
-  let inputLength = inputValue.length;
+  const inputValue = value.toString();
+  const inputLength = inputValue.length;
 
-  let candidates = provider.map(item => item.toString());
+  const candidates = provider.map(item => item.toString());
   return inputLength === 0 ? [] : candidates.filter(item =>
-    item.slice(0, inputLength) === inputValue
+    item.slice(0, inputLength) === inputValue,
   );
-};
+}
 
 function getBibCodesMap(results) {
-  let bibCodesMap = new Map();
-  for (let result of results) {
-    bibCodesMap.set(result.bib, result.controls.map(control => {
+  const bibCodesMap = new Map();
+  results.forEach((result) => {
+    bibCodesMap.set(result.bib, result.controls.map((control) => {
       return control.code;
     }));
-  }
+  });
   return bibCodesMap;
-};
+}
 
 function getBibControlsMap(result, bibControlsMap) {
-  let controls = result.controls;
-  let path = controls.map(control => {
+  const controls = result.controls;
+  const path = controls.map((control) => {
     return {
       lat: control.lat,
       lng: control.lng,
-    }
+    };
   });
   path.unshift(OMM_CONST.START_POINT);
   path.push(OMM_CONST.FINISH_POINT);
 
-  let routepath = {
+  const routepath = {
     path,
     geodesic: true,
     strokecolor: '#ff0000',
     strokeopacity: 1.0,
-    strokeweight: 2
-  }
+    strokeweight: 2,
+  };
   bibControlsMap.set(result.bib, routepath);
   return bibControlsMap;
 }
 
 function getControlsAndMarkers(data) {
-  let controls = new Map();
-  let markers = [];
-  for (let control of data) {
+  const controls = new Map();
+  const markers = [];
+  data.forEach((control) => {
     controls.set(control.code, control);
     markers.push({
       position: {
@@ -76,33 +79,10 @@ function getControlsAndMarkers(data) {
         lng: control.lng,
       },
       label: control.code.toString(),
-      key: control.id
+      key: control.id,
     });
-  };
-  return {controls, markers};
-}
-
-function getRoutesByResult(data) {
-  let routes = new Map();
-  let results = data.map(result => {
-    let controls = result.controls;
-    let path = controls.map(control => {
-      return {
-        lat: control.lat,
-        lng: control.lng,
-      };
-    });
-
-    let routepath = {
-      path: path,
-      geodesic: true,
-      strokecolor: '#ff0000',
-      strokeopacity: 1.0,
-      strokeweight: 2
-    }
-    routes.set(result.id, routepath);
   });
-  return routes;
+  return { controls, markers };
 }
 
 function deleteComareResult(bib, results) {
@@ -150,7 +130,7 @@ const initialState = {
    */
   gridWidth: {
     controlsTable: 0,
-    map: 12
+    map: 12,
   },
 };
 
@@ -160,114 +140,124 @@ function getPlaceHolder(target) {
       return OMM_CONST.SEARCH_PLACE_HOLDER.BIB;
     case OMM_CONST.SEARCH_TARGETS.PLAYER:
       return OMM_CONST.SEARCH_PLACE_HOLDER.PLAYER;
+    default:
+      return OMM_CONST.SEARCH_PLACE_HOLDER.BIB;
   }
-  return OMM_CONST.SEARCH_PLACE_HOLDER.BIB;
 }
 
 export default function omm(state = initialState, action) {
-
   switch (action.type) {
-     case OMM.ON_CHANGE_SEARCH_TARGET:
-       return Object.assign({}, state, {
-         searchTarget: action.value,
-         searchPlaceHolder: getPlaceHolder(action.value),
-       });
-
-    case OMM.SUGGEST_ON_KEY_PRESS:
+    case OMM.ON_CHANGE_SEARCH_TARGET: {
+      return Object.assign({}, state, {
+        searchTarget: action.value,
+        searchPlaceHolder: getPlaceHolder(action.value),
+      });
+    }
+    case OMM.SUGGEST_ON_KEY_PRESS: {
       return Object.assign({}, state, {
         searchPlayersResults: action.value,
       });
-
-    case OMM.SUGGEST_ON_CHANGE:
+    }
+    case OMM.SUGGEST_ON_CHANGE: {
       return Object.assign({}, state, {
         value: action.value,
-        suggestions: []
+        suggestions: [],
       });
-    case OMM.SUGGEST_ON_SUGGESTIONS_FETCH_REQUESTED:
+    }
+    case OMM.SUGGEST_ON_SUGGESTIONS_FETCH_REQUESTED: {
       return Object.assign({}, state, {
         suggestions: getSuggestions(action.value, state),
       });
-    case OMM.SUGGEST_ON_SUGGESTIONS_CLEAR_REQUESTED:
+    }
+    case OMM.SUGGEST_ON_SUGGESTIONS_CLEAR_REQUESTED: {
       return Object.assign({}, state, {
-        suggestions: []
+        suggestions: [],
       });
-    case OMM.SUGGEST_ON_SUGGESTION_SELECTED:
-      let results = state.compareResults.concat(action.value);
-      let codesByBib = action.value.controls.map(control => control.code);
+    }
+    case OMM.SUGGEST_ON_SUGGESTION_SELECTED: {
+      const results = state.compareResults.concat(action.value);
+      const codesByBib = action.value.controls.map(control => control.code);
       return Object.assign({}, state, {
         value: '',
         searchPlayersResults: [],
-        compareResults: results, 
+        compareResults: results,
         gridWidth: getGridWidth(results),
         bibCodesMap: state.bibCodesMap.set(action.value.bib, codesByBib),
         bibControlsMap: getBibControlsMap(action.value, state.bibControlsMap),
       });
-
-    case OMM.LOAD_RESULTS:
-      return {};
-
-    case OMM.LOAD_BIBS:
+    }
+    case OMM.LOAD_BIBS: {
       return Object.assign({}, state, {
-        bibs: []
+        bibs: [],
       });
-    case OMM.LOAD_BIBS_REQUST:
+    }
+    case OMM.LOAD_BIBS_REQUST: {
       return Object.assign({}, state, {
         loading: true,
         loaded: false,
         bibs: [],
       });
-    case OMM.LOAD_BIBS_RESULT:
+    }
+    case OMM.LOAD_BIBS_RESULT: {
       return Object.assign({}, state, {
         loading: false,
         loaded: true,
         bibs: action.value,
       });
-    case OMM.LOAD_PLAYERS_RESULT:
+    }
+    case OMM.LOAD_PLAYERS_RESULT: {
       return Object.assign({}, state, {
         players: action.value,
       });
-    case OMM.LOAD_CONTROLS:
+    }
+    case OMM.LOAD_CONTROLS: {
       return Object.assign({}, state, {
-        markers: []
+        markers: [],
       });
-    case OMM.LOAD_CONTROLS_REQUST:
+    }
+    case OMM.LOAD_CONTROLS_REQUST: {
       return Object.assign({}, state, {
         loading: true,
         loaded: false,
         markers: [],
       });
-    case OMM.LOAD_CONTROLS_RESULT:
-      let { controls, markers } = getControlsAndMarkers(action.result);
+    }
+    case OMM.LOAD_CONTROLS_RESULT: {
+      const { controls, markers } = getControlsAndMarkers(action.result);
       return Object.assign({}, state, {
         loading: false,
         loaded: true,
         markers,
         controls,
       });
-    case OMM.LOAD_RESULTS:
+    }
+    case OMM.LOAD_RESULTS: {
       return Object.assign({}, state, {
-        allResults: []
+        allResults: [],
       });
-    case OMM.LOAD_RESULTS_REQUST:
+    }
+    case OMM.LOAD_RESULTS_REQUST: {
       return Object.assign({}, state, {
         loading: true,
         loaded: false,
         allResults: [],
       });
-    case OMM.LOAD_RESULTS_RESULT:
-      let allResults = getRoutesByResult(action.result);
+    }
+    case OMM.LOAD_RESULTS_RESULT: {
       return Object.assign({}, state, {
         loading: false,
         loaded: true,
         allResults: action.result,
         bibCodesMap: getBibCodesMap(action.result),
       });
-    case OMM.DELETE_COMPARE_RESULT:
-      let compareResults = deleteComareResult(action.bib, state.compareResults);
+    }
+    case OMM.DELETE_COMPARE_RESULT: {
+      const compareResults = deleteComareResult(action.bib, state.compareResults);
       return Object.assign({}, state, {
         compareResults,
         gridWidth: getGridWidth(compareResults),
       });
+    }
     default:
       return state;
   }

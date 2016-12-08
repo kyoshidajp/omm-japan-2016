@@ -1,10 +1,10 @@
 import {
   default as React,
   PropTypes,
-  Component
+  Component,
 } from 'react';
 import {
-  Table
+  Table,
 } from 'react-bootstrap';
 import FaTrash from 'react-icons/lib/fa/trash';
 import FaCheck from 'react-icons/lib/fa/check';
@@ -19,12 +19,12 @@ export default class OMMContorlsTable extends Component {
     };
 
     this.isCheckedControl = this.isCheckedControl.bind(this);
-  };
+  }
 
-  isCheckedControl(bib, mark_id) {
+  isCheckedControl(bib, markId) {
     if (!this.props.omm.bibCodesMap.has(bib)) return false;
-    return this.props.omm.bibCodesMap.get(bib).indexOf(Number(mark_id)) > -1;
-  };
+    return this.props.omm.bibCodesMap.get(bib).indexOf(Number(markId)) > -1;
+  }
 
   render() {
     return (

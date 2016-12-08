@@ -25,63 +25,31 @@ export const SUGGEST_ON_SUGGESTION_SELECTED = 'SUGGEST_ON_SUGGESTION_SELECTED';
 
 export const SUGGEST_ON_KEY_PRESS = 'SUGGEST_ON_KEY_PRESS';
 
-export function suggestOnKeyPress(event, value) {
-  if (event.which === 13) {
-    return dispatch => {
-      Axios.get(`/api/v1/players.json?name=${value}`).then(
-        response => dispatch(searchPlayers(response.data))
-      ).catch(
-        response => console.log(response)
-      );
-    }
-  }
-  return { type: null }
-}
-
 function searchPlayers(value) {
   return {
     type: SUGGEST_ON_KEY_PRESS,
-    value
+    value,
+  };
+}
+
+export function suggestOnKeyPress(event, value) {
+  if (event.which === 13) {
+    return (dispatch) => {
+      Axios.get(`/api/v1/players.json?name=${value}`).then(
+        response => dispatch(searchPlayers(response.data)),
+      ).catch(
+        response => console.log(response),
+      );
+    };
   }
+  return { type: null };
 }
 
-export function addCompareResult(value) {
-  return onSuggestionSelected(value, OMM_CONST.SEARCH_TARGETS.BIB);
-}
-
-export function deleteCompareResult(bib) {
+function loadResultResult(value) {
   return {
-    type: DELETE_COMPARE_RESULT,
-    bib
-  }
-}
-
-export function onChangeSearchTarget(value) {
-  return {
-    type: ON_CHANGE_SEARCH_TARGET,
-    value
-  }
-}
-
-export function onChange(value) {
-  return {
-    type: SUGGEST_ON_CHANGE,
-    value: value
-  }
-}
-
-export function onSuggestionsFetchRequested(value, results) {
-  return {
-    type: SUGGEST_ON_SUGGESTIONS_FETCH_REQUESTED,
-    value: value.value,
-    results: results,
-  }
-}
-
-export function onSuggestionsClearRequested() {
-  return {
-    type: SUGGEST_ON_SUGGESTIONS_CLEAR_REQUESTED
-  }
+    type: SUGGEST_ON_SUGGESTION_SELECTED,
+    value,
+  };
 }
 
 function getResultAPIPath(value, searchTarget) {
@@ -93,38 +61,61 @@ function getResultAPIPath(value, searchTarget) {
     case OMM_CONST.SEARCH_TARGETS.PLAYER:
       cond = 'player';
       break;
+    default:
+      cond = 'bib';
+      break;
   }
 
   return `/api/v1/results.json?${cond}=${value}`;
 }
 
 export function onSuggestionSelected(value, searchTarget) {
-  let apiPath = getResultAPIPath(value, searchTarget);
-  return dispatch => {
+  const apiPath = getResultAPIPath(value, searchTarget);
+  return (dispatch) => {
     Axios.get(apiPath).then(
-      response => dispatch(loadResultResult(response.data))
+      response => dispatch(loadResultResult(response.data)),
     ).catch(
-      response => console.log(response)
+      response => console.log(response),
     );
   };
 }
 
-function loadResultResult(value) {
+export function addCompareResult(value) {
+  return onSuggestionSelected(value, OMM_CONST.SEARCH_TARGETS.BIB);
+}
+
+export function deleteCompareResult(bib) {
   return {
-    type: SUGGEST_ON_SUGGESTION_SELECTED,
+    type: DELETE_COMPARE_RESULT,
+    bib,
+  };
+}
+
+export function onChangeSearchTarget(value) {
+  return {
+    type: ON_CHANGE_SEARCH_TARGET,
     value,
   };
 }
 
-export function loadBibs() {
-  return dispatch => {
-    dispatch(loadBibsRequest());
+export function onChange(value) {
+  return {
+    type: SUGGEST_ON_CHANGE,
+    value,
+  };
+}
 
-    Axios.get('/api/v1/bibs.json').then(
-      response => dispatch(loadBibsResult(response.data))
-    ).catch(
-      response => console.log(response)
-    );
+export function onSuggestionsFetchRequested(value, results) {
+  return {
+    type: SUGGEST_ON_SUGGESTIONS_FETCH_REQUESTED,
+    value: value.value,
+    results,
+  };
+}
+
+export function onSuggestionsClearRequested() {
+  return {
+    type: SUGGEST_ON_SUGGESTIONS_CLEAR_REQUESTED,
   };
 }
 
@@ -141,14 +132,14 @@ function loadBibsResult(value) {
   };
 }
 
-export function loadPlayers() {
-  return dispatch => {
-    dispatch(loadPlayersRequest());
+export function loadBibs() {
+  return (dispatch) => {
+    dispatch(loadBibsRequest());
 
-    Axios.get('/api/v1/players.json').then(
-      response => dispatch(loadPlayersResult(response.data))
+    Axios.get('/api/v1/bibs.json').then(
+      response => dispatch(loadBibsResult(response.data)),
     ).catch(
-      response => console.log(response)
+      response => console.log(response),
     );
   };
 }
@@ -166,14 +157,14 @@ function loadPlayersResult(value) {
   };
 }
 
-export function loadControls() {
-  return dispatch => {
-    dispatch(loadControlsRequest());
+export function loadPlayers() {
+  return (dispatch) => {
+    dispatch(loadPlayersRequest());
 
-    Axios.get('/api/v1/controls.json').then(
-      response => dispatch(loadControlsResult(response.data))
+    Axios.get('/api/v1/players.json').then(
+      response => dispatch(loadPlayersResult(response.data)),
     ).catch(
-      response => console.log(response)
+      response => console.log(response),
     );
   };
 }
@@ -191,14 +182,14 @@ function loadControlsResult(result) {
   };
 }
 
-export function loadResults() {
-  return dispatch => {
-    dispatch(loadResultsRequest());
+export function loadControls() {
+  return (dispatch) => {
+    dispatch(loadControlsRequest());
 
-    Axios.get('/api/v1/results.json').then(
-      response => dispatch(loadResultsResult(response.data))
+    Axios.get('/api/v1/controls.json').then(
+      response => dispatch(loadControlsResult(response.data)),
     ).catch(
-      response => console.log(response)
+      response => console.log(response),
     );
   };
 }
@@ -212,6 +203,18 @@ function loadResultsRequest() {
 function loadResultsResult(result) {
   return {
     type: LOAD_RESULTS_RESULT,
-    result: result,
+    result,
+  };
+}
+
+export function loadResults() {
+  return (dispatch) => {
+    dispatch(loadResultsRequest());
+
+    Axios.get('/api/v1/results.json').then(
+      response => dispatch(loadResultsResult(response.data)),
+    ).catch(
+      response => console.log(response),
+    );
   };
 }

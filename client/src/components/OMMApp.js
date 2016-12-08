@@ -12,13 +12,13 @@ import {
   Grid,
   Row,
   Col,
-  Table
+  Table,
 } from 'react-bootstrap';
 import {
   GoogleMap,
   withGoogleMap,
   Marker,
-  Polyline
+  Polyline,
 } from 'react-google-maps';
 import withScriptjs from 'react-google-maps/lib/async/withScriptjs';
 import FaSpinner from 'react-icons/lib/fa/spinner';
@@ -84,18 +84,19 @@ class OMMApp extends Component {
   render() {
     return (
       <div>
-        <OMMNavbar style={{ height: `100%`, width: `100%` }}/>
+        <OMMNavbar style={{ height: '100%', width: '100%' }}/>
         <Grid fluid={true}>
           <Row className="show-grid omm-column">
             <Col xs={4} md={4}>
               <FormGroup>
                 <InputGroup>
-                  <DropdownButton bsStyle="primary" 
+                  <DropdownButton bsStyle="primary"
                     componentClass={InputGroup.Button}
                     title={this.props.omm.searchTarget}
                     id="input-dropdown-addon">
                     {this.props.omm.searchTargets.map(target =>
-                      <MenuItem key={target} eventKey="1"
+                      <MenuItem key={target}
+                        eventKey="1"
                         onClick={() => this.props.ommActions.onChangeSearchTarget(target)}>{target}</MenuItem>
                     )}
                   </DropdownButton>
@@ -120,7 +121,7 @@ class OMMApp extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                  {this.props.omm.searchPlayersResults.map(player => 
+                  {this.props.omm.searchPlayersResults.map(player =>
                     <tr key={player.id}>
                       <td>
                         <a href="#" onClick={() => this.props.ommActions.addCompareResult(player.bib)}><FaPlus /></a>
@@ -165,28 +166,28 @@ class OMMApp extends Component {
             </Col> : '' }
             <Col xs={this.props.omm.gridWidth.map}
                  md={this.props.omm.gridWidth.map}>
-              <AsyncGoogleMap 
+              <AsyncGoogleMap
                 googleMapURL={OMM.GOOGLE_MAP_API_URL}
                 loadingElement={
-                  <div style={{ height: `100%`, width: `100%` }}>
+                  <div style={{ height: '100%', width: '100%' }}>
                     <FaSpinner
                       style={{
-                        display: `block`,
-                        width: `80px`,
-                        height: `80px`,
-                        margin: `150px auto`,
-                        animation: `fa-spin 2s infinite linear`,
+                        display: 'block',
+                        width: '80px',
+                        height: '80px',
+                        margin: '150px auto',
+                        animation: 'fa-spin 2s infinite linear',
                       }}
                     />
                   </div>
                 }
                 containerElement={
                   <div style={{
-                    height: `500px`,
-                    alighnItems: 'center', }} />
+                    height: '500px',
+                    alighnItems: 'center' }} />
                 }
                 mapElement={
-                  <div style={{ height: `600px` }} />
+                  <div style={{ height: '600px' }} />
                 }
                 markers={this.props.omm.markers}
                 compareResults={this.props.omm.compareResults}

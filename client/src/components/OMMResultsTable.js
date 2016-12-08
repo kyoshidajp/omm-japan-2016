@@ -1,11 +1,5 @@
-import {
-  default as React,
-  PropTypes,
-  Component
-} from 'react';
-import {
-  Table
-} from 'react-bootstrap';
+import React, { Component, PropTypes } from 'react';
+import { Table } from 'react-bootstrap';
 import FaTrash from 'react-icons/lib/fa/trash';
 
 export default class OMMResultsTable extends Component {
@@ -19,12 +13,12 @@ export default class OMMResultsTable extends Component {
 
     this.isCheckedControl = this.isCheckedControl.bind(this);
     this.joinPlayers = this.joinPlayers.bind(this);
-  };
+  }
 
-  isCheckedControl(bib, mark_id) {
+  isCheckedControl(bib, markId) {
     if (!this.props.omm.bibCodesMap.has(bib)) return false;
-    return this.props.omm.bibCodesMap.get(bib).indexOf(Number(mark_id)) > -1;
-  };
+    return this.props.omm.bibCodesMap.get(bib).indexOf(Number(markId)) > -1;
+  }
 
   joinPlayers(players) {
     return players.map(player => `${player.last_name} ${player.first_name}`)
@@ -68,7 +62,7 @@ export default class OMMResultsTable extends Component {
               <td>
                 <div className="text-left">
                   {result.controls.map(control =>
-                     control.code.toString()
+                     control.code.toString(),
                    ).join('-')}
                   {result.score > 0 ? '-F' : ''}
                 </div>
