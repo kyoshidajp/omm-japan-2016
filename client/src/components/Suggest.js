@@ -15,8 +15,8 @@ export default class Suggest extends Component {
     super(props);
 
     const propTypes = {
-      ommActions: PropTypes.object.isRequired,
-      omm: PropTypes.object.isRequired,
+      actions: PropTypes.object.isRequired,
+      search: PropTypes.object.isRequired,
     };
 
     this.onChange = this.onChange.bind(this);
@@ -26,33 +26,33 @@ export default class Suggest extends Component {
 
   onChange(event, { newValue, method }) {
     event.preventDefault();
-    this.props.ommActions.onChange(newValue);
+    this.props.actions.onChange(newValue);
   }
 
   onKeyPress(event) {
-    this.props.ommActions.suggestOnKeyPress(event,
-        this.props.omm.value);
+    this.props.actions.suggestOnKeyPress(event,
+        this.props.search.value);
   }
 
   onSuggestionSelected(event, { suggestion, suggestionValue }) {
-    this.props.ommActions.onSuggestionSelected(suggestion,
-        this.props.omm.searchTarget);
+    this.props.actions.onSuggestionSelected(suggestion,
+        this.props.search.searchTarget);
   }
 
   render() {
     const inputProps = {
-      placeholder: this.props.omm.searchPlaceHolder,
-      value: this.props.omm.value,
+      placeholder: this.props.search.searchPlaceHolder,
+      value: this.props.search.value,
       onChange: this.onChange,
       onKeyDown: this.onKeyPress,
     };
     return (
       <Autosuggest
-        onSuggestionsFetchRequested={this.props.ommActions.onSuggestionsFetchRequested}
-        onSuggestionsClearRequested={this.props.ommActions.onSuggestionsClearRequested}
+        onSuggestionsFetchRequested={this.props.actions.onSuggestionsFetchRequested}
+        onSuggestionsClearRequested={this.props.actions.onSuggestionsClearRequested}
         onSuggestionSelected={this.onSuggestionSelected}
         getSuggestionValue={getSuggestionValue}
-        suggestions={this.props.omm.suggestions}
+        suggestions={this.props.search.suggestions}
         renderSuggestion={renderSuggestion}
         inputProps={inputProps}
       />

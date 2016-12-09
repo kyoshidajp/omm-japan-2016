@@ -9,7 +9,7 @@ import {
   MenuItem,
 } from 'react-bootstrap';
 
-export default class OMMNavbar extends Component {
+export default class Header extends Component {
   render() {
     return (
       <Navbar inverse collapseOnSelect>

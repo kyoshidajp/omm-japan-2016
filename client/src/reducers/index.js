@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
-import omm from './OMM';
+import map from './map';
+import search from './search';
 
 const rootReducer = combineReducers({
-  omm,
+  map,
+  search,
 });
 
 export default rootReducer;

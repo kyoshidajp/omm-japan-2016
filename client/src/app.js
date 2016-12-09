@@ -2,14 +2,14 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 
-import OMMApp from './components/OMMApp';
+import AppContainer from './containers/AppContainer';
 import createFinalStore from './store';
 
 const store = createFinalStore();
 
 render(
   <Provider store={store}>
-    <OMMApp />
+    <AppContainer />
   </Provider>,
   document.getElementById('app')
 );

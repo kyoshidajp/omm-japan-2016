@@ -9,12 +9,13 @@ import {
 import FaTrash from 'react-icons/lib/fa/trash';
 import FaCheck from 'react-icons/lib/fa/check';
 
-export default class OMMContorlsTable extends Component {
+export default class ContorlsTable extends Component {
   constructor(props) {
     super(props);
 
     const propTypes = {
       omm: PropTypes.object.isRequired,
+      map: PropTypes.object.isRequired,
       ommActions: PropTypes.object.isRequired,
     };
 
@@ -22,8 +23,8 @@ export default class OMMContorlsTable extends Component {
   }
 
   isCheckedControl(bib, markId) {
-    if (!this.props.omm.bibCodesMap.has(bib)) return false;
-    return this.props.omm.bibCodesMap.get(bib).indexOf(Number(markId)) > -1;
+    if (!this.props.search.bibCodesMap.has(bib)) return false;
+    return this.props.search.bibCodesMap.get(bib).indexOf(Number(markId)) > -1;
   }
 
   render() {
@@ -32,7 +33,7 @@ export default class OMMContorlsTable extends Component {
         <thead>
           <tr>
             <th><div className="text-right">bib</div></th>
-            {this.props.omm.compareResults.map(result => (
+            {this.props.search.compareResults.map(result => (
               <th key={result.id}>
                 <div className="text-center">{result.bib}</div>
               </th>
@@ -40,10 +41,10 @@ export default class OMMContorlsTable extends Component {
           </tr>
         </thead>
         <tbody>
-          {this.props.omm.markers.map(marker => (
+          {this.props.map.markers.map(marker => (
             <tr key={marker.key}>
               <td><div className="text-right">{marker.label}</div></td>
-              {this.props.omm.compareResults.map(result => (
+              {this.props.search.compareResults.map(result => (
                 <td key={result.id}>
                   <div className="text-center">
                   {this.isCheckedControl(result.bib, marker.label) ? <FaCheck /> : ''}</div>

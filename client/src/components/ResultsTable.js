@@ -2,12 +2,13 @@ import React, { Component, PropTypes } from 'react';
 import { Table } from 'react-bootstrap';
 import FaTrash from 'react-icons/lib/fa/trash';
 
-export default class OMMResultsTable extends Component {
+export default class ResultsTable extends Component {
   constructor(props) {
     super(props);
 
     const propTypes = {
       omm: PropTypes.object.isRequired,
+      search: PropTypes.object.isRequired,
       ommActions: PropTypes.object.isRequired,
     };
 
@@ -16,8 +17,8 @@ export default class OMMResultsTable extends Component {
   }
 
   isCheckedControl(bib, markId) {
-    if (!this.props.omm.bibCodesMap.has(bib)) return false;
-    return this.props.omm.bibCodesMap.get(bib).indexOf(Number(markId)) > -1;
+    if (!this.props.search.bibCodesMap.has(bib)) return false;
+    return this.props.search.bibCodesMap.get(bib).indexOf(Number(markId)) > -1;
   }
 
   joinPlayers(players) {
@@ -40,10 +41,10 @@ export default class OMMResultsTable extends Component {
           </tr>
         </thead>
         <tbody>
-          {this.props.omm.compareResults.map(result => (
+          {this.props.search.compareResults.map(result => (
             <tr key={result.id}>
               <td key={result.id} >
-                <a href="#" onClick={() => this.props.ommActions.deleteCompareResult(result.bib)}><FaTrash /></a>
+                <a href="#" onClick={() => this.props.searchActions.deleteCompareResult(result.bib)}><FaTrash /></a>
               </td>
               <td>
                 <div className="text-right">{result.bib}</div>
