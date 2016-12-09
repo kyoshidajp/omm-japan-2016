@@ -13,8 +13,8 @@ import $ from 'jquery';
 import ControlsTable from './ControlsTable';
 import ResultsTable from './ResultsTable';
 import Header from './Header';
-import MapContainer from '../containers/mapContainer';
-import SearchContainer from '../containers/searchContainer';
+import MapContainer from '../containers/MapContainer';
+import SearchContainer from '../containers/SearchContainer';
 
 export default class App extends Component {
 
