@@ -40,9 +40,6 @@ const initialState = {
 
   /* Array: [player.name, ...] */
   players: [],
-
-  /* Array: [player, ...] */
-  searchPlayersResults: [],
 }
 
 export default function map(state = initialState, action) {
@@ -66,11 +63,6 @@ export default function map(state = initialState, action) {
         loaded: true,
         markers,
         controls,
-      });
-    }
-    case OMM.SUGGEST_ON_KEY_PRESS: {
-      return Object.assign({}, state, {
-        searchPlayersResults: action.value,
       });
     }
     case OMM.LOAD_PLAYERS_RESULT: {

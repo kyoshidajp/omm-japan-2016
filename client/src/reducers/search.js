@@ -82,6 +82,9 @@ const initialState = {
   searchTarget: OMM_CONST.SEARCH_TARGETS.BIB,
   searchPlaceHolder: OMM_CONST.SEARCH_PLACE_HOLDER.BIB,
 
+  /* Array: [player, ...] */
+  searchPlayersResults: [],
+
   suggestions: [],
   value: '',
 
@@ -131,6 +134,11 @@ export default function search(state = initialState, action) {
         searchTarget: action.value,
         searchPlaceHolder: getPlaceHolder(action.value),
         value: '',
+      });
+    }
+    case OMM.SUGGEST_ON_KEY_PRESS: {
+      return Object.assign({}, state, {
+        searchPlayersResults: action.value,
       });
     }
     case OMM.SUGGEST_ON_CHANGE: {

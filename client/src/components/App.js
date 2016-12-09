@@ -40,7 +40,7 @@ export default class App extends Component {
               <SearchContainer />
             </Col>
           </Row>
-          {this.props.map.searchPlayersResults.length > 0 ?
+          {this.props.search.searchPlayersResults.length > 0 ?
             <Row className="show-grid omm-column">
               <Col xs={12} md={12}>
                 <Table bordered striped condensed hover responsive>
@@ -52,10 +52,10 @@ export default class App extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                  {this.props.map.searchPlayersResults.map(player =>
+                  {this.props.search.searchPlayersResults.map(player =>
                     <tr key={player.id}>
                       <td>
-                        <a href="#" onClick={() => this.props.ommActions.addCompareResult(player.bib)}><FaPlus /></a>
+                        <a href="#" onClick={() => this.props.searchActions.addCompareResult(player.bib)}><FaPlus /></a>
                       </td>
                       <td>
                         <div className="text-left">{player.bib}</div>

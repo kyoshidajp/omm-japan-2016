@@ -1,7 +1,5 @@
 import Axios from 'axios';
 
-import * as OMM_CONST from '../constants/OMM';
-
 export const LOAD_PLAYERS_REQUEST = 'LOAD_PLAYERS_REQUEST';
 export const LOAD_PLAYERS_RESULT = 'LOAD_PLAYERS_RESULT';
 
@@ -9,10 +7,6 @@ export const LOAD_RESULTS_REQUEST = 'LOAD_RESULTS_REQUEST';
 export const LOAD_RESULTS_RESULT = 'LOAD_RESULTS_RESULT';
 export const LOAD_CONTROLS_REQUEST = 'LOAD_CONTROLS_REQUEST';
 export const LOAD_CONTROLS_RESULT = 'LOAD_CONTROLS_RESULT';
-
-export function addCompareResult(value) {
-  return onSuggestionSelected(value, OMM_CONST.SEARCH_TARGETS.BIB);
-}
 
 function loadPlayersRequest() {
   return {
