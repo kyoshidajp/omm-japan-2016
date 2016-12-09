@@ -33,7 +33,7 @@ function getSuggestions(value, state) {
       break;
     case OMM_CONST.SEARCH_TARGETS.PLAYER:
       provider = state.players;
-      break;
+      return [];
     default:
       provider = state.bibs;
       break;
@@ -130,6 +130,7 @@ export default function search(state = initialState, action) {
       return Object.assign({}, state, {
         searchTarget: action.value,
         searchPlaceHolder: getPlaceHolder(action.value),
+        value: '',
       });
     }
     case OMM.SUGGEST_ON_CHANGE: {

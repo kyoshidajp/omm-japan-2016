@@ -22,6 +22,17 @@ export default class Suggest extends Component {
     this.onChange = this.onChange.bind(this);
     this.onKeyPress = this.onKeyPress.bind(this);
     this.onSuggestionSelected = this.onSuggestionSelected.bind(this);
+    this.storeInputReference = this.storeInputReference.bind(this);
+  }
+
+  storeInputReference(autosuggest) {
+    if (autosuggest !== null) {
+      this.input = autosuggest.input;
+    }
+  }
+
+  setFocus() {
+    this.input.focus();
   }
 
   onChange(event, { newValue, method }) {
@@ -48,6 +59,8 @@ export default class Suggest extends Component {
     };
     return (
       <Autosuggest
+        focusFirstSuggestion={true}
+        ref={this.storeInputReference}
         onSuggestionsFetchRequested={this.props.actions.onSuggestionsFetchRequested}
         onSuggestionsClearRequested={this.props.actions.onSuggestionsClearRequested}
         onSuggestionSelected={this.onSuggestionSelected}

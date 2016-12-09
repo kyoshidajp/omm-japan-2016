@@ -14,6 +14,12 @@ export default class Search extends Component {
 
   componentDidMount() {
     this.props.actions.loadBibs();
+    this.refs.suggest.setFocus();
+  }
+
+  changeTarget(target) {
+    this.props.actions.onChangeSearchTarget(target);
+    this.refs.suggest.setFocus();
   }
 
   render() {
@@ -27,10 +33,11 @@ export default class Search extends Component {
             {this.props.search.searchTargets.map(target =>
               <MenuItem key={target}
                 eventKey="1"
-                onClick={() => this.props.ommActions.onChangeSearchTarget(target)}>{target}</MenuItem>
+                onClick={() => this.changeTarget(target)}>{target}</MenuItem>
             )}
           </DropdownButton>
           <Suggest
+            ref="suggest"
             allResults={this.props.map.allResults}
             search={this.props.search}
             actions={this.props.actions}
