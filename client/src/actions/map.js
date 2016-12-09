@@ -55,7 +55,7 @@ export function loadResults() {
     ).catch(
       response => console.log(response),
     );
-  }
+  };
 }
 
 function loadControlsRequest() {

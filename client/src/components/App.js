@@ -9,7 +9,6 @@ import {
 } from 'react-bootstrap';
 import FaPlus from 'react-icons/lib/fa/plus';
 import $ from 'jquery';
-import _ from 'lodash';
 
 import ControlsTable from './ControlsTable';
 import ResultsTable from './ResultsTable';

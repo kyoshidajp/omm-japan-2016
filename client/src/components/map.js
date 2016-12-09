@@ -7,6 +7,7 @@ import {
   Polyline,
 } from 'react-google-maps';
 import withScriptjs from 'react-google-maps/lib/async/withScriptjs';
+import _ from 'lodash';
 
 import * as OMM from '../constants/OMM';
 
@@ -76,6 +77,6 @@ export default class Map extends Component {
         compareResults={this.props.search.compareResults}
         bibControlsMap={this.props.search.bibControlsMap}
       />
-    )
+    );
   }
 }

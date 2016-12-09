@@ -12,10 +12,6 @@ export const LOAD_BIBS_REQUEST = 'LOAD_BIBS_REQUEST';
 export const LOAD_BIBS_RESULT = 'LOAD_BIBS_RESULT';
 export const DELETE_COMPARE_RESULT = 'DELETE_COMPARE_RESULT';
 
-export function addCompareResult(value) {
-  return onSuggestionSelected(value, OMM_CONST.SEARCH_TARGETS.BIB);
-}
-
 function getResultAPIPath(value, searchTarget) {
   let cond = null;
   switch (searchTarget) {
@@ -31,6 +27,13 @@ function getResultAPIPath(value, searchTarget) {
   }
 
   return `/api/v1/results.json?${cond}=${value}`;
+}
+
+function loadResultResult(value) {
+  return {
+    type: SUGGEST_ON_SUGGESTION_SELECTED,
+    value,
+  };
 }
 
 export function onSuggestionSelected(value, searchTarget) {
@@ -117,16 +120,13 @@ export function onSuggestionsClearRequested() {
   };
 }
 
-function loadResultResult(value) {
-  return {
-    type: SUGGEST_ON_SUGGESTION_SELECTED,
-    value,
-  };
-}
-
 export function deleteCompareResult(bib) {
   return {
     type: DELETE_COMPARE_RESULT,
     bib,
   };
+}
+
+export function addCompareResult(value) {
+  return onSuggestionSelected(value, OMM_CONST.SEARCH_TARGETS.BIB);
 }
