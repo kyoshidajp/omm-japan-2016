@@ -36,7 +36,7 @@ const AsyncGoogleMap = _.flowRight(
     ))}
     {props.compareResults.map(result => (
       <Polyline key={result.id}
-        {...props.bibControlsMap.get(result.bib)}
+        {...props.bibConfigMap.get(result.bib).controls}
       />
     ))}
   </GoogleMap>
@@ -75,7 +75,7 @@ export default class Map extends Component {
         }
         markers={this.props.map.markers}
         compareResults={this.props.search.compareResults}
-        bibControlsMap={this.props.search.bibControlsMap}
+        bibConfigMap={this.props.search.bibConfigMap}
       />
     );
   }

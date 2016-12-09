@@ -47,7 +47,27 @@ function getSuggestions(value, state) {
   );
 }
 
-function getBibControlsMap(result, bibControlsMap) {
+function getRandomColor() {
+  let color = '#';
+  for (let i = 0; i < 3; i++) {
+    const randomColorNum = Math.floor(Math.random() * 255);
+    const randomColorString = `0${randomColorNum.toString(16)}`.slice(-2);
+    color = `${color}${randomColorString}`;
+  }
+  return color;
+}
+
+function getColorByBib(bib, bibConfigMap) {
+  let color = null;
+  if (bibConfigMap.has(bib) && bibConfigMap.get(bib).color) {
+    color = bibConfigMap.get(bib).color;
+  } else {
+    color = getRandomColor();
+  }
+  return color;
+}
+
+function getBibControlsMap(result, bibConfigMap) {
   const controls = result.controls;
   const path = controls.map((control) => {
     return {
@@ -58,15 +78,26 @@ function getBibControlsMap(result, bibControlsMap) {
   path.unshift(OMM_CONST.START_POINT);
   path.push(OMM_CONST.FINISH_POINT);
 
+  const color = getColorByBib(result.bib, bibConfigMap);
+  const options = {
+    geodesic: true,
+    strokeColor: color,
+    strokeOpacity: 1.0,
+    strokeWeight: 7,
+  };
+
   const routepath = {
     path,
-    geodesic: true,
-    strokecolor: '#ff0000',
-    strokeopacity: 1.0,
-    strokeweight: 2,
+    options,
   };
-  bibControlsMap.set(result.bib, routepath);
-  return bibControlsMap;
+  const codes = result.controls.map(control => control.code);
+  bibConfigMap.set(result.bib,
+    {
+      controls: routepath,
+      codes,
+      color,
+    });
+  return bibConfigMap;
 }
 
 function deleteComareResult(bib, results) {
@@ -93,11 +124,13 @@ const initialState = {
 
   compareResults: [],
 
-  /* Map: result.bib => [control.code, ...] */
-  bibCodesMap: new Map(),
-
-  /* Map: result.bib => [control, ...] */
-  bibControlsMap: new Map(),
+  /* Map: result.bib => {
+   *        controls: [control.code, ...],
+   *        codes: [control, ...],
+   *        color,
+   *      }
+   */
+  bibConfigMap: new Map(),
 
   /* Object: { controlsTable: number,
    *           map: number }
@@ -159,14 +192,13 @@ export default function search(state = initialState, action) {
     }
     case OMM.SUGGEST_ON_SUGGESTION_SELECTED: {
       const results = state.compareResults.concat(action.value);
-      const codesByBib = action.value.controls.map(control => control.code);
+      const bibConfigMap = getBibControlsMap(action.value, state.bibConfigMap);
       return Object.assign({}, state, {
         value: '',
         searchPlayersResults: [],
         compareResults: results,
         gridWidth: getGridWidth(results),
-        bibCodesMap: state.bibCodesMap.set(action.value.bib, codesByBib),
-        bibControlsMap: getBibControlsMap(action.value, state.bibControlsMap),
+        bibConfigMap,
       });
     }
     case OMM.DELETE_COMPARE_RESULT: {

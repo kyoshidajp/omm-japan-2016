@@ -23,8 +23,8 @@ export default class ContorlsTable extends Component {
   }
 
   isCheckedControl(bib, markId) {
-    if (!this.props.search.bibCodesMap.has(bib)) return false;
-    return this.props.search.bibCodesMap.get(bib).indexOf(Number(markId)) > -1;
+    if (!this.props.search.bibConfigMap.has(bib)) return false;
+    return this.props.search.bibConfigMap.get(bib).codes.indexOf(Number(markId)) > -1;
   }
 
   render() {
