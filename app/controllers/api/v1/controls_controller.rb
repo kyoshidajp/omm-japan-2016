@@ -1,6 +1,8 @@
-class Api::V1::ControlsController < ApplicationController
+class Api::V1::ControlsController < Api::V1::APIController
   def index
-    controls = Control.all
+    day = params[:day]
+    controls = Control.where(day1: day == '1',
+                             day2: day == '2')
     render json: controls
   end
 end

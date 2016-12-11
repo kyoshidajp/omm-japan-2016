@@ -41,7 +41,7 @@ export default class ContorlsTable extends Component {
           </tr>
         </thead>
         <tbody>
-          {this.props.map.markers.map(marker => (
+          {this.props.search.markers.map(marker => (
             <tr key={marker.key}>
               <td><div className="text-right">{marker.label}</div></td>
               {this.props.search.compareResults.map(result => (

@@ -4,7 +4,15 @@ import {
   InputGroup,
   FormGroup,
   DropdownButton,
+  ButtonGroup,
   MenuItem,
+  Input,
+  Checkbox,
+  Radio,
+  RadioGroup,
+  Row,
+  Col,
+  Form,
 } from 'react-bootstrap';
 
 import * as OMM from '../constants/OMM';
@@ -24,26 +32,39 @@ export default class Search extends Component {
 
   render() {
     return (
-      <FormGroup>
-        <InputGroup>
-          <DropdownButton bsStyle="primary"
-            componentClass={InputGroup.Button}
-            title={this.props.search.searchTarget}
-            id="input-dropdown-addon">
-            {this.props.search.searchTargets.map(target =>
-              <MenuItem key={target}
-                eventKey="1"
-                onClick={() => this.changeTarget(target)}>{target}</MenuItem>
-            )}
-          </DropdownButton>
-          <Suggest
-            ref="suggest"
-            allResults={this.props.map.allResults}
-            search={this.props.search}
-            actions={this.props.actions}
-          />
-        </InputGroup>
-      </FormGroup>
+      <Form inline>
+        <FormGroup>
+          <InputGroup>
+            <DropdownButton bsStyle="primary"
+              componentClass={InputGroup.Button}
+              title={this.props.search.searchTarget}
+              id="input-dropdown-addon">
+              {this.props.search.searchTargets.map(target =>
+                <MenuItem key={target}
+                  eventKey="1"
+                  onClick={() => this.changeTarget(target)}>{target}</MenuItem>
+              )}
+            </DropdownButton>
+            <Suggest
+              ref="suggest"
+              allResults={this.props.map.allResults}
+              search={this.props.search}
+              actions={this.props.actions}
+            />
+          </InputGroup>
+        </FormGroup>
+        <FormGroup className="day">
+          <InputGroup>
+          {Object.entries(OMM.DAYS).map(day =>
+            <Radio inline
+              key={day[1].code}
+              onChange={this.props.actions.changeDay}
+              value={day[1].code}
+              checked={this.props.search.selectedDay === day[1].code}>{day[1].value}</Radio>
+          )}
+          </InputGroup>
+        </FormGroup>
+      </Form>
     );
   }
 }

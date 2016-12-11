@@ -5,8 +5,6 @@ export const LOAD_PLAYERS_RESULT = 'LOAD_PLAYERS_RESULT';
 
 export const LOAD_RESULTS_REQUEST = 'LOAD_RESULTS_REQUEST';
 export const LOAD_RESULTS_RESULT = 'LOAD_RESULTS_RESULT';
-export const LOAD_CONTROLS_REQUEST = 'LOAD_CONTROLS_REQUEST';
-export const LOAD_CONTROLS_RESULT = 'LOAD_CONTROLS_RESULT';
 
 function loadPlayersRequest() {
   return {
@@ -52,31 +50,6 @@ export function loadResults() {
 
     Axios.get('/api/v1/results.json').then(
       response => dispatch(loadResultsResult(response.data)),
-    ).catch(
-      response => console.log(response),
-    );
-  };
-}
-
-function loadControlsRequest() {
-  return {
-    type: LOAD_CONTROLS_REQUEST,
-  };
-}
-
-function loadControlsResult(result) {
-  return {
-    type: LOAD_CONTROLS_RESULT,
-    result,
-  };
-}
-
-export function loadControls() {
-  return (dispatch) => {
-    dispatch(loadControlsRequest());
-
-    Axios.get('/api/v1/controls.json').then(
-      response => dispatch(loadControlsResult(response.data)),
     ).catch(
       response => console.log(response),
     );

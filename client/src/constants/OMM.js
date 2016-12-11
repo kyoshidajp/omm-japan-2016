@@ -7,13 +7,25 @@ export const CENTER_POINT = {
 };
 
 export const START_POINT = {
-  lat: 36.560606,
-  lng: 137.872176,
+  DAY1: {
+    lat: 36.600857,
+    lng: 137.835387,
+  },
+  DAY2: {
+    lat: 36.560606,
+    lng: 137.872176,
+  },
 };
 
 export const FINISH_POINT = {
-  lat: 36.598034,
-  lng: 137.824866,
+  DAY1: {
+    lat: 36.560606,
+    lng: 137.872176,
+  },
+  DAY2: {
+    lat: 36.598034,
+    lng: 137.824866,
+  },
 };
 
 export const SEARCH_TARGETS = {
@@ -24,4 +36,9 @@ export const SEARCH_TARGETS = {
 export const SEARCH_PLACE_HOLDER = {
   BIB: 'Type a bib',
   PLAYER: 'Type a player name',
+};
+
+export const DAYS = {
+  DAY1: { code: 1, value: 'DAY1' },
+  DAY2: { code: 2, value: 'DAY2' },
 };

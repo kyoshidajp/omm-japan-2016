@@ -1,6 +1,41 @@
 import * as OMM from '../actions/search';
 import * as OMM_CONST from '../constants/OMM';
 
+function getControlsAndMarkers(data, day) {
+  const controls = new Map();
+  const markers = [];
+  data.forEach((control) => {
+    controls.set(control.code, control);
+    markers.push({
+      position: {
+        lat: control.lat,
+        lng: control.lng,
+      },
+      label: control.code.toString(),
+      key: control.id,
+    });
+  });
+  let { startPoint, finishPoint } = [null, null];
+  if (day === OMM_CONST.DAYS.DAY1.code) {
+    startPoint = OMM_CONST.START_POINT.DAY1;
+    finishPoint = OMM_CONST.FINISH_POINT.DAY1;
+  } else if (day === OMM_CONST.DAYS.DAY2.code) {
+    startPoint = OMM_CONST.START_POINT.DAY2;
+    finishPoint = OMM_CONST.FINISH_POINT.DAY2;
+  }
+  markers.unshift({
+    position: startPoint,
+    label: 'start',
+    key: 'start',
+  });
+  markers.push({
+    position: finishPoint,
+    label: 'finish',
+    key: 'finish',
+  });
+  return { controls, markers };
+}
+
 function getGridWidthObject(results) {
   const length = results.length;
   if (length === 0) return [0, 12];
@@ -67,7 +102,7 @@ function getColorByBib(bib, bibConfigMap) {
   return color;
 }
 
-function getBibControlsMap(result, bibConfigMap) {
+function getBibControlsMap(result, bibConfigMap, day) {
   const controls = result.controls;
   const path = controls.map((control) => {
     return {
@@ -75,8 +110,16 @@ function getBibControlsMap(result, bibConfigMap) {
       lng: control.lng,
     };
   });
-  path.unshift(OMM_CONST.START_POINT);
-  path.push(OMM_CONST.FINISH_POINT);
+  let { startPoint, finishPoint } = [null, null];
+  if (day === OMM_CONST.DAYS.DAY1.code) {
+    startPoint = OMM_CONST.START_POINT.DAY1;
+    finishPoint = OMM_CONST.FINISH_POINT.DAY1;
+  } else if (day === OMM_CONST.DAYS.DAY2.code) {
+    startPoint = OMM_CONST.START_POINT.DAY2;
+    finishPoint = OMM_CONST.FINISH_POINT.DAY2;
+  }
+  path.unshift(startPoint);
+  path.push(finishPoint);
 
   const color = getColorByBib(result.bib, bibConfigMap);
   const options = {
@@ -139,10 +182,49 @@ const initialState = {
     controlsTable: 0,
     map: 12,
   },
+
+  selectedDay: OMM_CONST.DAYS.DAY1.code,
+
+  /* Array: [marker, ...] */
+  markers: [],
+
+  /* Map: control.code => control  */
+  controls: new Map(),
 };
 
 export default function search(state = initialState, action) {
   switch (action.type) {
+    case OMM.LOAD_CONTROLS: {
+      return Object.assign({}, state, {
+        markers: [],
+      });
+    }
+    case OMM.LOAD_CONTROLS_REQUST: {
+      return Object.assign({}, state, {
+        loading: true,
+        loaded: false,
+        markers: [],
+      });
+    }
+    case OMM.LOAD_CONTROLS_RESULT: {
+      const { controls, markers } = getControlsAndMarkers(action.result, state.selectedDay);
+      return Object.assign({}, state, {
+        loading: false,
+        loaded: true,
+        markers,
+        controls,
+      });
+    }
+    case OMM.CHANGE_DAY: {
+      return Object.assign({}, state, {
+        selectedDay: action.value,
+        // initialize
+        compareResults: [],
+        gridWidth: getGridWidth([]),
+        bibConfigMap: new Map(),
+        markers: [],
+      });
+    }
     case OMM.LOAD_BIBS: {
       return Object.assign({}, state, {
         bibs: [],
@@ -192,7 +274,7 @@ export default function search(state = initialState, action) {
     }
     case OMM.SUGGEST_ON_SUGGESTION_SELECTED: {
       const results = state.compareResults.concat(action.value);
-      const bibConfigMap = getBibControlsMap(action.value, state.bibConfigMap);
+      const bibConfigMap = getBibControlsMap(action.value, state.bibConfigMap, state.selectedDay);
       return Object.assign({}, state, {
         value: '',
         searchPlayersResults: [],

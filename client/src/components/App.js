@@ -35,7 +35,7 @@ export default class App extends Component {
         <Header style={{ height: '100%', width: '100%' }}/>
         <Grid fluid={true}>
           <Row className="show-grid omm-column">
-            <Col xs={4} md={4}>
+            <Col xs={12} md={12}>
               <SearchContainer />
             </Col>
           </Row>
@@ -54,7 +54,7 @@ export default class App extends Component {
                   {this.props.search.searchPlayersResults.map(player =>
                     <tr key={player.id}>
                       <td>
-                        <a href="#" onClick={() => this.props.searchActions.addCompareResult(player.bib)}><FaPlus /></a>
+                        <a href="#" onClick={() => this.props.searchActions.addCompareResult(player.bib, this.props.search.selectedDay)}><FaPlus /></a>
                       </td>
                       <td>
                         <div className="text-left">{player.bib}</div>

@@ -11,53 +11,60 @@ class PlayerClass
   def name
     "#{@last_name} #{@first_name}"
   end
+
+  def inspect
+    name
+  end
 end
 
 class ResultClass
 
+  DNF_DISQ = 'disq'
+  DNF_RET = 'ret'
+
   attr_accessor :line
-  attr_reader :bib, :time, :route, :players
 
   def initialize(line)
-    @line = line.chomp
+    @result = line.chomp.split(/ /)
   end
 
   def rank
-    return @rank unless @rank.nil?
+    @result[0] == DNF_DISQ || @result[0] == DNF_RET ?
+      nil : @result[0].to_i
+  end
 
-    rank_match = @line.match(/^(\d+) /)
-    @rank = rank_match ? rank_match[1] : nil
+  def disq
+    @result[0] == DNF_DISQ
+  end
+
+  def ret
+    @result[0] == DNF_DISQ
   end
 
   def bib
-    @bib ||= @line.match(/\((\d+)\)/)[1]
+    @result[3].to_i
   end
 
   def players
-    return @players unless @players.nil?
-    player_list = @line.split(' ')
-    player1 = PlayerClass.new(player_list[2,2])
-    player2 = PlayerClass.new(player_list[4,2])
-    @players = [player1, player2]
+    player1 = PlayerClass.new(@result[4..5])
+    player2 = PlayerClass.new(@result[6..7])
+    [player1, player2]
   end
 
   def time
-    @time ||= @line.match(/(\d+:\d+:\d+)/)[1]
+    @result[2]
   end
 
-  def route=(line)
-    @route ||= line.chomp.split('-')
+  def route
+    @result[11..-1]
   end
 
   def score
-    return @score unless @score.nil?
+    @result[1].to_s
+  end
 
-    if @line.match(/ DISQ /)
-      @score = 0
-      return @score
-    end
-
-    @score ||= @line.match(/(\d+)点/)[1]
+  def inspect
+    "rank: #{rank}, score: #{score}, bib: #{bib}, player1: #{players[0]}, #{players[1]}, route: #{route}"
   end
 end
 
@@ -65,41 +72,61 @@ class ResultsImporter
 
   def import
     files.each do |f|
+      day = f.match(/day(\d)/)[1].to_i
       results = read_results(f)
       results.each do |result|
-        Result.seed do |r|
-          r.bib = result.bib
-          r.score = result.score
-          r.rank = result.rank
-        end
-
-        result.players.each do |player|
-          Player.seed do |pl|
-            pl.bib = result.bib
-            pl.first_name = player.first_name
-            pl.last_name = player.last_name
-          end
-        end
-
-        result.players.each do |player|
-          ResultPlayer.seed do |rp|
-            rp.result = Result.find_by(bib: result.bib)
-            rp.player = Player.find_by(first_name: player.first_name,
-                                       last_name: player.last_name)
-          end
-        end
-
-        result.route.each do |route|
-          ResultControl.seed do |rc|
-            rc.result = Result.find_by(bib: result.bib)
-            rc.control = Control.find_by(code: route)
-          end
-        end
+        import_player(result) if day == 1
+        import_result(result, day)
+        import_result_player(result)
+        import_result_control(result, day)
       end
     end
   end
 
   private
+
+  def import_result(result, day)
+    Result.seed do |r|
+      r.bib = result.bib
+      r.score = result.score
+      r.rank = result.rank
+      r.disq = result.disq
+      r.ret = result.ret
+      r.day1 = day == 1
+      r.day2 = day == 2
+    end
+  end
+
+  def import_player(result)
+    result.players.each do |player|
+      Player.seed do |pl|
+        pl.bib = result.bib
+        pl.first_name = player.first_name
+        pl.last_name = player.last_name
+      end
+    end
+  end
+
+  def import_result_player(result)
+    result.players.each do |player|
+      ResultPlayer.seed do |rp|
+        rp.result = Result.find_by(bib: result.bib)
+        rp.player = Player.find_by(first_name: player.first_name,
+                                   last_name: player.last_name)
+      end
+    end
+  end
+
+  def import_result_control(result, day)
+    result.route.each do |route|
+      ResultControl.seed do |rc|
+        rc.result = Result.find_by(bib: result.bib,
+                                   day1: day == 1,
+                                   day2: day == 2)
+        rc.control = Control.find_by(code: route)
+      end
+    end
+  end
 
   def files
     Dir.glob('db/fixtures/*.txt')
@@ -108,17 +135,8 @@ class ResultsImporter
   def read_results(name)
     results = []
     File.open(name) do |file|
-      result = nil
-      is_route = false
       file.each_line do |line|
-        if line.match(/\(\d+\)/)
-          result = ResultClass.new(line)
-          is_route = true
-          next
-        end
-        result.route = line if is_route
-        is_route = false
-        results << result unless result.nil?
+        results << ResultClass.new(line)
       end
     end
     results

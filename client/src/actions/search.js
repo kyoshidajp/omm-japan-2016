@@ -11,8 +11,51 @@ export const SUGGEST_ON_KEY_PRESS = 'SUGGEST_ON_KEY_PRESS';
 export const LOAD_BIBS_REQUEST = 'LOAD_BIBS_REQUEST';
 export const LOAD_BIBS_RESULT = 'LOAD_BIBS_RESULT';
 export const DELETE_COMPARE_RESULT = 'DELETE_COMPARE_RESULT';
+export const CHANGE_DAY = 'CHANGE_DAY';
+export const LOAD_CONTROLS_REQUEST = 'LOAD_CONTROLS_REQUEST';
+export const LOAD_CONTROLS_RESULT = 'LOAD_CONTROLS_RESULT';
 
-function getResultAPIPath(value, searchTarget) {
+function loadControlsRequest() {
+  return {
+    type: LOAD_CONTROLS_REQUEST,
+  };
+}
+
+function loadControlsResult(result) {
+  return {
+    type: LOAD_CONTROLS_RESULT,
+    result,
+  };
+}
+
+export function loadControls(value) {
+  return (dispatch) => {
+    dispatch(loadControlsRequest());
+
+    Axios.get(`/api/v1/controls.json?day=${value}`).then(
+      response => dispatch(loadControlsResult(response.data)),
+    ).catch(
+      response => console.log(response),
+    );
+  };
+}
+
+function changeDayDisplay(value) {
+  return {
+    type: CHANGE_DAY,
+    value,
+  };
+}
+
+export function changeDay(event) {
+  const value = Number(event.target.value);
+  return (dispatch) => {
+    dispatch(loadControls(value));
+    dispatch(changeDayDisplay(value));
+  };
+}
+
+function getResultAPIPath(value, searchTarget, day) {
   let cond = null;
   switch (searchTarget) {
     case OMM_CONST.SEARCH_TARGETS.BIB:
@@ -26,7 +69,7 @@ function getResultAPIPath(value, searchTarget) {
       break;
   }
 
-  return `/api/v1/results.json?${cond}=${value}`;
+  return `/api/v1/results.json?${cond}=${value}&day=${day}`;
 }
 
 function loadResultResult(value) {
@@ -36,8 +79,8 @@ function loadResultResult(value) {
   };
 }
 
-export function onSuggestionSelected(value, searchTarget) {
-  const apiPath = getResultAPIPath(value, searchTarget);
+export function onSuggestionSelected(value, searchTarget, day) {
+  const apiPath = getResultAPIPath(value, searchTarget, day);
   return (dispatch) => {
     Axios.get(apiPath).then(
       response => dispatch(loadResultResult(response.data)),
@@ -127,6 +170,6 @@ export function deleteCompareResult(bib) {
   };
 }
 
-export function addCompareResult(value) {
-  return onSuggestionSelected(value, OMM_CONST.SEARCH_TARGETS.BIB);
+export function addCompareResult(value, day) {
+  return onSuggestionSelected(value, OMM_CONST.SEARCH_TARGETS.BIB, day);
 }

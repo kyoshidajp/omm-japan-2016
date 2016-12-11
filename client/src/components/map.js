@@ -22,12 +22,6 @@ const AsyncGoogleMap = _.flowRight(
     onClick={props.onMapClick}
     options={{ scrollwheel: false }}
   >
-    <Marker
-      position={OMM.START_POINT}
-      label="start" />
-    <Marker
-      position={OMM.FINISH_POINT}
-      label="finish" />
     {props.markers.map(marker => (
       <Marker
         {...marker}
@@ -45,7 +39,8 @@ const AsyncGoogleMap = _.flowRight(
 export default class Map extends Component {
 
   componentDidMount() {
-    this.props.mapActions.loadControls();
+    this.props.searchActions.loadControls(
+      this.props.search.selectedDay);
   }
 
   render() {
@@ -73,7 +68,7 @@ export default class Map extends Component {
         mapElement={
           <div style={{ height: '600px' }} />
         }
-        markers={this.props.map.markers}
+        markers={this.props.search.markers}
         compareResults={this.props.search.compareResults}
         bibConfigMap={this.props.search.bibConfigMap}
       />

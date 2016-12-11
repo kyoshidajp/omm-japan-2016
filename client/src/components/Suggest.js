@@ -47,7 +47,8 @@ export default class Suggest extends Component {
 
   onSuggestionSelected(event, { suggestion, suggestionValue }) {
     this.props.actions.onSuggestionSelected(suggestion,
-        this.props.search.searchTarget);
+        this.props.search.searchTarget,
+        this.props.search.selectedDay);
   }
 
   render() {
