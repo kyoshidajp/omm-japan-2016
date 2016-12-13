@@ -75,7 +75,7 @@ class ResultsImporter
       day = f.match(/day(\d)/)[1].to_i
       results = read_results(f)
       results.each_with_index do |result|
-        import_player(result)
+        import_player(result) if day == 1
         import_result(result, day)
         import_result_player(result, day)
         import_result_control(result, day)
