@@ -1,6 +1,44 @@
 import * as OMM from '../actions/search';
 import * as OMM_CONST from '../constants/OMM';
 
+function normalizeRoute(bibConfigMap) {
+  return precedeRoute(null, bibConfigMap);
+}
+
+function precedeRoute(targetBib, bibConfigMap) {
+  for (const entry of bibConfigMap.entries()) {
+    const [ bib, bibConfig ] = entry;
+    const isTarget = targetBib !== null && targetBib === bib;
+    const strokeOpacity = isTarget
+      ? OMM_CONST.MAP_TARGET_OPTION.STROKE_OPACITY
+			: OMM_CONST.MAP_UN_TARGET_OPTION.STROKE_OPACITY;
+    const strokeWeight = isTarget 
+      ? OMM_CONST.MAP_TARGET_OPTION.STROKE_WEIGHT
+			: OMM_CONST.MAP_UN_TARGET_OPTION.STROKE_WEIGHT;
+    const zIndex = isTarget
+      ? OMM_CONST.MAP_TARGET_OPTION.Z_INDEX
+			: OMM_CONST.MAP_UN_TARGET_OPTION.Z_INDEX;
+    const options = {
+      geodesic: true,
+      strokeColor: bibConfig.color,
+      strokeOpacity,
+      strokeWeight, 
+      zIndex,
+    };
+    const routepath = {
+      path: bibConfig.controls.path,
+      options,
+    };
+    bibConfigMap.set(bib,
+      {
+        controls: routepath,
+        codes: bibConfig.codes,
+        color: bibConfig.color,
+      });
+  }
+  return bibConfigMap;
+}
+
 function getControlsAndMarkers(data, day) {
   const controls = new Map();
   const markers = [];
@@ -125,8 +163,8 @@ function getBibControlsMap(result, bibConfigMap, day) {
   const options = {
     geodesic: true,
     strokeColor: color,
-    strokeOpacity: 1.0,
-    strokeWeight: 7,
+    strokeOpacity: OMM_CONST.MAP_UN_TARGET_OPTION.STROKE_OPACITY,
+    strokeWeight: OMM_CONST.MAP_UN_TARGET_OPTION.STROKE_WEIGHT,
   };
 
   const routepath = {
@@ -194,6 +232,16 @@ const initialState = {
 
 export default function search(state = initialState, action) {
   switch (action.type) {
+		case OMM.HOVER_RESULT_TABLE_ROW: {
+      return Object.assign({}, state, {
+        bibConfigMap: precedeRoute(action.value, state.bibConfigMap),
+      });
+		}
+		case OMM.OUT_RESULT_TABLE_ROW: {
+      return Object.assign({}, state, {
+        bibConfigMap: normalizeRoute(state.bibConfigMap),
+      });
+		}
     case OMM.LOAD_CONTROLS: {
       return Object.assign({}, state, {
         markers: [],

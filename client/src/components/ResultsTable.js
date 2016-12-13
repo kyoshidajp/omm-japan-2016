@@ -48,7 +48,9 @@ export default class ResultsTable extends Component {
         </thead>
         <tbody>
           {this.props.search.compareResults.map(result => (
-            <tr key={result.id}>
+            <tr key={result.id}
+              onMouseEnter={() => this.props.searchActions.hoverResultTableRow(result.bib)}
+              onMouseLeave={() => this.props.searchActions.outResultTableRow()} >
               <td key={result.id} >
                 <a href="#" onClick={() => this.deleteResult(result.bib)}><FaTrash /></a>
               </td>

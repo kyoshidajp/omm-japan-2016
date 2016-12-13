@@ -14,6 +14,21 @@ export const DELETE_COMPARE_RESULT = 'DELETE_COMPARE_RESULT';
 export const CHANGE_DAY = 'CHANGE_DAY';
 export const LOAD_CONTROLS_REQUEST = 'LOAD_CONTROLS_REQUEST';
 export const LOAD_CONTROLS_RESULT = 'LOAD_CONTROLS_RESULT';
+export const HOVER_RESULT_TABLE_ROW = 'HOVER_RESULT_TABLE_ROW';
+export const OUT_RESULT_TABLE_ROW = 'OUT_RESULT_TABLE_ROW';
+
+export function hoverResultTableRow(bib) {
+  return {
+    type: HOVER_RESULT_TABLE_ROW,
+    value: bib,
+  };
+}
+
+export function outResultTableRow() {
+  return {
+    type: OUT_RESULT_TABLE_ROW,
+  };
+}
 
 function loadControlsRequest() {
   return {

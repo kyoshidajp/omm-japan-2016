@@ -42,3 +42,15 @@ export const DAYS = {
   DAY1: { code: 1, value: 'DAY1' },
   DAY2: { code: 2, value: 'DAY2' },
 };
+
+export const MAP_TARGET_OPTION = {
+  STROKE_OPACITY: 1.5,
+  STROKE_WEIGHT: 13,
+  Z_INDEX: 2,
+}
+
+export const MAP_UN_TARGET_OPTION = {
+  STROKE_OPACITY: 1.0,
+  STROKE_WEIGHT: 7,
+  Z_INDEX: 1,
+}
