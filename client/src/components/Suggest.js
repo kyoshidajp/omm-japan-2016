@@ -27,12 +27,8 @@ export default class Suggest extends Component {
 
   storeInputReference(autosuggest) {
     if (autosuggest !== null) {
-      this.input = autosuggest.input;
+      window.suggestInput = autosuggest.input;
     }
-  }
-
-  setFocus() {
-    this.input.focus();
   }
 
   onChange(event, { newValue, method }) {

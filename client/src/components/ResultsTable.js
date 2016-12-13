@@ -14,6 +14,7 @@ export default class ResultsTable extends Component {
 
     this.isCheckedControl = this.isCheckedControl.bind(this);
     this.joinPlayers = this.joinPlayers.bind(this);
+    this.deleteResult = this.deleteResult.bind(this);
   }
 
   isCheckedControl(bib, markId) {
@@ -24,6 +25,11 @@ export default class ResultsTable extends Component {
   joinPlayers(players) {
     return players.map(player => `${player.last_name} ${player.first_name}`)
       .join(' / ');
+  }
+
+  deleteResult(bib) {
+    this.props.searchActions.deleteCompareResult(bib);
+    window.suggestInput.focus();
   }
 
   render() {
@@ -44,7 +50,7 @@ export default class ResultsTable extends Component {
           {this.props.search.compareResults.map(result => (
             <tr key={result.id}>
               <td key={result.id} >
-                <a href="#" onClick={() => this.props.searchActions.deleteCompareResult(result.bib)}><FaTrash /></a>
+                <a href="#" onClick={() => this.deleteResult(result.bib)}><FaTrash /></a>
               </td>
               <td>
                 <div className="text-right">{result.bib}</div>

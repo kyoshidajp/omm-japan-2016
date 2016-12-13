@@ -27,6 +27,13 @@ export default class App extends Component {
       search: PropTypes.object.isRequired,
       suggest: PropTypes.object.isRequired,
     };
+
+    this.addResult = this.addResult.bind(this);
+  }
+
+  addResult(bib, handler) {
+    this.props.searchActions.addCompareResult(bib, handler);
+    window.suggestInput.focus();
   }
 
   render() {
@@ -54,7 +61,7 @@ export default class App extends Component {
                   {this.props.search.searchPlayersResults.map(player =>
                     <tr key={player.id}>
                       <td>
-                        <a href="#" onClick={() => this.props.searchActions.addCompareResult(player.bib, this.props.search.selectedDay)}><FaPlus /></a>
+                        <a href="#" onClick={() => this.addResult(player.bib, this.props.search.selectedDay)}><FaPlus /></a>
                       </td>
                       <td>
                         <div className="text-left">{player.bib}</div>

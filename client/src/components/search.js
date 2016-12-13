@@ -20,15 +20,25 @@ import Suggest from './Suggest';
 
 export default class Search extends Component {
 
+  constructor(props) {
+    super(props);
+    this.changeDay = this.changeDay.bind(this);
+	}
+
   componentDidMount() {
     this.props.actions.loadBibs();
-    this.refs.suggest.setFocus();
+    window.suggestInput.focus();
   }
 
   changeTarget(target) {
     this.props.actions.onChangeSearchTarget(target);
-    this.refs.suggest.setFocus();
+    window.suggestInput.focus();
   }
+
+	changeDay(event) {
+    this.props.actions.changeDay(event);
+    window.suggestInput.focus();
+	}
 
   render() {
     return (
@@ -58,7 +68,7 @@ export default class Search extends Component {
           {Object.entries(OMM.DAYS).map(day =>
             <Radio inline
               key={day[1].code}
-              onChange={this.props.actions.changeDay}
+              onChange={this.changeDay}
               value={day[1].code}
               checked={this.props.search.selectedDay === day[1].code}>{day[1].value}</Radio>
           )}
