@@ -74,10 +74,10 @@ class ResultsImporter
     files.each do |f|
       day = f.match(/day(\d)/)[1].to_i
       results = read_results(f)
-      results.each do |result|
-        import_player(result) if day == 1
+      results.each_with_index do |result|
+        import_player(result)
         import_result(result, day)
-        import_result_player(result)
+        import_result_player(result, day)
         import_result_control(result, day)
       end
     end
@@ -107,10 +107,12 @@ class ResultsImporter
     end
   end
 
-  def import_result_player(result)
+  def import_result_player(result, day)
     result.players.each do |player|
       ResultPlayer.seed do |rp|
-        rp.result = Result.find_by(bib: result.bib)
+        rp.result = Result.find_by(bib: result.bib,
+                                   day1: day == 1,
+                                   day2: day == 2)
         rp.player = Player.find_by(first_name: player.first_name,
                                    last_name: player.last_name)
       end
