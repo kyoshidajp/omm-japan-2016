@@ -47,10 +47,10 @@ export const MAP_TARGET_OPTION = {
   STROKE_OPACITY: 1.5,
   STROKE_WEIGHT: 13,
   Z_INDEX: 2,
-}
+};
 
 export const MAP_UN_TARGET_OPTION = {
   STROKE_OPACITY: 1.0,
   STROKE_WEIGHT: 7,
   Z_INDEX: 1,
-}
+};

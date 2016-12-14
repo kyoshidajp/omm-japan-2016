@@ -1,28 +1,24 @@
 import * as OMM from '../actions/search';
 import * as OMM_CONST from '../constants/OMM';
 
-function normalizeRoute(bibConfigMap) {
-  return precedeRoute(null, bibConfigMap);
-}
-
 function precedeRoute(targetBib, bibConfigMap) {
   for (const entry of bibConfigMap.entries()) {
-    const [ bib, bibConfig ] = entry;
+    const [bib, bibConfig] = entry;
     const isTarget = targetBib !== null && targetBib === bib;
     const strokeOpacity = isTarget
       ? OMM_CONST.MAP_TARGET_OPTION.STROKE_OPACITY
-			: OMM_CONST.MAP_UN_TARGET_OPTION.STROKE_OPACITY;
-    const strokeWeight = isTarget 
+      : OMM_CONST.MAP_UN_TARGET_OPTION.STROKE_OPACITY;
+    const strokeWeight = isTarget
       ? OMM_CONST.MAP_TARGET_OPTION.STROKE_WEIGHT
-			: OMM_CONST.MAP_UN_TARGET_OPTION.STROKE_WEIGHT;
+      : OMM_CONST.MAP_UN_TARGET_OPTION.STROKE_WEIGHT;
     const zIndex = isTarget
       ? OMM_CONST.MAP_TARGET_OPTION.Z_INDEX
-			: OMM_CONST.MAP_UN_TARGET_OPTION.Z_INDEX;
+      : OMM_CONST.MAP_UN_TARGET_OPTION.Z_INDEX;
     const options = {
       geodesic: true,
       strokeColor: bibConfig.color,
       strokeOpacity,
-      strokeWeight, 
+      strokeWeight,
       zIndex,
     };
     const routepath = {
@@ -37,6 +33,10 @@ function precedeRoute(targetBib, bibConfigMap) {
       });
   }
   return bibConfigMap;
+}
+
+function normalizeRoute(bibConfigMap) {
+  return precedeRoute(null, bibConfigMap);
 }
 
 function getControlsAndMarkers(data, day) {
@@ -232,16 +232,16 @@ const initialState = {
 
 export default function search(state = initialState, action) {
   switch (action.type) {
-		case OMM.HOVER_RESULT_TABLE_ROW: {
+    case OMM.HOVER_RESULT_TABLE_ROW: {
       return Object.assign({}, state, {
         bibConfigMap: precedeRoute(action.value, state.bibConfigMap),
       });
-		}
-		case OMM.OUT_RESULT_TABLE_ROW: {
+    }
+    case OMM.OUT_RESULT_TABLE_ROW: {
       return Object.assign({}, state, {
         bibConfigMap: normalizeRoute(state.bibConfigMap),
       });
-		}
+    }
     case OMM.LOAD_CONTROLS: {
       return Object.assign({}, state, {
         markers: [],

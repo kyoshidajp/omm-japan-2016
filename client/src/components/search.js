@@ -23,7 +23,7 @@ export default class Search extends Component {
   constructor(props) {
     super(props);
     this.changeDay = this.changeDay.bind(this);
-	}
+  }
 
   componentDidMount() {
     this.props.actions.loadBibs();
@@ -35,10 +35,10 @@ export default class Search extends Component {
     window.suggestInput.focus();
   }
 
-	changeDay(event) {
+  changeDay(event) {
     this.props.actions.changeDay(event);
     window.suggestInput.focus();
-	}
+  }
 
   render() {
     return (

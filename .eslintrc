@@ -3,7 +3,8 @@
   "plugins": ["react"],
   "extends": "airbnb-base",
   "env": {
-    "es6": true
+    "es6": true,
+    "browser": true,
   },
   "rules": {
     "arrow-body-style": "off",
@@ -14,5 +15,6 @@
     "max-len": "off",
     "class-methods-use-this": "off",
     "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
+    "no-restricted-syntax": "off",
   }
 }
