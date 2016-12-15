@@ -15,6 +15,7 @@ export default class ResultsTable extends Component {
     this.isCheckedControl = this.isCheckedControl.bind(this);
     this.joinPlayers = this.joinPlayers.bind(this);
     this.deleteResult = this.deleteResult.bind(this);
+    this.getColorStyleByResult = this.getColorStyleByResult.bind(this);
   }
 
   isCheckedControl(bib, markId) {
@@ -32,13 +33,19 @@ export default class ResultsTable extends Component {
     window.suggestInput.focus();
   }
 
+  getColorStyleByResult(result) {
+    const color = this.props.search.bibConfigMap.get(result.bib).color;
+    return { 'background-color': color };
+  }
+
   render() {
     return (
-      <Table bordered striped condensed hover responsive
+      <Table striped condensed hover responsive bordered
         className="result-table">
         <thead>
           <tr>
             <th className="delete" />
+            <th className="color" />
             <th className="bib">bib</th>
             <th className="rank">rank</th>
             <th className="score">score</th>
@@ -54,6 +61,7 @@ export default class ResultsTable extends Component {
               <td key={result.id} >
                 <a href="#" onClick={() => this.deleteResult(result.bib)}><FaMinusCircle /></a>
               </td>
+              <td className="color" style={this.getColorStyleByResult(result)} />
               <td>
                 <div className="text-right">{result.bib}</div>
               </td>
@@ -70,6 +78,7 @@ export default class ResultsTable extends Component {
               </td>
               <td>
                 <div className="text-left">
+                  S-
                   {result.controls.map(control =>
                      control.code.toString(),
                    ).join('-')}
