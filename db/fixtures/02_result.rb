@@ -74,7 +74,8 @@ class ResultsImporter
     files.each do |f|
       day = f.match(/day(\d)/)[1].to_i
       results = read_results(f)
-      results.each_with_index do |result|
+      results.each.with_index(1) do |result, i|
+        break if (i > 10 && Rails.env.test?)
         import_player(result) if day == 1
         import_result(result, day)
         import_result_player(result, day)

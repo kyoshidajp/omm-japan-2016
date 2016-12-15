@@ -7,8 +7,11 @@ development:
   <<: *default
   database: omm_result_development
 test:
-  <<: *default
-  database: omm_result_test
+  adapter: sqlite3
+  encoding: utf8
+  pool: 5
+  timeout: 5000
+  database: db/test.sqlite3
 
 production:
   <<: *default
