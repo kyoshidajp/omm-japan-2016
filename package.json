@@ -6,7 +6,8 @@
   "scripts": {
     "webpack-watch": "webpack -w",
     "webpack-build": "webpack -p",
-    "lint": "eslint ./client/src/**/*.js"
+    "lint": "eslint ./client/src/**/*.js",
+    "test": "mocha --compilers js:babel-register ./client/test/**/*.js"
   },
   "keywords": [],
   "author": "",
@@ -33,10 +34,16 @@
   },
   "devDependencies": {
     "babel-eslint": "^7.1.1",
+    "babel-plugin-espower": "^2.3.1",
+    "babel-preset-power-assert": "^1.0.0",
+    "babel-register": "^6.18.0",
     "eslint": "^3.11.1",
     "eslint-config-airbnb-base": "^10.0.1",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^2.2.3",
-    "eslint-plugin-react": "^6.8.0"
+    "eslint-plugin-react": "^6.8.0",
+    "jsdom": "^9.8.3",
+    "mocha": "^3.2.0",
+    "power-assert": "^1.4.2"
   }
 }
