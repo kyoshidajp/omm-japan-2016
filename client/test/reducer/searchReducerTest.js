@@ -1,4 +1,4 @@
-import assert from 'power-assert';
+import assert from 'assert';
 import * as searchActions from '../../src/actions/search';
 import reducer from '../../src/reducers/search';
 
