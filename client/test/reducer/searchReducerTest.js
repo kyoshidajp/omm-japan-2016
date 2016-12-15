@@ -40,4 +40,18 @@ describe('reducer', () => {
     const options = bibConfig.controls.options;
     assert.deepEqual(options.strokeOpacity, 1.0);
   });
+
+  it('should handle ON_CHANGE_SEARCH_TARGET', () => {
+    const actual = reducer(
+		  { value: '111' }, {
+        type: searchActions.ON_CHANGE_SEARCH_TARGET,
+        value: 'PLAYER',
+      });
+    const expected = {
+			searchTarget: 'PLAYER',
+			searchPlaceHolder: 'Type a player name',
+		  value: '111',
+    }
+    assert.deepEqual(actual, expected);
+  });
 });

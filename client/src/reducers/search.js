@@ -296,7 +296,6 @@ export default function search(state = initialState, action) {
       return Object.assign({}, state, {
         searchTarget: action.value,
         searchPlaceHolder: getPlaceHolder(action.value),
-        value: '',
       });
     }
     case OMM.SUGGEST_ON_KEY_PRESS: {

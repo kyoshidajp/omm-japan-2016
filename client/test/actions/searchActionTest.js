@@ -14,4 +14,11 @@ describe('actions', () => {
                       value: 'bib'}
     assert.deepEqual(actual, expected);
   });
+
+	it('onChangeSearchTarget', () => {
+    const actual = searchActions.onChangeSearchTarget('target');
+    const expected = {type: searchActions.ON_CHANGE_SEARCH_TARGET,
+                      value: 'target'}
+    assert.deepEqual(actual, expected);
+  });
 });
