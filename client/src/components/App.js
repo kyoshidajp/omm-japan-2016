@@ -12,6 +12,7 @@ import $ from 'jquery';
 
 import ControlsTable from './ControlsTable';
 import ResultsTable from './ResultsTable';
+import SearchPlayerResultsTable from './SearchPlayerResultsTable';
 import Header from './Header';
 import MapContainer from '../containers/MapContainer';
 import SearchContainer from '../containers/SearchContainer';
@@ -27,13 +28,6 @@ export default class App extends Component {
       search: PropTypes.object.isRequired,
       suggest: PropTypes.object.isRequired,
     };
-
-    this.addResult = this.addResult.bind(this);
-  }
-
-  addResult(bib, handler) {
-    this.props.searchActions.addCompareResult(bib, handler);
-    window.suggestInput.focus();
   }
 
   render() {
@@ -49,30 +43,10 @@ export default class App extends Component {
           {this.props.search.searchPlayersResults.length > 0 ?
             <Row className="show-grid omm-column">
               <Col xs={12} md={12}>
-                <Table bordered striped condensed hover responsive>
-                  <thead>
-                    <tr>
-                      <th />
-                      <th>bib</th>
-                      <th>name</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                  {this.props.search.searchPlayersResults.map(player =>
-                    <tr key={player.id}>
-                      <td>
-                        <a href="#" onClick={() => this.addResult(player.bib, this.props.search.selectedDay)}><FaPlus /></a>
-                      </td>
-                      <td>
-                        <div className="text-left">{player.bib}</div>
-                      </td>
-                      <td>
-                        <div className="text-left">{player.last_name} {player.first_name}</div>
-                      </td>
-                    </tr>
-                  )}
-                  </tbody>
-                </Table>
+                <SearchPlayerResultsTable
+                 search={this.props.search}
+                 searchActions={this.props.searchActions}
+                 />
               </Col>
             </Row>
             : '' }

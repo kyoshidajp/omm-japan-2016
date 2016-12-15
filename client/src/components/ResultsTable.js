@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { Table } from 'react-bootstrap';
-import FaTrash from 'react-icons/lib/fa/trash';
+import FaMinusCircle from 'react-icons/lib/fa/minus-circle';
 
 export default class ResultsTable extends Component {
   constructor(props) {
@@ -52,7 +52,7 @@ export default class ResultsTable extends Component {
               onMouseEnter={() => this.props.searchActions.hoverResultTableRow(result.bib)}
               onMouseLeave={() => this.props.searchActions.outResultTableRow()} >
               <td key={result.id} >
-                <a href="#" onClick={() => this.deleteResult(result.bib)}><FaTrash /></a>
+                <a href="#" onClick={() => this.deleteResult(result.bib)}><FaMinusCircle /></a>
               </td>
               <td>
                 <div className="text-right">{result.bib}</div>
