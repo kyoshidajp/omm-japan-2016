@@ -1,6 +1,7 @@
 import Axios from 'axios';
 
 import * as OMM_CONST from '../constants/OMM';
+import * as API_PATH from '../constants/API_PATH';
 
 export const ON_CHANGE_SEARCH_TARGET = 'ON_CHANGE_SEARCH_TARGET';
 export const SUGGEST_ON_CHANGE = 'SUGGEST_ON_CHANGE';
@@ -47,7 +48,7 @@ export function loadControls(value) {
   return (dispatch) => {
     dispatch(loadControlsRequest());
 
-    Axios.get(`/api/v1/controls.json?day=${value}`).then(
+    Axios.get(`${API_PATH.CONTROLS}?day=${value}`).then(
       response => dispatch(loadControlsResult(response.data)),
     ).catch(
       response => console.log(response),
@@ -84,7 +85,7 @@ function getResultAPIPath(value, searchTarget, day) {
       break;
   }
 
-  return `/api/v1/results.json?${cond}=${value}&day=${day}`;
+  return `${API_PATH.RESULTS}?${cond}=${value}&day=${day}`;
 }
 
 function loadResultResult(value) {
@@ -122,7 +123,7 @@ export function loadBibs() {
   return (dispatch) => {
     dispatch(loadBibsRequest());
 
-    Axios.get('/api/v1/bibs.json').then(
+    Axios.get(API_PATH.BIBS).then(
       response => dispatch(loadBibsResult(response.data)),
     ).catch(
       response => console.log(response),
@@ -140,7 +141,7 @@ function searchPlayers(value) {
 export function suggestOnKeyPress(event, value) {
   if (event.which === 13) {
     return (dispatch) => {
-      Axios.get(`/api/v1/players.json?name=${value}`).then(
+      Axios.get(`${API_PATH.PLAYERS}?name=${value}`).then(
         response => dispatch(searchPlayers(response.data)),
       ).catch(
         response => console.log(response),
