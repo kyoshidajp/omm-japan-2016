@@ -37,6 +37,7 @@
     "babel-plugin-espower": "^2.3.1",
     "babel-preset-power-assert": "^1.0.0",
     "babel-register": "^6.18.0",
+    "dev-tools": "^0.1.6",
     "eslint": "^3.11.1",
     "eslint-config-airbnb-base": "^10.0.1",
     "eslint-plugin-import": "^2.2.0",
@@ -44,6 +45,9 @@
     "eslint-plugin-react": "^6.8.0",
     "jsdom": "^9.8.3",
     "mocha": "^3.2.0",
-    "power-assert": "^1.4.2"
+    "power-assert": "^1.4.2",
+    "redux-devtools": "^3.3.1",
+    "redux-devtools-dock-monitor": "^1.1.1",
+    "redux-devtools-log-monitor": "^1.1.1"
   }
 }
