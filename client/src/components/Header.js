@@ -19,11 +19,6 @@ export default class Header extends Component {
           </Navbar.Brand>
           <Navbar.Toggle />
         </Navbar.Header>
-        <Navbar.Collapse>
-          <Nav pullRight>
-            <NavItem eventKey={1} href="http://theomm.jp/?page_id=1063">Official</NavItem>
-          </Nav>
-        </Navbar.Collapse>
       </Navbar>
     );
   }

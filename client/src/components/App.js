@@ -6,8 +6,10 @@ import {
   Row,
   Col,
   Table,
+  Alert,
 } from 'react-bootstrap';
 import FaPlus from 'react-icons/lib/fa/plus';
+import FaInfoCircle from 'react-icons/lib/fa/info-circle';
 import $ from 'jquery';
 
 import ControlsTable from './ControlsTable';
@@ -16,6 +18,12 @@ import SearchPlayerResultsTable from './SearchPlayerResultsTable';
 import Header from './Header';
 import MapContainer from '../containers/MapContainer';
 import SearchContainer from '../containers/SearchContainer';
+
+const UnOfficialAlert = () => (
+  <Alert bsStyle="warning">
+    <FaInfoCircle /> This website is <strong>not an official</strong> site of <a href="https://www.theomm.com/" target="_blank">OMM</a>.
+  </Alert>
+);
 
 export default class App extends Component {
 
@@ -34,6 +42,7 @@ export default class App extends Component {
     return (
       <div>
         <Header style={{ height: '100%', width: '100%' }}/>
+        <UnOfficialAlert />
         <Grid fluid={true}>
           <Row className="show-grid omm-column">
             <Col xs={12} md={12}>
