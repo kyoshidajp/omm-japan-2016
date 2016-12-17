@@ -54,7 +54,7 @@ export default class ResultsTable extends Component {
               onMouseEnter={() => this.props.searchActions.hoverResultTableRow(result.bib)}
               onMouseLeave={() => this.props.searchActions.outResultTableRow()} >
               <td key={result.id} >
-                <a href="#" onClick={() => this.deleteResult(result.bib)}><FaMinusCircle /></a>
+                <a href="#" onClick={() => this.deleteResult(result.bib)}><FaMinusCircle className="del-result" /></a>
               </td>
               <td>
                 <ToggleButton
