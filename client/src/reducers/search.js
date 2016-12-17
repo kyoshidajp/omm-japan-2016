@@ -247,7 +247,7 @@ export default function search(state = initialState, action) {
         markers: [],
       });
     }
-    case OMM.LOAD_CONTROLS_REQUST: {
+    case OMM.LOAD_CONTROLS_REQUEST: {
       return Object.assign({}, state, {
         loading: true,
         loaded: false,
