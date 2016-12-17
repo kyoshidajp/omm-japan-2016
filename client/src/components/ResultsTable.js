@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { Table } from 'react-bootstrap';
 import FaMinusCircle from 'react-icons/lib/fa/minus-circle';
+import ToggleButton from 'react-toggle-button';
 
 export default class ResultsTable extends Component {
   constructor(props) {
@@ -15,7 +16,6 @@ export default class ResultsTable extends Component {
     this.isCheckedControl = this.isCheckedControl.bind(this);
     this.joinPlayers = this.joinPlayers.bind(this);
     this.deleteResult = this.deleteResult.bind(this);
-    this.getColorStyleByResult = this.getColorStyleByResult.bind(this);
   }
 
   isCheckedControl(bib, markId) {
@@ -33,11 +33,6 @@ export default class ResultsTable extends Component {
     window.suggestInput.focus();
   }
 
-  getColorStyleByResult(result) {
-    const color = this.props.search.bibConfigMap.get(result.bib).color;
-    return { 'background-color': color };
-  }
-
   render() {
     return (
       <Table striped condensed hover responsive bordered
@@ -45,7 +40,7 @@ export default class ResultsTable extends Component {
         <thead>
           <tr>
             <th className="delete" />
-            <th className="color" />
+            <th className="disp-toggle" />
             <th className="bib">bib</th>
             <th className="rank">rank</th>
             <th className="score">score</th>
@@ -61,7 +56,30 @@ export default class ResultsTable extends Component {
               <td key={result.id} >
                 <a href="#" onClick={() => this.deleteResult(result.bib)}><FaMinusCircle /></a>
               </td>
-              <td className="color" style={this.getColorStyleByResult(result)} />
+              <td>
+                <ToggleButton
+                  inactiveLabel={''}
+                  activeLabel={''}
+                  onToggle={() => this.props.searchActions.changeDisplayRoute(result.bib)}
+                  value={this.props.search.bibConfigMap.get(result.bib).display}
+                  colors={{
+                    activeThumb: {
+                      base: '#fff',
+                    },
+                    inactiveThumb: {
+                      base: '#fff',
+                    },
+                    active: {
+                      base: this.props.search.bibConfigMap.get(result.bib).color,
+                      hover: 'rgb(177, 191, 215)',
+                    },
+                    inactive: {
+                      base: 'rgb(65,66,68)',
+                      hover: 'rgb(95,96,98)',
+                    }
+                  }}
+                  />
+              </td>
               <td>
                 <div className="text-right">{result.bib}</div>
               </td>

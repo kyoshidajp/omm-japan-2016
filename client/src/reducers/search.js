@@ -30,6 +30,7 @@ function precedeRoute(targetBib, bibConfigMap) {
         controls: routepath,
         codes: bibConfig.codes,
         color: bibConfig.color,
+        display: bibConfig.display,
       });
   }
   return bibConfigMap;
@@ -175,6 +176,7 @@ function getBibControlsMap(result, bibConfigMap, day) {
   bibConfigMap.set(result.bib,
     {
       controls: routepath,
+      display: true,
       codes,
       color,
     });
@@ -209,6 +211,7 @@ const initialState = {
    *        controls: [control.code, ...],
    *        codes: [control, ...],
    *        color,
+   *        display,
    *      }
    */
   bibConfigMap: new Map(),
@@ -335,6 +338,13 @@ export default function search(state = initialState, action) {
       return Object.assign({}, state, {
         compareResults,
         gridWidth: getGridWidth(compareResults),
+      });
+    }
+    case OMM.CHANGE_DISPLAY_ROUTE: {
+      const bibConfig = state.bibConfigMap.get(action.bib);
+      bibConfig.display = !bibConfig.display;
+      return Object.assign({}, state, {
+        bibConfigMap: state.bibConfigMap.set(action.bib, bibConfig),
       });
     }
     default:

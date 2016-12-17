@@ -17,6 +17,14 @@ export const LOAD_CONTROLS_REQUEST = 'LOAD_CONTROLS_REQUEST';
 export const LOAD_CONTROLS_RESULT = 'LOAD_CONTROLS_RESULT';
 export const HOVER_RESULT_TABLE_ROW = 'HOVER_RESULT_TABLE_ROW';
 export const OUT_RESULT_TABLE_ROW = 'OUT_RESULT_TABLE_ROW';
+export const CHANGE_DISPLAY_ROUTE = 'CHANGE_DISPLAY_ROUTE';
+
+export function changeDisplayRoute(bib) {
+  return {
+    type: CHANGE_DISPLAY_ROUTE,
+    bib,
+  };
+}
 
 export function hoverResultTableRow(bib) {
   return {

@@ -311,4 +311,34 @@ describe('seach reducer', () => {
     };
     assert.deepEqual(actual, expected);
   });
+
+  describe('CHANGE_DISPLAY_ROUTE action type', () => {
+    const bibConfigMap = new Map();
+    bibConfigMap.set(1, {
+      codes: [],
+      color: '#ffffff',
+      display: true,
+    });
+    bibConfigMap.set(2, {
+      codes: [],
+      color: '#ffffff',
+      display: false,
+    });
+    it('display return false when true', () => {
+      const actual = reducer(
+        { bibConfigMap }, {
+          type: actions.CHANGE_DISPLAY_ROUTE,
+          bib: 1,
+        }).bibConfigMap.get(1).display;
+      assert.deepEqual(actual, false);
+    });
+    it('display return true when false', () => {
+      const actual = reducer(
+        { bibConfigMap }, {
+          type: actions.CHANGE_DISPLAY_ROUTE,
+          bib: 2,
+        }).bibConfigMap.get(2).display;
+      assert.deepEqual(actual, true);
+    });
+  });
 });

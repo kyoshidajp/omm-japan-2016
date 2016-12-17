@@ -28,7 +28,8 @@ const AsyncGoogleMap = _.flowRight(
         onRightClick={() => props.onMarkerRightClick(marker)}
       />
     ))}
-    {props.compareResults.map(result => (
+    {props.compareResults.filter(result =>
+      props.bibConfigMap.get(result.bib).display).map(result => (
       <Polyline key={result.id}
         {...props.bibConfigMap.get(result.bib).controls}
       />
