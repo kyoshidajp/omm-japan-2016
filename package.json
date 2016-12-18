@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "webpack-watch": "webpack -w",
-    "webpack-build": "webpack -p",
+    "webpack-build": "webpack --config webpack-production.config.js",
     "lint": "eslint ./client/src/**/*.js",
     "test": "mocha --compilers js:babel-register ./client/test/**/*.js"
   },
