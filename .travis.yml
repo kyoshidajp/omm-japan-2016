@@ -1,20 +1,21 @@
 language: ruby
-
 rvm:
-  - 2.3.0
-
+- 2.3.0
 services:
-   - postgresql
-
-bundler_args: '--without development --deployment'
-
+- postgresql
+bundler_args: "--without development --deployment"
 cache: bundler
-
 before_script:
-  - cp config/database.travis.yml config/database.yml
-  - bundle exec rake db:create
-  - bundle exec rake db:migrate
-  - bundle exec rake db:seed_fu RAILS_ENV=test
-
+- cp config/database.travis.yml config/database.yml
+- bundle exec rake db:create
+- bundle exec rake db:migrate
+- bundle exec rake db:seed_fu RAILS_ENV=test
 script:
-  - bundle exec rspec
+- bundle exec rspec
+deploy:
+  provider: heroku
+  api_key:
+    secure: dEKEjVsJaqpyodK58UqRumB47AWnq+LnoF/MHcbi1qx21tz30WqYmlPZxYQEwILzhxyED6ZGYHymnsQpV+n+OpJFQIE0W1iRnZgxFJqeBvvUCSTowILeJSYu+hi3R1t1u0EyZHWdiBcwGSpKZE01X5Ec7wR2eGflQBdBujw0egeeTdZ6Q/w8SGZEBSeBCQscimDV8sXxhkFzaC/KoitzLbRBq1NV+ryjk9p78aIgYhdh/lLxokT0IPYUoYloO09uXTBiN4L/fsrI6PM4WvxQHHW3QpNIXykl6TG4zUwUdeY0GPsEDwynN964smFYxRKz/SMvhXLneRSKxpS+TTlRyjWaO2OG/kMc9sTV8G0EXhVk0tViVROWCA1soUVIUQcXrLJbC3/rlylBRRlIzOSgp+rfroT31TmVhjwff5RqGVPNyfKeD7g/DMFPpapkQoGTc2jWBhiDChCIzx0pYh13rIwurvbwHKcZFZk6jZF7kcC7jW0y2FxWnZAV29pGyW6c+a2En615pMZpF5nU4c33pFYLtJhOpsHCecqAVlc1jXfZ6y92K9jmIee3q67yF2wco22SSXtmjnkk0ESgsKHyv5QlmOEA7dKCjP/iM00uv4vkhOf7Ec2hqOcgobktVOuMRSPisWlUes2+zSSVDCFCDjpnX/EA1RtIga/ClQONtyk=
+  app: omm-japan-2016
+  on:
+    repo: kyoshidajp/omm-japan-2016
