@@ -71,7 +71,7 @@ export default class ResultsTable extends Component {
                     },
                     active: {
                       base: this.props.search.bibConfigMap.get(result.bib).color,
-                      hover: 'rgb(177, 191, 215)',
+                      hover: 'rgb(95,96,98)',
                     },
                     inactive: {
                       base: 'rgb(65,66,68)',

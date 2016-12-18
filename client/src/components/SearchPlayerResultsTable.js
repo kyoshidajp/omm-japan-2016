@@ -33,7 +33,7 @@ export default class SearchPlayerResultsTable extends Component {
         {this.props.search.searchPlayersResults.map(player =>
           <tr key={player.id}>
             <td>
-              <a href="#" onClick={() => this.addResult(player.bib, this.props.search.selectedDay)}><FaPlusCircle /></a>
+              <a href="#" onClick={() => this.addResult(player.bib, this.props.search.selectedDay)}><FaPlusCircle className="add-result" /></a>
             </td>
             <td>
               <div className="text-left">{player.bib}</div>
