@@ -13,7 +13,6 @@ gem 'seed-fu'
 gem 'therubyracer'
 
 group :assets do
-  gem 'coffee-rails', '~> 4.2'
   gem 'uglifier', '>= 1.3.0'
 end
 
