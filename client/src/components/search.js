@@ -42,7 +42,7 @@ export default class Search extends Component {
 
   render() {
     return (
-      <Form inline>
+      <Form inline componentClass='div'>
         <FormGroup>
           <InputGroup>
             <DropdownButton bsStyle="primary"
