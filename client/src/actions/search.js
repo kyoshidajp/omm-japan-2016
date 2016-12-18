@@ -146,16 +146,25 @@ function searchPlayers(value) {
   };
 }
 
+function callSearchPlayersAPI(value) {
+  if (value === '') return { type: null };
+
+  return (dispatch) => {
+    Axios.get(`${API_PATH.PLAYERS}?name=${value}`).then(
+      response => dispatch(searchPlayers(response.data)),
+    ).catch(
+      response => console.log(response),
+    );
+  };
+}
+
+export function onClickSearchButton(value) {
+  return callSearchPlayersAPI(value);
+}
+
 export function suggestOnKeyPress(event, value) {
-  if (event.which === 13) {
-    return (dispatch) => {
-      Axios.get(`${API_PATH.PLAYERS}?name=${value}`).then(
-        response => dispatch(searchPlayers(response.data)),
-      ).catch(
-        response => console.log(response),
-      );
-    };
-  }
+  const ENTER_KEY = 13;
+  if (event.which === ENTER_KEY) return callSearchPlayersAPI(value);
   return { type: null };
 }
 

@@ -14,6 +14,7 @@ import {
   Col,
   Form,
 } from 'react-bootstrap';
+import FaSearch from 'react-icons/lib/fa/search';
 
 import * as OMM from '../constants/OMM';
 import Suggest from './Suggest';
@@ -23,6 +24,7 @@ export default class Search extends Component {
   constructor(props) {
     super(props);
     this.changeDay = this.changeDay.bind(this);
+    this.onClickSearchButton = this.onClickSearchButton.bind(this);
   }
 
   componentDidMount() {
@@ -40,12 +42,17 @@ export default class Search extends Component {
     window.suggestInput.focus();
   }
 
+  onClickSearchButton(event) {
+    this.props.actions.onClickSearchButton(this.props.search.value);
+  }
+
   render() {
     return (
       <Form inline componentClass='div'>
         <FormGroup>
           <InputGroup>
-            <DropdownButton bsStyle="primary"
+            <DropdownButton
+              className="search-targets-btn"
               componentClass={InputGroup.Button}
               title={this.props.search.searchTarget}
               id="input-dropdown-addon">
@@ -62,6 +69,13 @@ export default class Search extends Component {
               actions={this.props.actions}
             />
           </InputGroup>
+        </FormGroup>
+        <FormGroup>
+        <Button bsStyle="primary" className="search-btn"
+          disabled={this.props.search.searchTarget === OMM.SEARCH_TARGETS.BIB}
+          onClick={() => this.props.actions.onClickSearchButton(this.props.search.value)}>
+          <FaSearch className="search-icon" />
+        </Button>
         </FormGroup>
         <FormGroup className="day">
           <InputGroup>
