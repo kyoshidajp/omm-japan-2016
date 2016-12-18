@@ -65,12 +65,12 @@ export default class Search extends Component {
         </FormGroup>
         <FormGroup className="day">
           <InputGroup>
-          {Object.entries(OMM.DAYS).map(day =>
+          {[OMM.DAYS.DAY1, OMM.DAYS.DAY2].map(day =>
             <Radio inline
-              key={day[1].code}
+              key={day.code}
               onChange={this.changeDay}
-              value={day[1].code}
-              checked={this.props.search.selectedDay === day[1].code}>{day[1].value}</Radio>
+              value={day.code}
+              checked={this.props.search.selectedDay === day.code}>{day.value}</Radio>
           )}
           </InputGroup>
         </FormGroup>
