@@ -10,7 +10,9 @@ before_script:
 - bundle exec rake db:create
 - bundle exec rake db:migrate
 - bundle exec rake db:seed_fu RAILS_ENV=test
+- gem install rubocop
 script:
+- rubocop --fail-level=W
 - bundle exec rspec
 deploy:
   provider: heroku
