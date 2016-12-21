@@ -85,3 +85,16 @@ describe 'GET /api/v1/results.json' do
     end
   end
 end
+
+describe 'GET /api/v1/bibs.json' do
+  let(:json) { JSON.parse(response.body) }
+
+  it 'return status code 200' do
+    is_expected.to eq 200
+  end
+
+  it 'data size is 20' do
+    is_expected
+    expect(json.size).to eq 20
+  end
+end

@@ -10,6 +10,9 @@ module Api::V1
     private
 
     def validate_params(validate)
+      # TODO: use skip_before_action
+      return if params[:action] == 'bibs'
+
       activity = validate.new(params)
       render json: { error: activity.errors } unless activity.valid?
     end
