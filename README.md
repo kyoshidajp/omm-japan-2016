@@ -24,7 +24,7 @@ OMM-JAPAN-2016 is an application that visually displays the result of [OMM JAPAN
 
 ## Requirements
 
-- Ruby(MRI) 2.3.0 or higher
+- Ruby(MRI) 2.3.0
 - Bundler 1.13.6 or higher
 - Node.js v4.2.2 or higher
 - PostgreSQL 9.4.4 or higher
