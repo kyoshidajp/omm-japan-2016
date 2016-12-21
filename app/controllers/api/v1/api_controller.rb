@@ -1,10 +1,17 @@
-class Api::V1::APIController < ActionController::Base
-  before_action :check_day
+module Api::V1
+  class APIController < ActionController::Base
+    ActionController::Parameters.action_on_unpermitted_parameters = :raise
 
-  private
+    rescue_from(ActionController::UnpermittedParameters) do |pme|
+      render json: { error: { unknown_paramters: pme.params } },
+             status: :bad_request
+    end
 
-  def check_day
-    day = params[:day]
-    head(:bad_request) unless %w(1 2).include?(day)
+    private
+
+    def validate_params(validate)
+      activity = validate.new(params)
+      render json: { error: activity.errors } unless activity.valid?
+    end
   end
 end
