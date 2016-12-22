@@ -3,12 +3,7 @@ module Api::V1
     before_action { validate_params(Validations::Result) }
 
     def index
-      result = if params[:name].present?
-                 name = params[:name]
-                 Result.has_player_name_like(name)
-               elsif params[:bib].present?
-                 find_by(params[:bib].to_i)
-               end
+      result = find_by(params[:bib].to_i)
       render json: result, include: [:players, :controls]
     end
 
