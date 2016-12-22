@@ -1,38 +1,38 @@
 import assert from 'assert';
-import * as searchActions from '../../src/actions/search';
+import * as actions from '../../src/actions/search';
 
 describe('actions', () => {
   it('handle changeDisplayRoute', () => {
-    const actual = searchActions.changeDisplayRoute(100);
+    const actual = actions.changeDisplayRoute(100);
     const expected = { 
-			type: searchActions.CHANGE_DISPLAY_ROUTE,
+			type: actions.CHANGE_DISPLAY_ROUTE,
 			bib: 100,
 		};
     assert.deepEqual(actual, expected);
   });
 
   it('handle hoverResultTableRow', () => {
-    const actual = searchActions.hoverResultTableRow(100);
+    const actual = actions.hoverResultTableRow(100);
     const expected = { 
-			type: searchActions.HOVER_RESULT_TABLE_ROW,
+			type: actions.HOVER_RESULT_TABLE_ROW,
 			value: 100,
 		};
     assert.deepEqual(actual, expected);
   });
 
   it('handle onChangeSearchTarget', () => {
-    const actual = searchActions.onChangeSearchTarget('target');
+    const actual = actions.onChangeSearchTarget('target');
     const expected = {
-      type: searchActions.ON_CHANGE_SEARCH_TARGET,
+      type: actions.ON_CHANGE_SEARCH_TARGET,
       value: 'target'
     };
     assert.deepEqual(actual, expected);
   });
 
   it('handle onChange', () => {
-    const actual = searchActions.onChange('value');
+    const actual = actions.onChange('value');
     const expected = {
-      type: searchActions.SUGGEST_ON_CHANGE,
+      type: actions.SUGGEST_ON_CHANGE,
       value: 'value'
     };
     assert.deepEqual(actual, expected);
@@ -40,9 +40,9 @@ describe('actions', () => {
 
   it('handle onSuggestionsFetchRequested', () => {
 		const value = { value : 'value'};
-    const actual = searchActions.onSuggestionsFetchRequested(value, ['results']);
+    const actual = actions.onSuggestionsFetchRequested(value, ['results']);
     const expected = {
-      type: searchActions.SUGGEST_ON_SUGGESTIONS_FETCH_REQUESTED,
+      type: actions.SUGGEST_ON_SUGGESTIONS_FETCH_REQUESTED,
       value: value.value,
 			results: ['results'],
     };
@@ -50,17 +50,17 @@ describe('actions', () => {
   });
 
   it('handle onSuggestionsClearRequested', () => {
-    const actual = searchActions.onSuggestionsClearRequested();
+    const actual = actions.onSuggestionsClearRequested();
     const expected = {
-      type: searchActions.SUGGEST_ON_SUGGESTIONS_CLEAR_REQUESTED,
+      type: actions.SUGGEST_ON_SUGGESTIONS_CLEAR_REQUESTED,
     };
     assert.deepEqual(actual, expected);
   });
 
   it('handle deleteCompareResult', () => {
-    const actual = searchActions.deleteCompareResult(100);
+    const actual = actions.deleteCompareResult(100);
     const expected = {
-      type: searchActions.DELETE_COMPARE_RESULT,
+      type: actions.DELETE_COMPARE_RESULT,
 			bib: 100,
     };
     assert.deepEqual(actual, expected);
