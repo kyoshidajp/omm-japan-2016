@@ -10,6 +10,7 @@
 /log/*
 /tmp/*
 /db/*.sqlite3
+coverage
 !/log/.keep
 !/tmp/.keep
 .byebug_history
