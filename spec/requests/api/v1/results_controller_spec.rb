@@ -11,14 +11,76 @@ describe 'GET /api/v1/results.json' do
         is_expected.to eq 200
       end
 
-      it 'return score 880' do
+      it 'return bib is 163' do
+        is_expected
+        expect(json['bib']).to eq 163
+      end
+
+      it 'return score is 880' do
         is_expected
         expect(json['score']).to eq 880
+      end
+
+      it 'return demerit_point is 0' do
+        is_expected
+        expect(json['demerit_point']).to eq 0
+      end
+
+      it 'return day1 is true' do
+        is_expected
+        expect(json['day1']).to eq true
+      end
+
+      it 'return day2 is false' do
+        is_expected
+        expect(json['day2']).to eq false
+      end
+
+      it 'return rank is 1' do
+        is_expected
+        expect(json['rank']).to eq 1
+      end
+
+      it 'return disq is false' do
+        is_expected
+        expect(json['disq']).to eq false
+      end
+
+      it 'return ret is false' do
+        is_expected
+        expect(json['ret']).to eq false
+      end
+    end
+
+    context 'day is 2 and bib is 122' do
+      let(:params) { { day: '2', bib: '122' } }
+      it 'return status code 200' do
+        is_expected.to eq 200
+      end
+
+      it 'return day1 is false' do
+        is_expected
+        expect(json['day1']).to eq false
+      end
+
+      it 'return day2 is true' do
+        is_expected
+        expect(json['day2']).to eq true
+      end
+
+      it 'return rank is 5' do
+        is_expected
+        expect(json['rank']).to eq 5
+      end
+
+      it 'return score is 490' do
+        is_expected
+        expect(json['score']).to eq 490
       end
     end
 
     context 'day is 1 and bib is not number' do
-      let(:params) { { day: 2, bib: 'string' } }
+      let(:params) { { day: 1, bib: 'string' } }
       it 'return status code 200' do
         is_expected.to eq 200
       end
