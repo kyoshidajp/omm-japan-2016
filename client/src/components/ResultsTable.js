@@ -51,6 +51,10 @@ export default class ResultsTable extends Component {
     return icon;
   }
 
+  formatDemeritPoint(point) {
+    return point === 0 ? point : point;
+  }
+
   render() {
     return (
       <Table striped condensed hover responsive bordered
@@ -115,7 +119,7 @@ export default class ResultsTable extends Component {
                 <div className="text-right">{result.time}</div>
               </td>
               <td>
-                <div className="text-right">-{result.demerit_point}</div>
+                <div className="text-right">{result.demerit_point}</div>
               </td>
               <td>
                 <div className="text-left">
