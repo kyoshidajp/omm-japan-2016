@@ -10,6 +10,11 @@ describe 'GET /api/v1/results.json' do
       it 'return status code 200' do
         is_expected.to eq 200
       end
+
+      it 'return score 880' do
+        is_expected
+        expect(json['score']).to eq 880
+      end
     end
 
     context 'day is 1 and bib is not number' do

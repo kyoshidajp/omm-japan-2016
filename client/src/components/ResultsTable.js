@@ -43,7 +43,9 @@ export default class ResultsTable extends Component {
             <th className="disp-toggle" />
             <th className="bib">bib</th>
             <th className="rank">rank</th>
-            <th className="score">score</th>
+            <th className="score">point</th>
+            <th className="time">time</th>
+            <th className="adjust">adjust</th>
             <th className="players">players</th>
             <th className="routes">route</th>
           </tr>
@@ -88,6 +90,12 @@ export default class ResultsTable extends Component {
               </td>
               <td>
                 <div className="text-right">{result.score}</div>
+              </td>
+              <td>
+                <div className="text-right">{result.time}</div>
+              </td>
+              <td>
+                <div className="text-right">-{result.demerit_point}</div>
               </td>
               <td>
                 <div className="text-left">

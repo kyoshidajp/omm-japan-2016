@@ -42,7 +42,7 @@ class ResultClass
   end
 
   def bib
-    @result[3].to_i
+    has_time? ? @result[3].to_i : @result[2].to_i
   end
 
   def players
@@ -52,7 +52,7 @@ class ResultClass
   end
 
   def time
-    @result[2]
+    has_time? ? @result[2] : nil
   end
 
   def route
@@ -63,8 +63,18 @@ class ResultClass
     @result[1].to_s
   end
 
+  def demerit_point
+    disq ? 0 : @result[10].to_i
+  end
+
   def inspect
     "rank: #{rank}, score: #{score}, bib: #{bib}, player1: #{players[0]}, #{players[1]}, route: #{route}"
+  end
+
+  private
+
+  def has_time?
+    @result[2] =~ /:/
   end
 end
 
@@ -93,6 +103,8 @@ class ResultsImporter
       r.rank = result.rank
       r.disq = result.disq
       r.ret = result.ret
+      r.time = result.time
+      r.demerit_point = result.demerit_point
       r.day1 = day == 1
       r.day2 = day == 2
     end
