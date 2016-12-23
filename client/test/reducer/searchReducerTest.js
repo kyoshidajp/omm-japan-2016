@@ -278,6 +278,10 @@ describe('seach reducer', () => {
       {
         searchTarget: OMM_CONST.SEARCH_TARGETS.BIB,
         bibs: [100, 101, 200, 201],
+        compareResults: [
+          { bib: 300 },
+          { bib: 400 },
+        ],
       }, {
         type: actions.SUGGEST_ON_SUGGESTIONS_FETCH_REQUESTED,
         value: '1',
@@ -286,6 +290,10 @@ describe('seach reducer', () => {
       searchTarget: OMM_CONST.SEARCH_TARGETS.BIB,
       bibs: [100, 101, 200, 201],
       suggestions: ['100', '101'],
+      compareResults: [
+        { bib: 300 },
+        { bib: 400 },
+      ],
     };
     assert.deepEqual(actual, expected);
   });

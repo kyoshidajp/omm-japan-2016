@@ -115,9 +115,20 @@ function getSuggestions(value, state) {
   const inputValue = value.toString();
   const inputLength = inputValue.length;
 
+  if (inputLength === 0) return [];
+
   const candidates = provider.map(item => item.toString());
-  return inputLength === 0 ? [] : candidates.filter(item =>
-    item.slice(0, inputLength) === inputValue,
+  const displayedBibs = state.compareResults.map(result => result.bib);
+
+  // TODO:
+  //    when use
+  //      !displayedBibs.includes(Number(item))
+  //    instead of
+  //      displayedBibs.indexOf(Number(item)) === -1
+  //    failed at test
+  return candidates.filter(item =>
+    item.slice(0, inputLength) === inputValue &&
+      displayedBibs.indexOf(Number(item)) === -1,
   );
 }
 
