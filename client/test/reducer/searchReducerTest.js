@@ -349,4 +349,47 @@ describe('seach reducer', () => {
       assert.deepEqual(actual, true);
     });
   });
+
+  describe('SORT_RESULT_TABLE action type', () => {
+    const compareResults = [
+      { bib: 300, rank: 10 },
+      { bib: 200, rank: 3 },
+      { bib: 500, rank: 20 },
+    ];
+    it('return results sorted by rank asc and sortOrder is desc', () => {
+      const actual = reducer(
+        { compareResults }, {
+          type: actions.SORT_RESULT_TABLE,
+          sortBy: OMM_CONST.SORT_FIELDS.RANK,
+          sortOrder: OMM_CONST.SORT_ORDER.ASC,
+        });
+      const expected = {
+        compareResults: [
+          { bib: 200, rank: 3 },
+          { bib: 300, rank: 10 },
+          { bib: 500, rank: 20 },
+        ],
+        sortOrder: OMM_CONST.SORT_ORDER.DESC,
+      };
+      assert.deepEqual(actual, expected);
+    });
+
+    it('return results sorted by rank desc and sortOrder is asc', () => {
+      const actual = reducer(
+        { compareResults }, {
+          type: actions.SORT_RESULT_TABLE,
+          sortBy: OMM_CONST.SORT_FIELDS.RANK,
+          sortOrder: OMM_CONST.SORT_ORDER.DESC,
+        });
+      const expected = {
+        compareResults: [
+          { bib: 500, rank: 20 },
+          { bib: 300, rank: 10 },
+          { bib: 200, rank: 3 },
+        ],
+        sortOrder: OMM_CONST.SORT_ORDER.ASC,
+      };
+      assert.deepEqual(actual, expected);
+    });
+  });
 });

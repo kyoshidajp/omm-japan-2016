@@ -198,12 +198,54 @@ function deleteComareResult(bib, results) {
   return results.filter(result => result.bib !== bib);
 }
 
+function isSortField(field) {
+  // if use Object.values and includes, then raise error at test
+  const values = Object.keys(OMM_CONST.SORT_FIELDS).map(key => OMM_CONST.SORT_FIELDS[key]);
+  return values.indexOf(field) !== -1;
+}
+
+function sortComareResult(results, sortBy, sortOrder) {
+  // check can sort or not
+  if (!isSortField(sortBy)) {
+    console.error(`Unsupport sort field: ${sortBy}`);
+    return results;
+  }
+
+  if (sortOrder === OMM_CONST.SORT_ORDER.DESC) {
+    results.sort((result1, result2) => {
+      if (result1[sortBy] < result2[sortBy]) return 1;
+      if (result1[sortBy] > result2[sortBy]) return -1;
+      return 0;
+    });
+  } else if (sortOrder === OMM_CONST.SORT_ORDER.ASC) {
+    results.sort((result1, result2) => {
+      if (result1[sortBy] < result2[sortBy]) return -1;
+      if (result1[sortBy] > result2[sortBy]) return 1;
+      return 0;
+    });
+  }
+  return results;
+}
+
+function switchSortOrder(sortOrder) {
+  if (sortOrder === OMM_CONST.SORT_ORDER.DESC) {
+    return OMM_CONST.SORT_ORDER.ASC;
+  }
+  if (sortOrder === OMM_CONST.SORT_ORDER.ASC) {
+    return OMM_CONST.SORT_ORDER.DESC;
+  }
+
+  console.warn(`Unknown sortOrder: ${sortOrder}`);
+  return OMM_CONST.SORT_ORDER.DESC;
+}
+
 const initialState = {
   searchTargets: [
     OMM_CONST.SEARCH_TARGETS.BIB,
     OMM_CONST.SEARCH_TARGETS.PLAYER,
   ],
 
+  sortOrder: OMM_CONST.SORT_ORDER.DESC,
   searchTarget: OMM_CONST.SEARCH_TARGETS.BIB,
   searchPlaceHolder: OMM_CONST.SEARCH_PLACE_HOLDER.BIB,
 
@@ -356,6 +398,16 @@ export default function search(state = initialState, action) {
       bibConfig.display = !bibConfig.display;
       return Object.assign({}, state, {
         bibConfigMap: state.bibConfigMap.set(action.bib, bibConfig),
+      });
+    }
+    case OMM.SORT_RESULT_TABLE: {
+      const sortOrder = switchSortOrder(action.sortOrder);
+      const compareResults = sortComareResult(state.compareResults,
+                                              action.sortBy,
+                                              action.sortOrder);
+      return Object.assign({}, state, {
+        compareResults,
+        sortOrder,
       });
     }
     default:

@@ -2,6 +2,9 @@ import React, { Component, PropTypes } from 'react';
 import { Table } from 'react-bootstrap';
 import FaMinusCircle from 'react-icons/lib/fa/minus-circle';
 import ToggleButton from 'react-toggle-button';
+import FaArrowUp from 'react-icons/lib/fa/arrow-up';
+import FaArrowDown from 'react-icons/lib/fa/arrow-down';
+import * as OMM_CONST from '../constants/OMM';
 
 export default class ResultsTable extends Component {
   constructor(props) {
@@ -16,6 +19,7 @@ export default class ResultsTable extends Component {
     this.isCheckedControl = this.isCheckedControl.bind(this);
     this.joinPlayers = this.joinPlayers.bind(this);
     this.deleteResult = this.deleteResult.bind(this);
+    this.sortIcon = this.sortIcon.bind(this);
   }
 
   isCheckedControl(bib, markId) {
@@ -33,6 +37,20 @@ export default class ResultsTable extends Component {
     window.suggestInput.focus();
   }
 
+  sortIcon(field) {
+    const sortOrder = this.props.search.sortOrder;
+    let icon = '';
+    if (sortOrder === OMM_CONST.SORT_ORDER.ASC) {
+      icon = <a href="#" onClick={() => this.props.searchActions.sortResultTable(field, OMM_CONST.SORT_ORDER.ASC)}><FaArrowDown /></a>;
+    }
+
+    if (sortOrder === OMM_CONST.SORT_ORDER.DESC) {
+      icon = <a href="#" onClick={() => this.props.searchActions.sortResultTable(field, OMM_CONST.SORT_ORDER.DESC)}><FaArrowUp /></a>;
+    }
+
+    return icon;
+  }
+
   render() {
     return (
       <Table striped condensed hover responsive bordered
@@ -42,8 +60,10 @@ export default class ResultsTable extends Component {
             <th className="delete" />
             <th className="disp-toggle" />
             <th className="bib">bib</th>
-            <th className="rank">rank</th>
-            <th className="score">point</th>
+            <th className="rank">
+              rank {this.sortIcon(OMM_CONST.SORT_FIELDS.RANK)}
+            </th>
+            <th className="score">score</th>
             <th className="time">time</th>
             <th className="adjust">adjust</th>
             <th className="players">players</th>

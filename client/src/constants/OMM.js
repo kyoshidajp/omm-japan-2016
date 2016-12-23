@@ -54,3 +54,12 @@ export const MAP_UN_TARGET_OPTION = {
   STROKE_WEIGHT: 7,
   Z_INDEX: 1,
 };
+
+export const SORT_ORDER = {
+  ASC: 'asc',
+  DESC: 'desc',
+};
+
+export const SORT_FIELDS = {
+  RANK: 'rank',
+};

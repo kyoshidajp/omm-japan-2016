@@ -18,6 +18,15 @@ export const LOAD_CONTROLS_RESULT = 'LOAD_CONTROLS_RESULT';
 export const HOVER_RESULT_TABLE_ROW = 'HOVER_RESULT_TABLE_ROW';
 export const OUT_RESULT_TABLE_ROW = 'OUT_RESULT_TABLE_ROW';
 export const CHANGE_DISPLAY_ROUTE = 'CHANGE_DISPLAY_ROUTE';
+export const SORT_RESULT_TABLE = 'SORT_RESULT_TABLE';
+
+export function sortResultTable(sortBy, sortOrder) {
+  return {
+    type: SORT_RESULT_TABLE,
+    sortBy,
+    sortOrder,
+  };
+}
 
 export function changeDisplayRoute(bib) {
   return {
