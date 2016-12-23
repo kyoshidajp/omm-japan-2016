@@ -8,7 +8,9 @@ module Api::V1
     end
 
     def bibs
-      bibs = Result.all.map(&:bib)
+      day = params[:day].to_i
+      bibs = Result.where(day1: day == 1,
+                          day2: day == 2).map(&:bib).uniq
       render json: bibs
     end
 

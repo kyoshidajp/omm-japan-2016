@@ -28,7 +28,7 @@ export default class Search extends Component {
   }
 
   componentDidMount() {
-    this.props.actions.loadBibs();
+    this.props.actions.loadBibs(this.props.search.selectedDay);
     window.suggestInput.focus();
   }
 

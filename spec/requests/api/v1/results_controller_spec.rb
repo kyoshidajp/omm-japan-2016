@@ -156,12 +156,29 @@ end
 describe 'GET /api/v1/bibs.json' do
   let(:json) { JSON.parse(response.body) }
 
-  it 'return status code 200' do
-    is_expected.to eq 200
-  end
+  context 'with params[:day]' do
+    context 'day is 1' do
+      let(:params) { { day: '1' } }
+      it 'return status code 200' do
+        is_expected.to eq 200
+      end
 
-  it 'data size is 20' do
-    is_expected
-    expect(json.size).to eq 20
+      it 'data size is 10' do
+        is_expected
+        expect(json.size).to eq 10
+      end
+    end
+
+    context 'day is 2' do
+      let(:params) { { day: '2' } }
+      it 'return status code 200' do
+        is_expected.to eq 200
+      end
+
+      it 'data size is 10' do
+        is_expected
+        expect(json.size).to eq 10
+      end
+    end
   end
 end

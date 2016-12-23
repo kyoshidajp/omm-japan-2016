@@ -136,11 +136,11 @@ function loadBibsResult(value) {
   };
 }
 
-export function loadBibs() {
+export function loadBibs(day) {
   return (dispatch) => {
     dispatch(loadBibsRequest());
 
-    Axios.get(API_PATH.BIBS).then(
+    Axios.get(`${API_PATH.BIBS}?day=${day}`).then(
       response => dispatch(loadBibsResult(response.data)),
     ).catch(
       response => console.log(response),
