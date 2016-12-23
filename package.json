@@ -7,7 +7,8 @@
     "webpack-watch": "webpack -w",
     "webpack-build": "webpack --config webpack-production.config.js",
     "lint": "eslint ./client/src/**/*.js",
-    "test": "mocha --compilers js:babel-register ./client/test/**/*.js"
+    "test": "mocha --compilers js:babel-register ./client/test/**/*.js",
+    "coverage": "babel-node ./node_modules/.bin/isparta cover _mocha -- --compilers js:babel-register $(find client -path '*Test*')"
   },
   "keywords": [],
   "author": "",
@@ -34,17 +35,21 @@
     "webpack": "^1.13.3"
   },
   "devDependencies": {
+    "babel-cli": "^6.18.0",
     "babel-eslint": "^7.1.1",
     "babel-plugin-espower": "^2.3.1",
     "babel-preset-power-assert": "^1.0.0",
     "babel-register": "^6.18.0",
     "css-loader": "^0.26.1",
     "dev-tools": "^0.1.6",
+    "es6-promise": "^4.0.5",
     "eslint": "^3.11.1",
     "eslint-config-airbnb-base": "^10.0.1",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^2.2.3",
     "eslint-plugin-react": "^6.8.0",
+    "isparta": "^4.0.0",
+    "istanbul": "^0.4.5",
     "jsdom": "^9.8.3",
     "mocha": "^3.2.0",
     "power-assert": "^1.4.2",
