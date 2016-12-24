@@ -60,7 +60,7 @@ class ResultClass
   end
 
   def score
-    @result[1].to_s
+    @result[1].to_i
   end
 
   def demerit_point
@@ -105,6 +105,7 @@ class ResultsImporter
       r.ret = result.ret
       r.time = result.time
       r.demerit_point = result.demerit_point
+      r.score_without_demerit_point = result.score + result.demerit_point.abs
       r.day1 = day == 1
       r.day2 = day == 2
     end

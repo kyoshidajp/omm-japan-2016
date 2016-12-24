@@ -124,6 +124,17 @@ body {
   min-width: 5em;
 }
 
+.result-table .score-if,
+.result-table .rank-if,
+{
+  min-width: 6.5em;
+}
+
+.result-table a:focus,
+{
+  outline: none;
+}
+
 .logo.navbar-brand {
   color: #e78b14;
   font-family: impact;

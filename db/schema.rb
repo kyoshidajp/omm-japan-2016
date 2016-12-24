@@ -10,7 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161211122754) do
+ActiveRecord::Schema.define(version: 20161224010357) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "categories", force: :cascade do |t|
     t.string   "name"
@@ -28,7 +31,7 @@ ActiveRecord::Schema.define(version: 20161211122754) do
     t.float    "lng"
     t.boolean  "day1"
     t.boolean  "day2"
-    t.index ["code"], name: "index_controls_on_code"
+    t.index ["code"], name: "index_controls_on_code", using: :btree
   end
 
   create_table "players", force: :cascade do |t|
@@ -44,8 +47,8 @@ ActiveRecord::Schema.define(version: 20161211122754) do
     t.integer  "control_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["control_id"], name: "index_result_controls_on_control_id"
-    t.index ["result_id"], name: "index_result_controls_on_result_id"
+    t.index ["control_id"], name: "index_result_controls_on_control_id", using: :btree
+    t.index ["result_id"], name: "index_result_controls_on_result_id", using: :btree
   end
 
   create_table "result_players", force: :cascade do |t|
@@ -53,8 +56,8 @@ ActiveRecord::Schema.define(version: 20161211122754) do
     t.integer  "player_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["player_id"], name: "index_result_players_on_player_id"
-    t.index ["result_id"], name: "index_result_players_on_result_id"
+    t.index ["player_id"], name: "index_result_players_on_player_id", using: :btree
+    t.index ["result_id"], name: "index_result_players_on_result_id", using: :btree
   end
 
   create_table "results", force: :cascade do |t|
@@ -65,11 +68,17 @@ ActiveRecord::Schema.define(version: 20161211122754) do
     t.integer  "demerit_point"
     t.boolean  "day1"
     t.boolean  "day2"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
     t.integer  "rank"
     t.boolean  "disq"
     t.boolean  "ret"
+    t.integer  "score_without_demerit_point"
+    t.integer  "rank_without_demerit_point"
   end
 
+  add_foreign_key "result_controls", "controls"
+  add_foreign_key "result_controls", "results"
+  add_foreign_key "result_players", "players"
+  add_foreign_key "result_players", "results"
 end

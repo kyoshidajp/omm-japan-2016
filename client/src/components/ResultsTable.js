@@ -1,10 +1,24 @@
 import React, { Component, PropTypes } from 'react';
-import { Table } from 'react-bootstrap';
+import { Table, Modal } from 'react-bootstrap';
 import FaMinusCircle from 'react-icons/lib/fa/minus-circle';
+import FaQuestion from 'react-icons/lib/fa/question';
+import FaThumbsOUp from 'react-icons/lib/fa/thumbs-o-up';
 import ToggleButton from 'react-toggle-button';
 import FaArrowUp from 'react-icons/lib/fa/arrow-up';
 import FaArrowDown from 'react-icons/lib/fa/arrow-down';
 import * as OMM_CONST from '../constants/OMM';
+
+const IfModal = props => (
+  <a href="#" onClick={props.click}>
+    <FaQuestion />
+    <Modal show={props.show} onHide={() => props.close()}>
+      <Modal.Header closeButton>
+        <Modal.Title>{props.title}</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>{props.message}</Modal.Body>
+    </Modal>
+  </a>
+);
 
 export default class ResultsTable extends Component {
   constructor(props) {
@@ -16,10 +30,19 @@ export default class ResultsTable extends Component {
       ommActions: PropTypes.object.isRequired,
     };
 
+    this.state = {
+      showModalIfScore: false,
+      showModalIfRank: false,
+    };
+
     this.isCheckedControl = this.isCheckedControl.bind(this);
     this.joinPlayers = this.joinPlayers.bind(this);
     this.deleteResult = this.deleteResult.bind(this);
     this.sortIcon = this.sortIcon.bind(this);
+    this.openModalIfScore = this.openModalIfScore.bind(this);
+    this.closeModalIfScore = this.closeModalIfScore.bind(this);
+    this.openModalIfRank = this.openModalIfRank.bind(this);
+    this.closeModalIfRank = this.closeModalIfRank.bind(this);
   }
 
   isCheckedControl(bib, markId) {
@@ -51,6 +74,42 @@ export default class ResultsTable extends Component {
     return icon;
   }
 
+  openModalIfScore() {
+    this.setState({ showModalIfScore: true });
+  }
+
+  closeModalIfScore() {
+    this.setState({ showModalIfScore: false });
+  }
+
+  openModalIfRank() {
+    this.setState({ showModalIfRank: true });
+  }
+
+  closeModalIfRank() {
+    this.setState({ showModalIfRank: false });
+  }
+
+  showScoreIfHelpIcon() {
+    const title = 'What is "score if ..."';
+    const message = 'It is the score when there is no miss score exceeding the time limit.';
+    return <IfModal
+             click={this.openModalIfScore}
+             show={this.state.showModalIfScore}
+             close={this.closeModalIfScore}
+             title={title} message={message} />;
+  }
+
+  showRankIfHelpIcon() {
+    const title = 'What is "rank if ..."';
+    const message = 'It is the rank when there is no miss score exceeding the time limit. In the case of ties the official score will take precedence.';
+    return <IfModal
+             click={this.openModalIfRank}
+             show={this.state.showModalIfRank}
+             close={this.closeModalIfRank}
+             title={title} message={message} />;
+  }
+
   formatDemeritPoint(point) {
     return point === 0 ? point : point;
   }
@@ -72,6 +131,12 @@ export default class ResultsTable extends Component {
             <th className="adjust">adjust</th>
             <th className="players">players</th>
             <th className="routes">route</th>
+            <th className="score-if">score if ...
+              {this.showScoreIfHelpIcon()}
+            </th>
+            <th className="rank-if">rank if ...
+              {this.showRankIfHelpIcon()}
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -134,6 +199,12 @@ export default class ResultsTable extends Component {
                    ).join('-')}
                   {result.score > 0 ? '-F' : ''}
                 </div>
+              </td>
+              <td>
+                <div className="text-right">{result.score_without_demerit_point}</div>
+              </td>
+              <td>
+                <div className="text-right">{result.rank_without_demerit_point}</div>
               </td>
             </tr>
           ))}
