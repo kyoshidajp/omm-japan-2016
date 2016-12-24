@@ -1,4 +1,4 @@
-import * as OMM from '../actions/search';
+import * as actions from '../actions/search';
 import * as OMM_CONST from '../constants/OMM';
 
 function precedeRoute(targetBib, bibConfigMap) {
@@ -288,29 +288,29 @@ const initialState = {
 
 export default function search(state = initialState, action) {
   switch (action.type) {
-    case OMM.HOVER_RESULT_TABLE_ROW: {
+    case actions.HOVER_RESULT_TABLE_ROW: {
       return Object.assign({}, state, {
         bibConfigMap: precedeRoute(action.value, state.bibConfigMap),
       });
     }
-    case OMM.OUT_RESULT_TABLE_ROW: {
+    case actions.OUT_RESULT_TABLE_ROW: {
       return Object.assign({}, state, {
         bibConfigMap: normalizeRoute(state.bibConfigMap),
       });
     }
-    case OMM.LOAD_CONTROLS: {
+    case actions.LOAD_CONTROLS: {
       return Object.assign({}, state, {
         markers: [],
       });
     }
-    case OMM.LOAD_CONTROLS_REQUEST: {
+    case actions.LOAD_CONTROLS_REQUEST: {
       return Object.assign({}, state, {
         loading: true,
         loaded: false,
         markers: [],
       });
     }
-    case OMM.LOAD_CONTROLS_RESULT: {
+    case actions.LOAD_CONTROLS_RESULT: {
       const { controls, markers } = getControlsAndMarkers(action.result, state.selectedDay);
       return Object.assign({}, state, {
         loading: false,
@@ -319,7 +319,7 @@ export default function search(state = initialState, action) {
         controls,
       });
     }
-    case OMM.CHANGE_DAY: {
+    case actions.CHANGE_DAY: {
       return Object.assign({}, state, {
         selectedDay: action.value,
         // initialize
@@ -329,53 +329,53 @@ export default function search(state = initialState, action) {
         markers: [],
       });
     }
-    case OMM.LOAD_BIBS: {
+    case actions.LOAD_BIBS: {
       return Object.assign({}, state, {
         bibs: [],
       });
     }
-    case OMM.LOAD_BIBS_REQUST: {
+    case actions.LOAD_BIBS_REQUST: {
       return Object.assign({}, state, {
         loading: true,
         loaded: false,
         bibs: [],
       });
     }
-    case OMM.LOAD_BIBS_RESULT: {
+    case actions.LOAD_BIBS_RESULT: {
       return Object.assign({}, state, {
         loading: false,
         loaded: true,
         bibs: action.value,
       });
     }
-    case OMM.ON_CHANGE_SEARCH_TARGET: {
+    case actions.ON_CHANGE_SEARCH_TARGET: {
       return Object.assign({}, state, {
         searchTarget: action.value,
         searchPlaceHolder: getPlaceHolder(action.value),
       });
     }
-    case OMM.SUGGEST_ON_KEY_PRESS: {
+    case actions.SUGGEST_ON_KEY_PRESS: {
       return Object.assign({}, state, {
         searchPlayersResults: action.value,
       });
     }
-    case OMM.SUGGEST_ON_CHANGE: {
+    case actions.SUGGEST_ON_CHANGE: {
       return Object.assign({}, state, {
         value: action.value,
         suggestions: [],
       });
     }
-    case OMM.SUGGEST_ON_SUGGESTIONS_FETCH_REQUESTED: {
+    case actions.SUGGEST_ON_SUGGESTIONS_FETCH_REQUESTED: {
       return Object.assign({}, state, {
         suggestions: getSuggestions(action.value, state),
       });
     }
-    case OMM.SUGGEST_ON_SUGGESTIONS_CLEAR_REQUESTED: {
+    case actions.SUGGEST_ON_SUGGESTIONS_CLEAR_REQUESTED: {
       return Object.assign({}, state, {
         suggestions: [],
       });
     }
-    case OMM.SUGGEST_ON_SUGGESTION_SELECTED: {
+    case actions.SUGGEST_ON_SUGGESTION_SELECTED: {
       const results = state.compareResults.concat(action.value);
       const bibConfigMap = getBibControlsMap(action.value, state.bibConfigMap, state.selectedDay);
       return Object.assign({}, state, {
@@ -386,21 +386,21 @@ export default function search(state = initialState, action) {
         bibConfigMap,
       });
     }
-    case OMM.DELETE_COMPARE_RESULT: {
+    case actions.DELETE_COMPARE_RESULT: {
       const compareResults = deleteComareResult(action.bib, state.compareResults);
       return Object.assign({}, state, {
         compareResults,
         gridWidth: getGridWidth(compareResults),
       });
     }
-    case OMM.CHANGE_DISPLAY_ROUTE: {
+    case actions.CHANGE_DISPLAY_ROUTE: {
       const bibConfig = state.bibConfigMap.get(action.bib);
       bibConfig.display = !bibConfig.display;
       return Object.assign({}, state, {
         bibConfigMap: state.bibConfigMap.set(action.bib, bibConfig),
       });
     }
-    case OMM.SORT_RESULT_TABLE: {
+    case actions.SORT_RESULT_TABLE: {
       const sortOrder = switchSortOrder(action.sortOrder);
       const compareResults = sortComareResult(state.compareResults,
                                               action.sortBy,

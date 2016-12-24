@@ -1,4 +1,4 @@
-import * as OMM from '../actions/map';
+import * as actions from '../actions/map';
 
 function getBibCodesMap(results) {
   const bibCodesMap = new Map();
@@ -21,19 +21,19 @@ const initialState = {
 
 export default function map(state = initialState, action) {
   switch (action.type) {
-    case OMM.LOAD_PLAYERS_RESULT: {
+    case actions.LOAD_PLAYERS_RESULT: {
       return Object.assign({}, state, {
         players: action.value,
       });
     }
-    case OMM.LOAD_RESULTS_REQUST: {
+    case actions.LOAD_RESULTS_REQUST: {
       return Object.assign({}, state, {
         loading: true,
         loaded: false,
         allResults: [],
       });
     }
-    case OMM.LOAD_RESULTS_RESULT: {
+    case actions.LOAD_RESULTS_RESULT: {
       return Object.assign({}, state, {
         loading: false,
         loaded: true,
