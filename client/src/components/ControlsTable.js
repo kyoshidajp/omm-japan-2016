@@ -8,6 +8,7 @@ import {
 } from 'react-bootstrap';
 import FaTrash from 'react-icons/lib/fa/trash';
 import FaCheck from 'react-icons/lib/fa/check';
+import * as OMM_CONST from '../constants/OMM';
 
 export default class ContorlsTable extends Component {
   constructor(props) {
@@ -20,6 +21,7 @@ export default class ContorlsTable extends Component {
     };
 
     this.isCheckedControl = this.isCheckedControl.bind(this);
+    this.getContorols = this.getControls.bind(this);
   }
 
   isCheckedControl(bib, markId) {
@@ -27,7 +29,12 @@ export default class ContorlsTable extends Component {
     return this.props.search.bibConfigMap.get(bib).codes.indexOf(Number(markId)) > -1;
   }
 
+  getControls() {
+    return this.props.search.markers.filter(marker => marker.label !== OMM_CONST.START_POINT.LABEL && marker.label !== OMM_CONST.FINISH_POINT.LABEL);
+  }
+
   render() {
+    const controls = this.getControls();
     return (
       <Table striped condensed hover responsive>
         <thead>
@@ -41,7 +48,7 @@ export default class ContorlsTable extends Component {
           </tr>
         </thead>
         <tbody>
-          {this.props.search.markers.map(marker => (
+          {controls.map(marker => (
             <tr key={marker.key}>
               <td><div className="text-right">{marker.label}</div></td>
               {this.props.search.compareResults.map(result => (

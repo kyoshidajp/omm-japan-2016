@@ -7,6 +7,7 @@ export const CENTER_POINT = {
 };
 
 export const START_POINT = {
+  LABEL: 'start',
   DAY1: {
     lat: 36.600857,
     lng: 137.835387,
@@ -18,6 +19,7 @@ export const START_POINT = {
 };
 
 export const FINISH_POINT = {
+  LABEL: 'finish',
   DAY1: {
     lat: 36.560606,
     lng: 137.872176,

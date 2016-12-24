@@ -64,13 +64,13 @@ function getControlsAndMarkers(data, day) {
   }
   markers.unshift({
     position: startPoint,
-    label: 'start',
-    key: 'start',
+    label: OMM_CONST.START_POINT.LABEL,
+    key: OMM_CONST.START_POINT.LABEL,
   });
   markers.push({
     position: finishPoint,
-    label: 'finish',
-    key: 'finish',
+    label: OMM_CONST.FINISH_POINT.LABEL,
+    key: OMM_CONST.FINISH_POINT.LABEL,
   });
   return { controls, markers };
 }
