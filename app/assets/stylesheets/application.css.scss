@@ -74,6 +74,10 @@ body {
 	width: 60px;
 }
 
+button[type="button"]:focus {
+	outline: none;
+}
+
 .search-icon {
 	width: 30px;
 	height: 18px;
