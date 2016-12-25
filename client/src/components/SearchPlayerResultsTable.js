@@ -36,6 +36,7 @@ export default class SearchPlayerResultsTable extends Component {
 
     this.addResult = this.addResult.bind(this);
     this.handlePageClick = this.handlePageClick.bind(this);
+    this.highlightName = this.highlightName.bind(this);
   }
 
   addResult(bib, handler) {
@@ -47,6 +48,18 @@ export default class SearchPlayerResultsTable extends Component {
     this.props.searchActions.onPageChange(this.props.search.value,
                                           this.props.search.pageLimit,
                                           data.selected);
+  }
+
+  escapeRegexCharacters(str) {
+    return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  }
+
+  highlightName(player) {
+    const name = `${player.last_name} ${player.first_name}`;
+    const value = this.escapeRegexCharacters(name).replace(
+      new RegExp(this.props.search.value, 'g'),
+      `<span class="highlight">${this.props.search.value}</span>`);
+    return <span dangerouslySetInnerHTML={{ __html: value }} />;
   }
 
   render() {
@@ -74,7 +87,7 @@ export default class SearchPlayerResultsTable extends Component {
                 <div className="text-left">{player.bib}</div>
               </td>
               <td>
-                <div className="text-left">{player.last_name} {player.first_name}</div>
+                <div className="text-left">{this.highlightName(player)}</div>
               </td>
             </tr>
           )}
