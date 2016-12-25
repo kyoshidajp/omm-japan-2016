@@ -2,7 +2,8 @@
 @import "bootstrap";
 
 body {
-  font-family: Helvetica, sans-serif;
+  //font-family: Helvetica, sans-serif;
+  font-family: 'Hiragino Kaku Gothic Pro', 'ヒラギノ角ゴ Pro W3', Meiryo, メイリオ, Osaka, 'MS PGothic', arial, helvetica, sans-serif;
 }
 
 .react-autosuggest__container {
@@ -121,13 +122,13 @@ button[type="button"]:focus {
 }
 
 .result-table .rank {
-  min-width: 4.2em;
+  min-width: 5em;
 }
 
 .result-table .score-if,
 .result-table .rank-if,
 {
-  min-width: 6.5em;
+  min-width: 7.1em;
 }
 
 .pagination a:focus,
