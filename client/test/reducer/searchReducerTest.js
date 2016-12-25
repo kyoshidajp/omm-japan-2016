@@ -250,12 +250,25 @@ describe('seach reducer', () => {
 
   it('should handle SUGGEST_ON_KEY_PRESS', () => {
     const actual = reducer(
-      {}, {
+      {
+        pageCount: 3,
+        pageOffset: 2,
+        pageTotal: 0,
+        pageLimit: 10
+      }, {
         type: actions.SUGGEST_ON_KEY_PRESS,
-        value: 'keyword',
+        value: {
+          total_count: 10,
+          players: ['keyword'],
+        },
+        offset: 2,
       });
     const expected = {
-      searchPlayersResults: 'keyword',
+      pageCount: 1,
+      pageOffset: 2,
+      pageTotal: 10,
+      pageLimit: 10,
+      searchPlayersResults: ['keyword'],
     };
     assert.deepEqual(actual, expected);
   });

@@ -19,6 +19,15 @@ export const HOVER_RESULT_TABLE_ROW = 'HOVER_RESULT_TABLE_ROW';
 export const OUT_RESULT_TABLE_ROW = 'OUT_RESULT_TABLE_ROW';
 export const CHANGE_DISPLAY_ROUTE = 'CHANGE_DISPLAY_ROUTE';
 export const SORT_RESULT_TABLE = 'SORT_RESULT_TABLE';
+export const ON_PAGE_CHANGE = 'ON_PAGE_CHANGE';
+
+function callOnPageChange(value, offset) {
+  return {
+    type: ON_PAGE_CHANGE,
+    value,
+    offset,
+  };
+}
 
 export function sortResultTable(sortBy, sortOrder) {
   return {
@@ -148,32 +157,39 @@ export function loadBibs(day) {
   };
 }
 
-function searchPlayers(value) {
+function searchPlayers(result, offset) {
   return {
     type: SUGGEST_ON_KEY_PRESS,
-    value,
+    value: result,
+    offset,
   };
 }
 
-function callSearchPlayersAPI(value) {
+function callSearchPlayersAPI(value, limit, offset) {
   if (value === '') return { type: null };
 
   return (dispatch) => {
-    Axios.get(`${API_PATH.PLAYERS}?name=${value}`).then(
-      response => dispatch(searchPlayers(response.data)),
+    Axios.get(`${API_PATH.PLAYERS}?name=${value}&page=${offset}&per=${limit}`).then(
+      response => dispatch(searchPlayers(response.data, offset)),
     ).catch(
       response => console.log(response),
     );
   };
 }
 
-export function onClickSearchButton(value) {
-  return callSearchPlayersAPI(value);
+export function onClickSearchButton(query, limit, offset) {
+  return callSearchPlayersAPI(query, OMM_CONST.SEARCH_LIMIT_PER_PAGE, 1);
 }
 
-export function suggestOnKeyPress(event, value) {
+export function onPageChange(query, limit, selected) {
+  return callSearchPlayersAPI(query, limit, selected + 1);
+}
+
+export function suggestOnKeyPress(event, value, limit, offset) {
   const ENTER_KEY = 13;
-  if (event.which === ENTER_KEY) return callSearchPlayersAPI(value);
+  if (event.which === ENTER_KEY) {
+    return callSearchPlayersAPI(value, OMM_CONST.SEARCH_LIMIT_PER_PAGE, 1);
+  }
   return { type: null };
 }
 

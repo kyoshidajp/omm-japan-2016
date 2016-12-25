@@ -126,9 +126,14 @@ body {
   min-width: 6.5em;
 }
 
+.pagination a:focus,
 .result-table a:focus,
 {
   outline: none;
+}
+
+.pagination {
+	margin: 10px;
 }
 
 .logo.navbar-brand {

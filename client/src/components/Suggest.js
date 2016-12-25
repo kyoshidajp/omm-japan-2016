@@ -37,7 +37,10 @@ export default class Suggest extends Component {
   }
 
   onKeyPress(event) {
-    this.props.actions.suggestOnKeyPress(event, this.props.search.value);
+    this.props.actions.suggestOnKeyPress(event,
+                                         this.props.search.value,
+                                         this.props.search.pageLimit,
+                                         this.props.search.pageOffset);
   }
 
   onSuggestionSelected(event, { suggestion, suggestionValue }) {

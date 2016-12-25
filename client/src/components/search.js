@@ -43,7 +43,9 @@ export default class Search extends Component {
   }
 
   onClickSearchButton(event) {
-    this.props.actions.onClickSearchButton(this.props.search.value);
+    this.props.actions.onClickSearchButton(this.props.search.value,
+                                           this.props.search.pageLimit,
+                                           this.props.search.pageOffset);
   }
 
   render() {
@@ -73,7 +75,7 @@ export default class Search extends Component {
         <FormGroup>
         <Button bsStyle="primary" className="search-btn"
           disabled={this.props.search.searchTarget === OMM.SEARCH_TARGETS.BIB}
-          onClick={() => this.props.actions.onClickSearchButton(this.props.search.value)}>
+          onClick={this.onClickSearchButton}>
           <FaSearch className="search-icon" />
         </Button>
         </FormGroup>

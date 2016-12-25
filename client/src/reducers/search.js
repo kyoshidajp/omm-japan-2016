@@ -227,6 +227,10 @@ function sortComareResult(results, sortBy, sortOrder) {
   return results;
 }
 
+function getPageCount(totalCount, limit) {
+  return Math.ceil(totalCount / limit);
+}
+
 function switchSortOrder(sortOrder) {
   if (sortOrder === OMM_CONST.SORT_ORDER.DESC) {
     return OMM_CONST.SORT_ORDER.ASC;
@@ -237,6 +241,10 @@ function switchSortOrder(sortOrder) {
 
   console.warn(`Unknown sortOrder: ${sortOrder}`);
   return OMM_CONST.SORT_ORDER.DESC;
+}
+
+function getPageOffset(offset, perPage) {
+  return Math.ceil(offset * perPage);
 }
 
 const initialState = {
@@ -284,6 +292,12 @@ const initialState = {
 
   /* Map: control.code => control  */
   controls: new Map(),
+
+  /* for pagenation */
+  pageCount: 0,
+  pageOffset: 1,
+  pageLimit: OMM_CONST.SEARCH_LIMIT_PER_PAGE,
+  pageTotal: 0,
 };
 
 export default function search(state = initialState, action) {
@@ -355,8 +369,12 @@ export default function search(state = initialState, action) {
       });
     }
     case actions.SUGGEST_ON_KEY_PRESS: {
+      const pageCount = getPageCount(action.value.total_count, state.pageLimit);
       return Object.assign({}, state, {
-        searchPlayersResults: action.value,
+        searchPlayersResults: action.value.players,
+        pageTotal: action.value.total_count,
+        pageCount,
+        pageOffset: action.offset,
       });
     }
     case actions.SUGGEST_ON_CHANGE: {
@@ -408,6 +426,12 @@ export default function search(state = initialState, action) {
       return Object.assign({}, state, {
         compareResults,
         sortOrder,
+      });
+    }
+    case actions.ON_PAGE_CHANGE: {
+      const pageOffset = getPageOffset(action.value, action.offset);
+      return Object.assign({}, state, {
+        pageOffset,
       });
     }
     default:

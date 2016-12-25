@@ -65,3 +65,5 @@ export const SORT_ORDER = {
 export const SORT_FIELDS = {
   RANK: 'rank',
 };
+
+export const SEARCH_LIMIT_PER_PAGE = 10;
