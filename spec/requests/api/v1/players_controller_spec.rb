@@ -26,8 +26,8 @@ describe 'GET /api/v1/players.json' do
     context 'page is not number' do
       let(:params) { { name: '田中', page: 'wrong', per: 10 } }
 
-      it 'return status code 200' do
-        is_expected.to eq 200
+      it 'return status code 400' do
+        is_expected.to eq 400
       end
 
       it 'return page error message' do
@@ -43,8 +43,8 @@ describe 'GET /api/v1/players.json' do
     context 'per is not number' do
       let(:params) { { name: '田中', page: 1, per: 'bad' } }
 
-      it 'return status code 200' do
-        is_expected.to eq 200
+      it 'return status code 400' do
+        is_expected.to eq 400
       end
 
       it 'return per error message' do
@@ -61,8 +61,8 @@ describe 'GET /api/v1/players.json' do
   context 'with params[:name] and params[:page] without params[:per]' do
     let(:params) { { name: '田中', page: 1 } }
 
-    it 'return status code 200' do
-      is_expected.to eq 200
+    it 'return status code 400' do
+      is_expected.to eq 400
     end
 
     it 'return per error message' do
@@ -78,8 +78,8 @@ describe 'GET /api/v1/players.json' do
   context 'with params[:name] and params[:per] without params[:page]' do
     let(:params) { { name: '田中', per: 10 } }
 
-    it 'return status code 200' do
-      is_expected.to eq 200
+    it 'return status code 400' do
+      is_expected.to eq 400
     end
 
     it 'return page error message' do
@@ -95,8 +95,8 @@ describe 'GET /api/v1/players.json' do
   context 'with params[:name] without params[:page] and params[:per]' do
     let(:params) { { name: '田中' } }
 
-    it 'return status code 200' do
-      is_expected.to eq 200
+    it 'return status code 400' do
+      is_expected.to eq 400
     end
 
     it 'return page error message' do
@@ -113,8 +113,8 @@ describe 'GET /api/v1/players.json' do
   context 'without params[:name] and params[:page] and params[:per]' do
     let(:params) { {} }
 
-    it 'return status code 200' do
-      is_expected.to eq 200
+    it 'return status code 400' do
+      is_expected.to eq 400
     end
 
     it 'return page error message' do

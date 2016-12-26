@@ -81,8 +81,8 @@ describe 'GET /api/v1/controls.json' do
 
     context 'is neither 1 nor 2' do
       let(:params) { { day: 3 } }
-      it 'return status code 200' do
-        is_expected.to eq 200
+      it 'return status code 400' do
+        is_expected.to eq 400
       end
       it 'return day error message' do
         is_expected
@@ -96,8 +96,8 @@ describe 'GET /api/v1/controls.json' do
   end
 
   context 'without params[:day]' do
-    it 'return status code 200' do
-      is_expected.to eq 200
+    it 'return status code 400' do
+      is_expected.to eq 400
     end
     it 'return day error message' do
       is_expected

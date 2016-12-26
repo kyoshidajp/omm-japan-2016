@@ -14,7 +14,7 @@ module Api::V1
       return if params[:action] == 'bibs'
 
       activity = validate.new(params)
-      render json: { error: activity.errors } unless activity.valid?
+      render json: { error: activity.errors }, status: :bad_request unless activity.valid?
     end
   end
 end
