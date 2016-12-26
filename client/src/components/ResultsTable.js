@@ -130,7 +130,6 @@ export default class ResultsTable extends Component {
             <th className="time">time</th>
             <th className="adjust">adjust</th>
             <th className="players">players</th>
-            <th className="routes">route</th>
             <th className="score-if">score if ...
               {this.showScoreIfHelpIcon()}
             </th>
@@ -189,15 +188,6 @@ export default class ResultsTable extends Component {
               <td>
                 <div className="text-left">
                   {this.joinPlayers(result.players)}
-                </div>
-              </td>
-              <td>
-                <div className="text-left">
-                  S-
-                  {result.controls.map(control =>
-                     control.code.toString(),
-                   ).join('-')}
-                  {result.score > 0 ? '-F' : ''}
                 </div>
               </td>
               <td>
